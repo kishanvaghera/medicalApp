@@ -1,12 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import PublicRoutes from './src/Routes/PublicRoutes';
+import PrivateRouters from './src/Routes/PrivateRouters';
 
 export default function App() {
+  const isLogin=true;
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {
+        isLogin?<PrivateRouters/>:<PublicRoutes/>
+      }
+    </NavigationContainer>
   );
 }
 
