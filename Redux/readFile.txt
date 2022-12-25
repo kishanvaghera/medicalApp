@@ -1,0 +1,6 @@
+Actions
+Reducers
+Contants
+Utils
+Store
+this file will be store
