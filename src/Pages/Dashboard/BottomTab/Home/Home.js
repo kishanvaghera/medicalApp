@@ -4,7 +4,8 @@ import {
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native'
 import React, { useState } from 'react';
 import {
@@ -13,8 +14,9 @@ import {
 } from 'react-native-responsive-screen';
 
 import { Header } from '../../../../Layouts'
+import RoutName from '../../../../Routes/RoutName';
 
-const Home = () => {
+const Home = ({ navigation }) => {
 
   const [listDate, setListDate] = useState([{
     id: 1,
@@ -53,7 +55,7 @@ const Home = () => {
   ])
 
   const renderItem = ({ item }) => {
-    
+
     return (
       <View style={{ marginTop: 15 }}>
         <Text style={styles.titleText}>{item.title}</Text>
@@ -64,11 +66,12 @@ const Home = () => {
           legacyImplementation={false}
           data={item.list}
           renderItem={item => {
-            console.log('object', item.item)
+            // console.log('object', item.item)
             return (
-              <View style={styles.itemBox}>
+              <TouchableOpacity style={styles.itemBox}
+                onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
                 <Text style={{ alignSelf: 'center' }}>{item.item.name}</Text>
-              </View>
+              </TouchableOpacity>
             )
           }}
           keyExtractor={kry => kry.id}
@@ -91,7 +94,6 @@ const Home = () => {
           }} >
           <KeyboardAvoidingView enabled>
             <View style={styles.listContainer}>
-
               <FlatList
                 data={listDate}
                 renderItem={item => renderItem(item)}

@@ -9,6 +9,8 @@ export default {
     MEDITATION : 'Meditation',
     MUSIC: 'Music',
     LIVE: 'Live',
-    PROFILE: 'Profile'
+    PROFILE: 'Profile',
+    PRODUCT_LIST: 'ProductList',
+    PRODUCT_DETAIL: 'ProductDetail'
     
 };
