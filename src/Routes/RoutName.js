@@ -11,6 +11,8 @@ export default {
     LIVE: 'Live',
     PROFILE: 'Profile',
     PRODUCT_LIST: 'ProductList',
-    PRODUCT_DETAIL: 'ProductDetail'
+    PRODUCT_DETAIL: 'ProductDetail',
+    MUSIC_LIST: 'MusicList',
+    MUSIC_PLAYER: 'MusicPlayer'
     
 };

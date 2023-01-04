@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather  } from '@expo/vector-icons';
 
-import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail } from '../Pages/Dashboard';
+import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail, MusicList, MusicPlayer } from '../Pages/Dashboard';
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
 const Stack = createStackNavigator();
@@ -20,6 +20,8 @@ const homeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={'BottomTabStack'} component={BottomTabStack} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.PRODUCT_LIST} component={ProductList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.PRODUCT_DETAIL} component={ProductDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
