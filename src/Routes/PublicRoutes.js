@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const PublicRoutes = () => {
     return (
-        <Stack.Navigator initialRouteName={RoutName.FRIST_SCREEN} screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName={RoutName.LOGIN} screenOptions={{ headerShown: false }}>
             <Stack.Screen name={RoutName.FRIST_SCREEN} component={FristScreen} />
             <Stack.Screen name={RoutName.LOGIN} component={Login} />
             <Stack.Screen name={RoutName.REGIDTER} component={Register} />
