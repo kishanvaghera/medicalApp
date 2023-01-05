@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import { Audio } from 'expo-av';
-import { AntDesign, Entypo, EvilIcons, Fontisto  } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
+import { AntDesign, Entypo, EvilIcons, Fontisto, Feather, MaterialIcons, Foundation  } from '@expo/vector-icons';
 import { Header } from '../../../../Layouts';
 
 
@@ -19,28 +20,55 @@ const MusicPlayer = () => {
 
 
   const [sound, setSound] = React.useState();
+  const [sTime, setSTime] = React.useState();
+  const [eTime, setETime] = React.useState();
   // const { audio } = '';
 
   async function getSound() {
     const { sound } = await Audio.Sound.createAsync({ uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' });
     setSound(sound);
-    console.log(sound);
+    sound.getStatusAsync()
+      .then(function (result) {
+        msToTime(result.durationMillis)
+
+      })
+      .catch(failureCallback);
   }
+
+
+  // useEffect(() => {
+  //   console.log('time', eTime);
+  //   return () => { }
+  // }, [eTime])
 
   async function playSound() {
     console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync({ uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' });
-    // console.log(sound);
-
-
 
     console.log('Playing Sound', sound);
     await sound.playAsync();
   }
 
+  function msToTime(duration) {
+    var milliseconds = parseInt((duration % 1000))
+      , seconds = parseInt((duration / 1000) % 60)
+      , minutes = parseInt((duration / (1000 * 60)) % 60)
+      , hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+    // console.log('time', minutes + ":" + seconds);
+    // setETime(minutes + ":" + seconds)
+    return minutes + ":" + seconds + "." + milliseconds;
+    //return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  }
+
   React.useEffect(() => {
+    getSound()
     return sound
       ? () => {
+
         console.log('Unloading Sound');
         sound.unloadAsync();
       }
@@ -60,32 +88,41 @@ const MusicPlayer = () => {
           <Text style={styles.boldText}>Morning</Text>
         </View>
         <View>
-          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection:'row', marginTop: 10, alignSelf: 'center' }}>
+          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 10, alignSelf: 'center' }}>
             <Entypo name="ccw" size={24} color="black" />
             <EvilIcons name="heart" size={30} color="black" />
             {/* <Fontisto name="heart" size={24} color="black" /> */}
           </View>
+          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
+            <Text style={styles.normalText}>00:00</Text>
+            <Slider
+              style={{ width: wp(70), height: 40 }}
+              minimumValue={0}
+              maximumValue={1}
+              minimumTrackTintColor="tomato"
+              maximumTrackTintColor="#000000"
+            />
+            <Text style={styles.normalText}>00:00</Text>
+          </View>
+          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
+            <MaterialIcons name="queue-music" size={24} color="black" />
+            <Foundation name="previous" size={24} color="black" />
+            <TouchableOpacity
+              onPress={playSound}
+              style={{
+                width: 50,
+                height: 50,
+              }}>
+              <AntDesign name="play" size={50} color="black" />
+              {/* <AntDesign name="pausecircle" size={50} color="black" /> */}
+            </TouchableOpacity>
+            <Foundation name="next" size={24} color="black" />
+            <Feather name="thumbs-up" size={24} color="black" />
+            {/* <Fontisto name="heart" size={24} color="black" /> */}
+          </View>
         </View>
-        {/* <TouchableOpacity 
-        onPress={playSound}
-        style={{
-          width: 100,
-          height: 100,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <AntDesign name="play" size={50} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity 
-         onPress={pauseSound}
-        style={{
-          width: 100,
-          height: 100,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-        <AntDesign name="pausecircle" size={50} color="black" />
-        </TouchableOpacity> */}
+
+      
       </SafeAreaView>
     </View>
   )
@@ -116,5 +153,10 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     marginTop: 10
-  }
+  },
+  normalText: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
 });

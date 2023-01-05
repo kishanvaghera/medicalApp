@@ -26,7 +26,7 @@ export default Header;
 const styles = StyleSheet.create({
   headerContainer: {
     width: wp(100),
-    height: 55,
+    height: 65,
     backgroundColor: 'gray',
     flexDirection: 'row',
     alignItems: 'center',
