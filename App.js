@@ -1,21 +1,12 @@
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { PublicRoutes, PrivateRouters } from './src/Routes';
-import ThemeProvider from './src/utils/ThemeProvider';
+import { store } from './src/Redux/store';
+import { Provider } from 'react-redux'
+import MainNavigator from './src/Routes/MainNavigator';
 
 export default function App() {
-  const isLogin=true;
   return (
-    <NavigationContainer>
-      {/* <ThemeProvider> */}
-      {
-        isLogin?<PrivateRouters/>:<PublicRoutes/>
-      }
-      {/* </ThemeProvider> */}
-      
-    </NavigationContainer>
+    <Provider store={store}>
+      <MainNavigator />      
+    </Provider>
   );
 }
 

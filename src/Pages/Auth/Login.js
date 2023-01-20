@@ -1,15 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import images from '../../../assets';
-import { PrivateRouters } from '../../Routes';
 import { Input, Button } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
+import { useSelector, useDispatch } from 'react-redux'
+import { LoginSuccess } from '../../Redux/reducer';
 
 
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch()
+  const loggedData = useSelector((state) => state.userLoggedData );
 
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  console.log("loggedData",loggedData)
+
+  const [state,setState]=useState({
+    userName:"",
+    password:""
+  });
+
+  const handleChange=(e,name)=>{
+    setState(prevState=>{
+      return{
+        ...prevState,
+        [name]:e
+      }
+    })
+  }
+
+  const [isInvalidErr,setIsInvalidErr]=useState(false);
+  const LoginCheck=()=>{
+    if(state.userName!="" && state.password!=""){
+      if(state.userName=="admin" && state.password=="123456"){
+        setIsInvalidErr(false);
+        dispatch(LoginSuccess({userLoggedId:12}));
+      }else{
+        setIsInvalidErr(true);
+      }
+    }else{
+      setIsInvalidErr(true);
+    }
+  }
+
+  useEffect(() => {
+    console.log("loggedData.isLogin",loggedData.isLogin)
+    if(loggedData.isLogin){
+      navigation.navigate('homeScreenStack');
+    }
+    return () => {}
+  }, [loggedData])
+  
+
 
   return (
     <View style={styles.body}>
@@ -24,16 +64,16 @@ const Login = ({ navigation }) => {
 
         <Input
           placeholder={'Username'}
-          onChangeText={(text) => setUserName(text)}
-          value={userName}
+          onChangeText={(text) => handleChange(text,'userName')}
+          value={state.userName}
           keyboardType={'text'}
           multiline={false}
           returnKeyType={'next'}
         />
         <Input
           placeholder={'Password'}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
+          onChangeText={(text) => handleChange(text,'password')}
+          value={state.password}
           keyboardType={'text'}
           multiline={false}
           returnKeyType={'next'}
@@ -45,7 +85,7 @@ const Login = ({ navigation }) => {
           height={40}
           title={'Sign in'}
           buttonStyle={{ marginTop: 20 }}
-          customClick={() => navigation.navigate('homeScreenStack')} />
+          customClick={() => LoginCheck()} />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
           <Text style={[styles.lableText, {}]}>Don't have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate(RoutName.REGIDTER)}><Text style={[styles.lableText, { fontWeight: '600' }]} > Sign up</Text></TouchableOpacity>

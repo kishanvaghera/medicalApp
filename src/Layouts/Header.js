@@ -25,15 +25,13 @@ const Header = ({ title, iconName, customClick, setIconBG }, props) => {
 export default Header;
 const styles = StyleSheet.create({
   headerContainer: {
-    width: wp(100),
+    width: wp(95),
     height: 65,
-    backgroundColor: 'gray',
     flexDirection: 'row',
     alignItems: 'center',
     alignContent:'center',
     justifyContent: 'center',
-    paddingHorizontal: wp(0.5),
-    paddingTop: hp(2)
+    marginTop:wp(6),
   },
   textStyle: {
     fontSize: 20,
@@ -44,12 +42,9 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 35,
     height: 35,
-    //borderRadius: 25/2,
     justifyContent: 'center',
     alignItems: 'center',
     left: 0,
     position:'absolute',
-    paddingTop: hp(2)
-   // backgroundColor: '#D3D3D3'
   },
 });
