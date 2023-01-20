@@ -5,24 +5,34 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import { Audio } from 'expo-av';
 import Slider from '@react-native-community/slider';
-import { AntDesign, Entypo, EvilIcons, Fontisto, Feather, MaterialIcons, Foundation  } from '@expo/vector-icons';
+import { AntDesign, Entypo, EvilIcons, Fontisto, Feather, MaterialIcons, Foundation } from '@expo/vector-icons';
 import { Header } from '../../../../Layouts';
 
 
 const MusicPlayer = () => {
 
 
-  const [sound, setSound] = React.useState();
-  const [sTime, setSTime] = React.useState();
-  const [eTime, setETime] = React.useState();
-  // const { audio } = '';
+  const [sound, setSound] = useState('');
+  const [sTime, setSTime] = useState('00:00');
+  const [eTime, setETime] = useState('00:00');
+  const [isPlay, setIsPlay] = useState(false);
+  const [playback, setPlayback] = useState({
+    isLoaded: true,
+    sound: '',
+    positionMillis: '',
+    durationMillis: '',
+    isPlaying: '',
+    isLooping: '',
+    isMuted: '',
+  });
+ 
 
   async function getSound() {
     const { sound } = await Audio.Sound.createAsync({ uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' });
@@ -32,21 +42,18 @@ const MusicPlayer = () => {
         msToTime(result.durationMillis)
 
       })
-      .catch(failureCallback);
+      .catch(e => console.log('sond cach',e));
   }
 
-
-  // useEffect(() => {
-  //   console.log('time', eTime);
-  //   return () => { }
-  // }, [eTime])
-
   async function playSound() {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync({ uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' });
-
-    console.log('Playing Sound', sound);
     await sound.playAsync();
+    setIsPlay(true);
+  }
+
+  async function pauseSound() {
+    console.log('pushhh')
+    await sound.pauseSound();
+    setIsPlay(false);
   }
 
   function msToTime(duration) {
@@ -59,25 +66,24 @@ const MusicPlayer = () => {
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
     // console.log('time', minutes + ":" + seconds);
-    // setETime(minutes + ":" + seconds)
+    let time = minutes + ":" + seconds;
+    setETime(time);
     return minutes + ":" + seconds + "." + milliseconds;
     //return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
   }
 
   React.useEffect(() => {
-    getSound()
+    getSound();
     return sound
       ? () => {
 
-        console.log('Unloading Sound');
+        // console.log('Unloading Sound');
         sound.unloadAsync();
       }
       : undefined;
   }, [sound]);
 
-  async function pauseSound() {
-    await sound.pauseSound();
-  }
+
 
   return (
     <View style={styles.body}>
@@ -102,18 +108,18 @@ const MusicPlayer = () => {
               minimumTrackTintColor="tomato"
               maximumTrackTintColor="#000000"
             />
-            <Text style={styles.normalText}>00:00</Text>
+            <Text style={styles.normalText}>{eTime}</Text>
           </View>
           <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
             <MaterialIcons name="queue-music" size={24} color="black" />
             <Foundation name="previous" size={24} color="black" />
             <TouchableOpacity
-              onPress={playSound}
+              onPress={() => isPlay ? pauseSound() : playSound()}
               style={{
                 width: 50,
                 height: 50,
               }}>
-              <AntDesign name="play" size={50} color="black" />
+              <AntDesign name={isPlay ? 'pausecircle' : 'play'} size={50} color="black" />
               {/* <AntDesign name="pausecircle" size={50} color="black" /> */}
             </TouchableOpacity>
             <Foundation name="next" size={24} color="black" />
@@ -122,7 +128,7 @@ const MusicPlayer = () => {
           </View>
         </View>
 
-      
+
       </SafeAreaView>
     </View>
   )
