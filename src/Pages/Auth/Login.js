@@ -5,13 +5,12 @@ import { Input, Button } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { useSelector, useDispatch } from 'react-redux'
 import { LoginSuccess } from '../../Redux/reducer';
+import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch()
   const loggedData = useSelector((state) => state.userLoggedData );
-
-  console.log("loggedData",loggedData)
 
   const [state,setState]=useState({
     userName:"",
@@ -55,13 +54,15 @@ const Login = ({ navigation }) => {
     <View style={styles.body}>
       <Image
         style={styles.image}
-        source={images.img_space}
+        source={images.login_bg}
         resizeMode={'stretch'} />
 
       <View style={styles.formContaner}>
         <Text style={styles.boldText}>WelCome back</Text>
-        <Text style={styles.lableText}>Login to yout account</Text>
-
+        <Text style={styles.lableText}>Login to your account</Text>
+        {
+          isInvalidErr?<Text style={{marginTop:wp(2),color:"red"}}>Username or password is wrong!</Text>:""
+        }
         <Input
           placeholder={'Username'}
           onChangeText={(text) => handleChange(text,'userName')}
@@ -106,14 +107,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
+    marginTop:wp(10),
     width: '100%',
-    height: '35%'
+    height: '50%'
   },
   formContaner: {
     width: '100%',
-    paddingHorizontal: '10%',
+    // paddingHorizontal: '10%',
     alignItems: 'center',
-    marginTop: '10%'
+    // marginTop: '10%'
   },
   boldText: {
     fontSize: 28,

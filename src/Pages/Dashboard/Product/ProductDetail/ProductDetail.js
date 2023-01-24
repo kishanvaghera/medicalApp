@@ -6,7 +6,8 @@ import {
     FlatList,
     SafeAreaView,
     ScrollView,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Dimensions
 } from 'react-native'
 import {
     widthPercentageToDP as wp,
@@ -14,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { Header } from '../../../../Layouts';
 
 const ProductDetail = ({ navigation, props, route }) => {
@@ -27,6 +28,22 @@ const ProductDetail = ({ navigation, props, route }) => {
         setPageTitle(route.params.pageTitle);
         return () => { }
     }, [pageTitle])
+
+    function setOrientation() {
+        if (Dimensions.get('window').height > Dimensions.get('window').width) {
+    
+          //Device is in portrait mode, rotate to landscape mode.
+          ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    
+        }
+        else {
+          
+          //Device is in landscape mode, rotate to portrait mode.
+          ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    
+        }
+      }
+
     return (
         <View style={styles.body}>
 
@@ -50,6 +67,7 @@ const ProductDetail = ({ navigation, props, route }) => {
                             resizeMode="contain"
                             isLooping
                             onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                            onFullscreenUpdate={setOrientation}
                         />
                         <Text style={styles.titleText}>Video Title</Text>
                         <View style={{ marginTop: 8 }}>

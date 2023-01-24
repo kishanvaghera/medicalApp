@@ -69,7 +69,7 @@ const ProductList = ({ navigation, props, route }) => {
         return (
             <TouchableOpacity style={styles.itemContainer}
                 onPress={() => navigation.navigate(RoutName.PRODUCT_DETAIL, { pageTitle: item.title })}>
-                <MaterialCommunityIcons name={item.icon} size={24} color="black" />
+                <MaterialCommunityIcons name={item.icon} size={30} color="black" />
                 <Text style={styles.titleText}>{item.title}</Text>
             </TouchableOpacity>
         );
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         width: wp(95),
-        height: 40,
+        height: wp(15),
         marginBottom: 8,
         alignContent: 'center',
         alignItems: 'center',
