@@ -1,4 +1,4 @@
-import axios from 'react-native-axios';
+import axios from 'axios';
 import apiUrls from './apiUrls';
 
 
@@ -10,16 +10,15 @@ export async function apiAction(formData, urlKey) {
         };
        
         let resStatus = "";
-        console.log('object', apiUrl +  urlKey, JSON.stringify(postData))
-        const data = axios.post(apiUrl +  urlKey,JSON.stringify(postData));
+
+        const data = axios.post(apiUrl +  urlKey,formData);
         await data.then(val => { resStatus = val  });
-        
-        console.log('object res ', data) 
-        // if (resStatus.data.status == 412) {
-        //     return false;
-        // } else {
-        //     return resStatus.data;
-        // }
+
+         if (resStatus.data.status == 412) {
+            return false;
+        } else {
+            return resStatus.data;
+        }
     // } else {
     //     const token = await AsyncStorage.getItem('token').then(val => val);
     //     if (token) {

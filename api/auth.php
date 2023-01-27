@@ -2,6 +2,9 @@
 
 include ("includes/connect.php");
 
+
+print_r($_POST);
+exit();
 if($_POST['action'] == "login"){
     $vUsername = $_POST['vUsername'];
     $vPassword = $_POST['vPassword'];

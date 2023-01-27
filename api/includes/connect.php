@@ -1,12 +1,22 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+header('Access-Control-Allow-Headers: token, Content-Type');
+header('Access-Control-Max-Age: 1728000');
+header('Content-Length: 0');
+header('Content-Type: text/plain');
 
-error_reporting(1);
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+
+error_reporting(0);
 
 include ("class.php");
 
-$data = json_decode(file_get_contents("php://input"));
+$input = file_get_contents('php://input');
+
+$data = json_decode($input);
+
+$_POST = json_decode(json_encode($data), true);
+
+print_r($_POST);
