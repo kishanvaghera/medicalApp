@@ -5,53 +5,77 @@ import { Input, Button } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { useSelector, useDispatch } from 'react-redux'
 import { LoginSuccess } from '../../Redux/reducer';
-import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+import * as APIService from './../../Middleware/APIService';
+import apiUrls from '../../Middleware/apiUrls';
+import { Loader } from '../../Components';
 
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch()
-  const loggedData = useSelector((state) => state.userLoggedData );
+  const loggedData = useSelector((state) => state.userLoggedData);
 
-  const [state,setState]=useState({
-    userName:"",
-    password:""
+  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({
+    userName: "",
+    password: ""
   });
 
-  const handleChange=(e,name)=>{
-    setState(prevState=>{
-      return{
+  const handleChange = (e, name) => {
+    setState(prevState => {
+      return {
         ...prevState,
-        [name]:e
+        [name]: e
       }
     })
   }
 
-  const [isInvalidErr,setIsInvalidErr]=useState(false);
-  const LoginCheck=()=>{
-    if(state.userName!="" && state.password!=""){
-      if(state.userName=="admin" && state.password=="123456"){
-        setIsInvalidErr(false);
-        dispatch(LoginSuccess({userLoggedId:12}));
-      }else{
-        setIsInvalidErr(true);
-      }
-    }else{
-      setIsInvalidErr(true);
-    }
+  const [isInvalidErr, setIsInvalidErr] = useState(false);
+  const LoginCheck = () => {
+  //  setLoading(true);
+    const postData = {
+      action: 'login',
+      vUsername: state.userName,
+      vPassword: state.password
+    };
+
+    APIService.apiAction(postData, apiUrls.auth).then(res => {
+   //   setLoading(false);
+      console.log('login respos', JSON.stringify(res))
+      // if (res) {
+      //   if (res.status == 200) {
+      //     setIsInvalidErr(false);
+      //     dispatch(LoginSuccess({ userLoggedId: 12 }));
+      //   }
+      // }
+    })
+
+    // if(state.userName!="" && state.password!=""){
+    //   if(state.userName=="admin" && state.password=="123456"){
+    //     setIsInvalidErr(false);
+    //     dispatch(LoginSuccess({userLoggedId:12}));
+    //   }else{
+    //     setIsInvalidErr(true);
+    //   }
+    // }else{
+    //   setIsInvalidErr(true);
+    // }
   }
 
   useEffect(() => {
-    console.log("loggedData.isLogin",loggedData.isLogin)
-    if(loggedData.isLogin){
+    console.log("loggedData.isLogin", loggedData.isLogin)
+    if (loggedData.isLogin) {
       navigation.navigate('homeScreenStack');
     }
-    return () => {}
+    return () => { }
   }, [loggedData])
-  
+
 
 
   return (
     <View style={styles.body}>
+      <Loader loading={loading} />
       <Image
         style={styles.image}
         source={images.login_bg}
@@ -61,11 +85,11 @@ const Login = ({ navigation }) => {
         <Text style={styles.boldText}>WelCome back</Text>
         <Text style={styles.lableText}>Login to your account</Text>
         {
-          isInvalidErr?<Text style={{marginTop:wp(2),color:"red"}}>Username or password is wrong!</Text>:""
+          isInvalidErr ? <Text style={{ marginTop: wp(2), color: "red" }}>Username or password is wrong!</Text> : ""
         }
         <Input
           placeholder={'Username'}
-          onChangeText={(text) => handleChange(text,'userName')}
+          onChangeText={(text) => handleChange(text, 'userName')}
           value={state.userName}
           keyboardType={'text'}
           multiline={false}
@@ -73,7 +97,7 @@ const Login = ({ navigation }) => {
         />
         <Input
           placeholder={'Password'}
-          onChangeText={(text) => handleChange(text,'password')}
+          onChangeText={(text) => handleChange(text, 'password')}
           value={state.password}
           keyboardType={'text'}
           multiline={false}
@@ -82,7 +106,7 @@ const Login = ({ navigation }) => {
           secureTextEntry={true}
         />
         <Button
-          width={'75%'}
+          width={'80%'}
           height={40}
           title={'Sign in'}
           buttonStyle={{ marginTop: 20 }}
@@ -107,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    marginTop:wp(10),
+    marginTop: wp(10),
     width: '100%',
     height: '50%'
   },

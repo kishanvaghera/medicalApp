@@ -23,6 +23,7 @@ const ProductDetail = ({ navigation, props, route }) => {
     const [pageTitle, setPageTitle] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
+   
 
     useEffect(() => {
         setPageTitle(route.params.pageTitle);

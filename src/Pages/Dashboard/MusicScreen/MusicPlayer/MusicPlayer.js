@@ -16,6 +16,7 @@ import { AntDesign, Entypo, EvilIcons, Fontisto, Feather, MaterialIcons, Foundat
 import { Header } from '../../../../Layouts';
 
 
+
 const MusicPlayer = () => {
 
 
@@ -24,6 +25,7 @@ const MusicPlayer = () => {
   const [eTime, setETime] = useState('00:00');
   const [isPlay, setIsPlay] = useState(false);
   const [playback, setPlayback] = useState({
+    isAlreadyPlay: false,
     isLoaded: true,
     sound: '',
     positionMillis: '',
@@ -45,13 +47,14 @@ const MusicPlayer = () => {
       .catch(e => console.log('sond cach',e));
   }
 
+  
   async function playSound() {
     await sound.playAsync();
     setIsPlay(true);
   }
 
   async function pauseSound() {
-    console.log('pushhh')
+    console.log('pushhh',sound)
     await sound.pauseSound();
     setIsPlay(false);
   }
