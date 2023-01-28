@@ -4,7 +4,7 @@ import images from '../../../assets';
 import { Input, Button } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { useSelector, useDispatch } from 'react-redux'
-import { LoginSuccess } from '../../Redux/reducer';
+import { LoginSuccess, UserDataStor } from '../../Redux/reducer';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import * as APIService from './../../Middleware/APIService';
@@ -18,8 +18,8 @@ const Login = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
-    userName: "",
-    password: ""
+    userName: "admin",
+    password: "123456"
   });
 
   const handleChange = (e, name) => {
@@ -33,7 +33,7 @@ const Login = ({ navigation }) => {
 
   const [isInvalidErr, setIsInvalidErr] = useState(false);
   const LoginCheck = () => {
-  //  setLoading(true);
+    setLoading(true);
     const postData = {
       action: 'login',
       vUsername: state.userName,
@@ -41,26 +41,22 @@ const Login = ({ navigation }) => {
     };
 
     APIService.apiAction(postData, apiUrls.auth).then(res => {
-   //   setLoading(false);
-      console.log('login respos', JSON.stringify(res))
-      // if (res) {
-      //   if (res.status == 200) {
-      //     setIsInvalidErr(false);
-      //     dispatch(LoginSuccess({ userLoggedId: 12 }));
-      //   }
-      // }
+      setLoading(false);
+      console.log('login respos', res.status)
+      if (res) {
+        if (res.status == 200) {
+          setIsInvalidErr(false);
+          dispatch(LoginSuccess({ userLoggedId: res.data.iUserId }));
+          dispatch(UserDataStor({ isUserData : res.data }));
+        }else{
+          setIsInvalidErr(true);
+        }
+      }else{
+        setIsInvalidErr(true);
+      }
     })
 
-    // if(state.userName!="" && state.password!=""){
-    //   if(state.userName=="admin" && state.password=="123456"){
-    //     setIsInvalidErr(false);
-    //     dispatch(LoginSuccess({userLoggedId:12}));
-    //   }else{
-    //     setIsInvalidErr(true);
-    //   }
-    // }else{
-    //   setIsInvalidErr(true);
-    // }
+   
   }
 
   useEffect(() => {
