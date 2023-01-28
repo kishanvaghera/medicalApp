@@ -1,4 +1,4 @@
-import {LoginSucess,Logout} from './constants';
+import {LoginSucess,Logout, UserData} from './constants';
 
 export const LoginSucessActs = text =>{
     return {
@@ -10,5 +10,11 @@ export const LoginSucessActs = text =>{
 export const LogoutActs = text => {
     return {
         type:Logout
+    }
+}
+
+export const UserDataActs = text => {
+    return {
+        type:UserData
     }
 }

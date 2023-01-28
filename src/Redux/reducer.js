@@ -5,6 +5,7 @@ const todosSlice = createSlice({
     initialState: {
         isLogin:false,
         isLoggedId:1,
+        isUserData:''
     },
     reducers: {
       LoginSuccess(state, action) {
@@ -12,9 +13,12 @@ const todosSlice = createSlice({
       },
       LogOut(state, action){
         return {...state,isLogin:false,isLoggedId:0}
-      }
+      },
+      UserDataStor(state, action){
+        return {...state,isLogin:true,isUserData:action.payload.isUserData}
+      },
     }
   })
   
-  export const { LoginSuccess, LogOut } = todosSlice.actions
+  export const { LoginSuccess, LogOut, UserDataStor  } = todosSlice.actions
   export default todosSlice.reducer
