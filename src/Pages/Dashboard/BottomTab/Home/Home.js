@@ -79,7 +79,6 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.body}>
-        <ImageBackground source={images.bg} resizeMode="cover" style={{}}>
         <Header iconName={'menu'} title={'Home'} />
           <View style={styles.container}>
             <ScrollView
@@ -99,7 +98,6 @@ const Home = ({ navigation }) => {
               </KeyboardAvoidingView>
             </ScrollView>
           </View>
-        </ImageBackground>
       </View>
   )
 }
