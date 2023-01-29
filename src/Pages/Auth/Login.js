@@ -55,8 +55,6 @@ const Login = ({ navigation }) => {
         setIsInvalidErr(true);
       }
     })
-
-   
   }
 
   useEffect(() => {
