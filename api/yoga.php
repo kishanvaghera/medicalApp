@@ -105,6 +105,7 @@ if($_POST['action']=="getYogaCategory"){
                         WHERE y.eStatus='y' ".$where."");
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
+            $row['tYogaFile']=$MAIN_URL."uploads/yoga/".$row['tYogaFile'];
             $dataArr[$row['iYogaCatId']][]=$row;
         }
     }

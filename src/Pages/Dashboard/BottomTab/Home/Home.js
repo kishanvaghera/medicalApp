@@ -130,9 +130,8 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.body}>
-      <Loader loading={loading} />
-      <ImageBackground source={images.bg} resizeMode="cover" style={{ height: hp(100), width: wp(100) }}>
         <Header iconName={'menu'} title={'Home'} />
+<<<<<<< HEAD
         <View style={styles.container}>
           <View style={styles.listContainer}>
             <FlatList
@@ -144,6 +143,27 @@ const Home = ({ navigation }) => {
         </View>
       </ImageBackground>
     </View>
+=======
+          <View style={styles.container}>
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={{
+                justifyContent: 'flex-start',
+                alignContent: 'flex-start',
+              }} >
+              <KeyboardAvoidingView enabled>
+                <View style={styles.listContainer}>
+                  <FlatList
+                    data={listDate}
+                    renderItem={item => renderItem(item)}
+                    keyExtractor={kry => kry.id}
+                  />
+                </View>
+              </KeyboardAvoidingView>
+            </ScrollView>
+          </View>
+      </View>
+>>>>>>> vkishan
   )
 }
 

@@ -1,4 +1,5 @@
 <?php
+ $MAIN_URL="http://schoolopathy.com/MedicalApi/";
  class Dbconnect 
  { 
   private $_localhost = 'localhost'; 

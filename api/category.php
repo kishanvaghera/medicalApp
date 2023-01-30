@@ -88,11 +88,20 @@ if($_POST['action']=="getCategoryList"){
     $LogedData=$mfp->LoginCheck($_POST['vAuthToken']);
     $iCategoryId=$_POST['iCategoryId'];
 
+    $where="";
+    if($iCategoryId>0){
+        $where=" AND cd.iCategoryId='".$iCategoryId."' ";
+    }
+
     $dataArr=array();
-    $sql=$mfp->mf_query("SELECT iDetailId,iCategoryId,tImage,tText FROM category_detail WHERE iCategoryId='".$iCategoryId."' AND eStatus='y'");
+    $sql=$mfp->mf_query("SELECT cd.iDetailId,cd.iCategoryId,ct.iCategoryName,cd.tImage,cd.tText
+                            FROM category_detail as cd
+                            LEFT JOIN category as ct ON ct.iCategoryId=cd.iCategoryId
+                        WHERE cd.eStatus='y' ".$where."");
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
-            $dataArr[]=$row;
+            $row['tImage']=$MAIN_URL."uploads/category/".$row['tImage'];
+            $dataArr[$row['iCategoryId']]=$row;
         }
     }
 

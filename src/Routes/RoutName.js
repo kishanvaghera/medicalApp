@@ -13,6 +13,23 @@ export default {
     PRODUCT_LIST: 'ProductList',
     PRODUCT_DETAIL: 'ProductDetail',
     MUSIC_LIST: 'MusicList',
-    MUSIC_PLAYER: 'MusicPlayer'
-    
+    MUSIC_PLAYER: 'MusicPlayer',
+
+    ADMIN_DASHBOARD:'AdminDashboard',
+    ADMIN_ACTIVITY_LIST:'AdminActivityList',
+    ADMIN_ACTIVITY_ADD:'AdminActivityAdd',
+    ADMIN_CATEGORY_LIST:'AdminCategoryList',
+    ADMIN_CATEGORY_ADD:'AdminCategoryAdd',
+    ADMIN_MUSIC_LIST:'AdminMusicList',
+    ADMIN_MUSIC_ADD:'AdminMusicAdd',
+    ADMIN_YOGA_ADD:'AdminYogaAdd',
+    ADMIN_YOGA_LIST:'AdminYogaList',
+    ADMIN_CATEGORY_DET_ADD:'AdminCateDetailAdd',
+    ADMIN_CATEGORY_DET_LIST:'AdminCategoryDetailList',
+    ADMIN_ACTIVITY_DET_ADD:'AdminActivitDetAdd',
+    ADMIN_ACTIVITY_DET_LIST:'AdminActivityDetList',
+    ADMIN_YOGA_DET_ADD:'AdminYogaDetAdd',
+    ADMIN_YOGA_DET_LIST:'AdminYogaDetList',
+    ADMIN_MUSIC_DET_ADD:'adminMusicDetAdd',
+    ADMIN_MUSIC_DET_LIST:'AdminMusicDetList'
 };

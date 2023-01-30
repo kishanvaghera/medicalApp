@@ -4,7 +4,7 @@ import images from '../../../assets';
 import { Input, Button } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { useSelector, useDispatch } from 'react-redux'
-import { LoginSuccess, UserDataStor } from '../../Redux/reducer';
+import { LoginSuccess, UserDataStor,AdminLogin } from '../../Redux/reducer';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import * as APIService from './../../Middleware/APIService';
@@ -42,10 +42,12 @@ const Login = ({ navigation }) => {
 
     APIService.apiAction(postData, apiUrls.auth).then(res => {
       setLoading(false);
-      console.log('login respos', res.status)
       if (res) {
         if (res.status == 200) {
           setIsInvalidErr(false);
+          if(res.iRole){
+            dispatch(AdminLogin())
+          }
           dispatch(LoginSuccess({ userLoggedId: res.data.iUserId }));
           dispatch(UserDataStor({ isUserData : res.data }));
         }else{
@@ -58,7 +60,6 @@ const Login = ({ navigation }) => {
   }
 
   useEffect(() => {
-    console.log("loggedData.isLogin", loggedData.isLogin)
     if (loggedData.isLogin) {
       navigation.navigate('homeScreenStack');
     }

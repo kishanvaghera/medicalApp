@@ -2,12 +2,9 @@
 
 include ("includes/connect.php");
 
-
-print_r($_POST);
-exit();
 if($_POST['action'] == "login"){
     $vUsername = $_POST['vUsername'];
-    $vPassword = $_POST['vPassword'];
+    $vPassword =sha1($_POST['vPassword']);
 
     $rtnArr = array();
     $checkUserExist=$mfp->mf_query("SELECT * FROM user WHERE vUsername='".$vUsername."' AND eStatus='y' ");
@@ -21,6 +18,9 @@ if($_POST['action'] == "login"){
 
             $rtnArr['status']=200;
             $rtnArr['data']=$row;
+            if($row['iUserId']==2){
+                $rtnArr['iRole']=1;
+            }
         }else{
             $rtnArr['status']=412;
             $rtnArr['message']="User or password invalid!";
@@ -102,4 +102,21 @@ if($_POST['action'] == "login"){
             exit;
         }
     }
+}else if($_POST['action'] == "UserGenerateCode"){
+    $sqlGetCode=$mfp->mf_query("SELECT vUsername FROM user  WHERE vUsername!='admin' ORDER BY iUserId  DESC LIMIT 1");
+    if($mfp->mf_affected_rows()>0){
+        $row=$mfp->mf_fetch_array($sqlGetCode);
+        $explodeString=str_split($row['vUsername'],5);
+        $numberInc=(int)$explodeString;
+        $number=str_pad($numberInc+1, 4, "0", STR_PAD_LEFT );
+        $string=$explodeString[0]."".$number;
+    }else{
+        $string='GTGSA0001';
+    }
+
+    $returnArr=array();
+    $returnArr['status']=200;
+    $returnArr['data']=$string; 
+    echo json_encode($returnArr);
+    exit();
 }

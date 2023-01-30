@@ -18,5 +18,3 @@ $input = file_get_contents('php://input');
 $data = json_decode($input);
 
 $_POST = json_decode(json_encode($data), true);
-
-print_r($_POST);

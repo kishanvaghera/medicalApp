@@ -105,6 +105,7 @@ if($_POST['action']=="getActivityCategory"){
                         WHERE a.eStatus='y' ".$where."");
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
+            $row['tActivityFile']=$MAIN_URL."uploads/activity/".$row['tActivityFile'];
             $dataArr[$row['iActivityCatId']][]=$row;
         }
     }

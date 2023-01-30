@@ -7,21 +7,37 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
 import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail, MusicList, MusicPlayer } from '../Pages/Dashboard';
+import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList} from '../Admin/'
+
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
+import { useSelector, useDispatch } from 'react-redux'
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 
 const homeScreenStack = ({ navigation, props }) => {
+  const loggedData = useSelector((state) => state.userLoggedData );
+  console.log("loggedData",loggedData)
   return (
-    <Stack.Navigator initialRouteName={'BottomTabStack'}>
+    <Stack.Navigator initialRouteName={loggedData.isRole?RoutName.ADMIN_DASHBOARD:'BottomTabStack'}>
       <Stack.Screen name={'BottomTabStack'} component={BottomTabStack} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.PRODUCT_LIST} component={ProductList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.PRODUCT_DETAIL} component={ProductDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
+
+      <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_YOGA_ADD} component={AdminYogaAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_YOGA_LIST} component={AdminYogaList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_MUSIC_ADD} component={AdminMusicAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_MUSIC_LIST} component={AdminMusicList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_ACTIVITY_ADD} component={AdminActivityAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_ACTIVITY_LIST} component={AdminActivityList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_CATEGORY_ADD} component={AdminCategoryAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_CATEGORY_LIST} component={AdminCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_CATEGORY_DET_LIST} component={AdminCategoryDetailsList} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
