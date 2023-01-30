@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     boxCard:{
         borderRadius:wp(5),
-        height:wp(30),
+        height:wp(14),
         width:wp(90),
         backgroundColor:theme.BgWhite,
         shadowColor: "#000",
@@ -33,17 +33,9 @@ const styles = StyleSheet.create({
     boxInner:{
         flexDirection:'row',
     },
-    boxImage:{
-        marginLeft:wp(2),
-        marginTop:wp(2),
-        height:wp(25),
-        width:wp(25),
-        backgroundColor:theme.primaryLight,
-        borderRadius:wp(5)
-    },
     boxHead:{
-        marginLeft:wp(2),
-        marginTop:wp(2),
+        marginLeft:wp(8),
+        marginTop:wp(3),
     },
     boxHeadTitle:{
         fontSize:20,
@@ -58,8 +50,20 @@ const styles = StyleSheet.create({
     },
     boxEditButton:{
         position:'absolute',
-        right:wp(3),
-        top:wp(2)
+        right:wp(4),
+        top:wp(4)
+    },
+    boxButtonRow:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        width:wp(15),
+    },
+    tophead:{
+        flexDirection:'row',
+        justifyContent:'space-between'
+    },
+    TopHeadBtn:{
+        marginTop:wp(2)
     }
 })
 

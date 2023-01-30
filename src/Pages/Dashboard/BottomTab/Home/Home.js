@@ -67,10 +67,8 @@ const Home = ({ navigation }) => {
       action: 'getCategoryList',
       vAuthToken: uToken
     };
-    console.log('getCategoryList postData', postData)
     APIService.apiAction(postData, apiUrls.auth).then(res => {
       setLoading(false);
-      console.log('getCategoryList', res)
       if (res) {
         if (res.status == 200) {
          

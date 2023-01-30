@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather  } from '@expo/vector-icons';
 
 import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail, MusicList, MusicPlayer } from '../Pages/Dashboard';
-import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList} from '../Admin/'
+import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList} from '../Admin/'
 
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
@@ -30,12 +30,14 @@ const homeScreenStack = ({ navigation, props }) => {
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_YOGA_ADD} component={AdminYogaAdd} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.ADMIN_MUSIC_ADD} component={AdminMusicAdd} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.ADMIN_ACTIVITY_ADD} component={AdminActivityAdd} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.ADMIN_CATEGORY_ADD} component={AdminCategoryAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_YOGA_LIST} component={AdminYogaList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_MUSIC_ADD} component={AdminMusicAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_MUSIC_LIST} component={AdminMusicList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_ACTIVITY_ADD} component={AdminActivityAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_ACTIVITY_LIST} component={AdminActivityList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_CATEGORY_ADD} component={AdminCategoryAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_CATEGORY_LIST} component={AdminCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_CATEGORY_DET_LIST} component={AdminCategoryDetailsList} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

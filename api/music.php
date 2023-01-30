@@ -105,6 +105,7 @@ if($_POST['action']=="getMusicCategory"){
                         WHERE m.eStatus='y' ".$where."");
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
+            $row['tMusicFile']=$MAIN_URL."uploads/music/".$row['tMusicFile'];
             $dataArr[$row['iMusicCategoryId']][]=$row;
         }
     }
