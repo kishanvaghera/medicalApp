@@ -14,6 +14,7 @@ export async function apiAction(formData, urlKey) {
         console.log('object', apiUrl +  urlKey, postData)
         const data = axios.post(apiUrl +  urlKey,postData);
         await data.then(val => { resStatus = val  });
+       console.log('object res ', resStatus.data) 
         if (resStatus.data.status == 402) {
            console.log('object res ', resStatus.data.status , resStatus.data) 
             return false;
