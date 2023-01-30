@@ -94,15 +94,15 @@ const Home = ({ navigation }) => {
   console.log('renderItem', listDate)
  
   const renderItem = ({ item, index }) => {
-   console.log('renderItem ==>', item.iCategoryName)
+   console.log('renderItem ==>', item.iCategoryName, item.tImage)
     return (
       <View style={{ marginTop: 15 }}>
         <Text style={styles.titleText}>{item.iCategoryName + ''}</Text>
-        {/* <TouchableOpacity style={styles.itemBox}
+        <TouchableOpacity style={styles.itemBox}
           onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
-          <Image source={{ uri: item[index + 1]['tImage'] }}
+          <Image source={{ uri: item.tImage }}
             style={{ width: 70, height: 70, borderRadius: wp(2) }} />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         {/* <FlatList
           horizontal
           pagingEnabled={true}
