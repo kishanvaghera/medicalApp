@@ -29,29 +29,30 @@ const Home = ({ navigation }) => {
   const userData = useSelector((state) => state.userLoggedData.isUserData);
   const uToken = useSelector((state) => state.userLoggedData.isUserData.vAuthToken);
   const [loading, setLoading] = useState(false);
-  const [listDate, setListDate] = useState([{
-    id: 1,
-    title: 'Good Book',
-    list: [{ idItem: 1, name: 'one' },
-    { idItem: 2, name: 'two' },
-    { idItem: 3, name: 'three' },
-    { idItem: 4, name: 'four' },],
-  }, {
-    id: 2,
-    title: 'Dite',
-    list: [{ idItem: 1, name: 'one' },
-    { idItem: 2, name: 'two' },
-    { idItem: 3, name: 'three' },
-    { idItem: 4, name: 'four' },],
-  }, {
-    id: 3,
-    title: 'Happy',
-    list: [{ idItem: 1, name: 'one' },
-    { idItem: 2, name: 'two' },
-    { idItem: 3, name: 'three' },
-    { idItem: 4, name: 'four' },]
-  }
-  ]);
+  const [listDate, setListDate] = useState();
+  // const [listDate, setListDate] = useState([{
+  //   id: 1,
+  //   title: 'Good Book',
+  //   list: [{ idItem: 1, name: 'one' },
+  //   { idItem: 2, name: 'two' },
+  //   { idItem: 3, name: 'three' },
+  //   { idItem: 4, name: 'four' },],
+  // }, {
+  //   id: 2,
+  //   title: 'Dite',
+  //   list: [{ idItem: 1, name: 'one' },
+  //   { idItem: 2, name: 'two' },
+  //   { idItem: 3, name: 'three' },
+  //   { idItem: 4, name: 'four' },],
+  // }, {
+  //   id: 3,
+  //   title: 'Happy',
+  //   list: [{ idItem: 1, name: 'one' },
+  //   { idItem: 2, name: 'two' },
+  //   { idItem: 3, name: 'three' },
+  //   { idItem: 4, name: 'four' },]
+  // }
+  // ]);
 
   useEffect(() => {
     if (uToken != undefined && uToken != null) {
@@ -60,49 +61,67 @@ const Home = ({ navigation }) => {
     return () => { }
   }, [uToken])
 
-  
+
   const getCalagotyList = () => {
     setLoading(true);
     const postData = {
-      action: 'getCategoryList',
-      vAuthToken: uToken
+      //   action: 'getCategoryList',
+      action: 'categoryViseData',
+      vAuthToken: uToken,
+      iCategoryId: '1'
     };
-    console.log('getCategoryList postData', postData)
-    APIService.apiAction(postData, apiUrls.auth).then(res => {
+    // console.log('getCategoryList postData', postData)
+    APIService.apiAction(postData, apiUrls.category).then(res => {
       setLoading(false);
-      console.log('getCategoryList', res)
+      console.log('getCategoryList', res.data)
       if (res) {
         if (res.status == 200) {
+          let newArr = Object.keys(res.data).map(key => {
+            let ar = res.data[key]
          
+            // Apppend key if one exists (optional)
+            ar.key = key
+         
+            return ar
+         })
+        
+         setListDate(newArr)
         }
       }
     })
   }
 
-  const renderItem = ({ item }) => {
+  console.log('renderItem', listDate)
+ 
+  const renderItem = ({ item, index }) => {
+   console.log('renderItem ==>', item.iCategoryName)
     return (
       <View style={{ marginTop: 15 }}>
-        <Text style={styles.titleText}>{item.title}</Text>
-        <FlatList
+        <Text style={styles.titleText}>{item.iCategoryName + ''}</Text>
+        {/* <TouchableOpacity style={styles.itemBox}
+          onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
+          <Image source={{ uri: item[index + 1]['tImage'] }}
+            style={{ width: 70, height: 70, borderRadius: wp(2) }} />
+        </TouchableOpacity> */}
+        {/* <FlatList
           horizontal
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
           legacyImplementation={false}
           data={item.list}
           renderItem={item => {
-            // console.log('object', item.item)
             return (
               <TouchableOpacity style={styles.itemBox}
                 onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
                 <Image source={{ uri: 'https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png' }}
                   style={{ width: 70, height: 70, borderRadius: wp(2) }} />
-                {/* <Text>{item.item.name}</Text> */}
+             
               </TouchableOpacity>
             )
           }}
           keyExtractor={kry => kry.id}
-          style={{ marginTop: 5, padding: wp(2) }}
-        />
+          style={{ marginTop: 5, padding: wp(2) }} 
+        />*/}
       </View>
     )
   };
@@ -115,13 +134,13 @@ const Home = ({ navigation }) => {
       <ImageBackground source={images.bg} resizeMode="cover" style={{ height: hp(100), width: wp(100) }}>
         <Header iconName={'menu'} title={'Home'} />
         <View style={styles.container}>
-              <View style={styles.listContainer}>
-                <FlatList
-                  data={listDate}
-                  renderItem={item => renderItem(item)}
-                  keyExtractor={kry => kry.id}
-                />
-              </View>
+          <View style={styles.listContainer}>
+            <FlatList
+              data={listDate}
+              renderItem={(item, index) => {renderItem(item, index)}}
+              keyExtractor={index => index}
+            />
+          </View>
         </View>
       </ImageBackground>
     </View>

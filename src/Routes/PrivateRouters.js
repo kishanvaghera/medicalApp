@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather  } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
 import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail, MusicList, MusicPlayer } from '../Pages/Dashboard';
 import RoutName from './RoutName';
@@ -30,7 +30,7 @@ const BottomTabStack = () => {
   return (
     <Tab.Navigator
       initialRouteName={RoutName.HOME}
-      tabBarOptions={{
+      screenOptions={{
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
         style: {
