@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import styles from './CategoryAddStyle'
+import styles from './CategoryDetailAddStyle'
 import * as APIService from '../../../Middleware/APIService';
 import apiUrls from '../../../Middleware/apiUrls';
 import { Input } from '../../../Layouts';
@@ -8,12 +8,13 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import {ToastMessage} from '../../../utils/ToastMessage'
 import RoutName from '../../../Routes/RoutName';
 
-const CategoryAdd = ({navigation, route}) => {
-  const {id,name}=route.params;
-
+const CategoryDetailAdd = ({navigation, route}) => {
+  const {data}=route.params;
   const [CategoryForm,setCategoryForm]=useState({
-    iCategoryId:id?id:"",
-    iCategoryName:name?name:"",
+    iDetailId:data?data.id:"",
+    iCategoryId:data?data.iCategoryId:"",
+    tImage:"",
+    tText:"",
   });
 
   const handleChange=(e,name="")=>{
@@ -26,42 +27,21 @@ const CategoryAdd = ({navigation, route}) => {
   }
 
   const [isRequires,setisRequired]=useState({
-    iCategoryName:{status:false}
+    iCategoryId:{status:false},
+    tImage:{status:false},
+    tText:{status:false}
   });
 
-  const [isSubmit,setIsSubmit]=useState(false);
-  const OnSubmit=()=>{
-    setIsSubmit(true);
-      if(CategoryForm.iCategoryName!=""){
-        setisRequired({
-          iCategoryName:{status:true}
-        });
-        const postData={action:"addCategory",iCategoryId:CategoryForm.iCategoryId,iCategoryName:CategoryForm.iCategoryName};
-        APIService.apiAction(postData, apiUrls.category).then(res => {
-          setIsSubmit(false);
-          if (res.status == 200) {
-              ToastMessage(1,res.message);
-              navigation.navigate(RoutName.ADMIN_CATEGORY_LIST);
-          }else{
-            ToastMessage(0,res.message);
-          }
-        })
-      }else{
-        setisRequired({
-          iCategoryName:{status:false}
-        });
-      }
-  }
-  
+
   return (
     <View style={styles.mainScreen}>
-      <Text style={styles.mainTitle}>{id?'Edit':'Add'} Category</Text>
+      <Text style={styles.mainTitle}>{id?'Edit':'Add'} Category Detail</Text>
       
       <Text style={{marginTop:wp(5),fontSize:18}}>Category Name<Text style={{color:"red"}}>*</Text></Text>
       <Input
           placeholder={'Enter Category Name'}
-          onChangeText={(text) => handleChange(text, 'iCategoryName')}
-          value={CategoryForm.iCategoryName}
+          onChangeText={(text) => handleChange(text, 'iCategoryId')}
+          value={CategoryForm.iCategoryId}
           keyboardType={'text'}
           multiline={false}
           returnKeyType={'next'}
@@ -71,7 +51,24 @@ const CategoryAdd = ({navigation, route}) => {
           }}
         />
         {
-          isSubmit && !isRequires.iCategoryName?<Text style={{color:"red"}}>Category name field is required!</Text>:""
+          isSubmit && !isRequires.iCategoryId?<Text style={{color:"red"}}>Category name field is required!</Text>:""
+        }
+
+      <Text style={{marginTop:wp(5),fontSize:18}}>Image<Text style={{color:"red"}}>*</Text></Text>
+      <Input
+          placeholder={'Enter Image'}
+          onChangeText={(text) => handleChange(text, 'Image')}
+          value={CategoryForm.Image}
+          keyboardType={'text'}
+          multiline={false}
+          returnKeyType={'next'}
+          inputContainerStyle={{
+            width:wp(90),
+            marginTop:wp(3)
+          }}
+        />
+        {
+          isSubmit && !isRequires.Image?<Text style={{color:"red"}}>Image field is required!</Text>:""
         }
 
         <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>
@@ -81,4 +78,4 @@ const CategoryAdd = ({navigation, route}) => {
   )
 }
 
-export default CategoryAdd
+export default CategoryDetailAdd

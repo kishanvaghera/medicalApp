@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
         fontSize:25,
         fontWeight:'800',
         alignSelf:'center',
-        color:theme.TextColor
+        color:theme.TextColor,
+        textAlign:'center'
     }
 })
 

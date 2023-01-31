@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
 import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail, MusicList, MusicPlayer } from '../Pages/Dashboard';
-import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList} from '../Admin/'
+import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList} from '../Admin/'
 
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
@@ -19,7 +19,6 @@ const Tab = createBottomTabNavigator();
 
 const homeScreenStack = ({ navigation, props }) => {
   const loggedData = useSelector((state) => state.userLoggedData );
-  console.log("loggedData",loggedData)
   return (
     <Stack.Navigator initialRouteName={loggedData.isRole?RoutName.ADMIN_DASHBOARD:'BottomTabStack'}>
       <Stack.Screen name={'BottomTabStack'} component={BottomTabStack} options={{ headerShown: false }} />
@@ -38,6 +37,10 @@ const homeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.ADMIN_CATEGORY_ADD} component={AdminCategoryAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_CATEGORY_LIST} component={AdminCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_CATEGORY_DET_LIST} component={AdminCategoryDetailsList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_CATEGORY_DET_ADD} component={AdminCategoryDetailAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_MUSIC_DET_LIST} component={AdminMusicDetailList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_YOGA_DET_LIST} component={AdminYogaDetailList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_ACTIVITY_DET_LIST} component={AdminActivityDetailList} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

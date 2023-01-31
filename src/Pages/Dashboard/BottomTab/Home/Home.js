@@ -131,19 +131,6 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.body}>
         <Header iconName={'menu'} title={'Home'} />
-<<<<<<< HEAD
-        <View style={styles.container}>
-          <View style={styles.listContainer}>
-            <FlatList
-              data={listDate}
-              renderItem={(item, index) => {renderItem(item, index)}}
-              keyExtractor={index => index}
-            />
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
-=======
           <View style={styles.container}>
             <ScrollView
               keyboardShouldPersistTaps="handled"
@@ -163,7 +150,6 @@ const Home = ({ navigation }) => {
             </ScrollView>
           </View>
       </View>
->>>>>>> vkishan
   )
 }
 

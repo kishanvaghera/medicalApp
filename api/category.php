@@ -101,7 +101,7 @@ if($_POST['action']=="getCategoryList"){
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
             $row['tImage']=$MAIN_URL."uploads/category/".$row['tImage'];
-            $dataArr[$row['iCategoryId']]=$row;
+            $dataArr[$row['iCategoryId']][]=$row;
         }
     }
 

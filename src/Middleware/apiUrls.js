@@ -3,9 +3,15 @@ const BASE_URL = 'http://schoolopathy.com/MedicalApi/';
 const auth = 'auth.php';
 const category = 'category.php';
 const general = 'general.php';
+const activity = 'activity.php';
+const music = 'music.php';
+const yoga = 'yoga.php';
 export default {
     BASE_URL,
     auth,
     category,
-    general
+    general,
+    activity,
+    music,
+    yoga
 }

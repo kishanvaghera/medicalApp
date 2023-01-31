@@ -41,7 +41,7 @@ const CategoryList = ({navigation}) => {
     <View style={styles.mainScreen}>
       <Loader loading={loading} />
       <View style={styles.tophead}>
-        <Text style={styles.mainTitle}>CategoryList</Text>
+        <Text style={styles.mainTitle}>Category List</Text>
         <TouchableOpacity onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:"",name:""})} style={styles.TopHeadBtn}>
           <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={25} IconColor={theme.primaryDark}/>
         </TouchableOpacity>
@@ -62,9 +62,7 @@ export default CategoryList
 const BoxRows=(props)=>{
   const deleteRecord=(id)=>{
     const postData={action:"deleteCommon",tableName:"category",id:id,whrIdName:'iCategoryId'}
-    console.log("postData",postData)
     APIService.apiAction(postData, apiUrls.general).then(res => {
-      console.log("res",res)
       if (res.status == 200) {
         ToastMessage(1,res.message);
         props.ApiCall();
