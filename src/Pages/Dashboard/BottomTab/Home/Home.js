@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
   const userData = useSelector((state) => state.userLoggedData.isUserData);
   const uToken = useSelector((state) => state.userLoggedData.isUserData.vAuthToken);
   const [loading, setLoading] = useState(false);
-  const [listDate, setListDate] = useState();
+  const [listData, setListData] = useState([]);
   // const [listDate, setListDate] = useState([{
   //   id: 1,
   //   title: 'Good Book',
@@ -73,55 +73,37 @@ const Home = ({ navigation }) => {
     // console.log('getCategoryList postData', postData)
     APIService.apiAction(postData, apiUrls.category).then(res => {
       setLoading(false);
-      console.log('getCategoryList', res.data)
+      // console.log('getCategoryList', res.data)
       if (res) {
         if (res.status == 200) {
-          let newArr = Object.keys(res.data).map(key => {
-            let ar = res.data[key]
-         
-            // Apppend key if one exists (optional)
-            ar.key = key
-         
-            return ar
-         })
-        
-         setListDate(newArr)
+          let newDataArr = [];
+          Object.keys(res.data).map((key, ind) => {
+            res.data[key].map((curEle, index) => {
+              newDataArr.push(curEle);
+            })
+          })
+
+          setListData([...newDataArr])
         }
       }
     })
   }
 
-  console.log('renderItem', listDate)
- 
+
   const renderItem = ({ item, index }) => {
-   console.log('renderItem ==>', item.iCategoryName, item.tImage)
+    //   console.log('renderItem ==>', item)
+
     return (
       <View style={{ marginTop: 15 }}>
         <Text style={styles.titleText}>{item.iCategoryName + ''}</Text>
+
         <TouchableOpacity style={styles.itemBox}
           onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
           <Image source={{ uri: item.tImage }}
-            style={{ width: 70, height: 70, borderRadius: wp(2) }} />
+            style={{ width: 80, height: 80, borderRadius: wp(2) }}
+            resizeMode={'contain'} />
         </TouchableOpacity>
-        {/* <FlatList
-          horizontal
-          pagingEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          legacyImplementation={false}
-          data={item.list}
-          renderItem={item => {
-            return (
-              <TouchableOpacity style={styles.itemBox}
-                onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
-                <Image source={{ uri: 'https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png' }}
-                  style={{ width: 70, height: 70, borderRadius: wp(2) }} />
-             
-              </TouchableOpacity>
-            )
-          }}
-          keyExtractor={kry => kry.id}
-          style={{ marginTop: 5, padding: wp(2) }} 
-        />*/}
+
       </View>
     )
   };
@@ -130,30 +112,54 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.body}>
-        <Header iconName={'menu'} title={'Home'} />
-          <View style={styles.container}>
-            <ScrollView
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={{
-                justifyContent: 'flex-start',
-                alignContent: 'flex-start',
-              }} >
-              <KeyboardAvoidingView enabled>
-                <View style={styles.listContainer}>
-                  <FlatList
-                    data={listDate}
-                    renderItem={item => renderItem(item)}
-                    keyExtractor={kry => kry.id}
-                  />
-                </View>
-              </KeyboardAvoidingView>
-            </ScrollView>
-          </View>
+      <Header iconName={'menu'} title={'Home'} />
+      <View style={styles.container}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            justifyContent: 'flex-start',
+            alignContent: 'flex-start',
+          }} >
+          <KeyboardAvoidingView enabled>
+            <View style={styles.listContainer}>
+
+
+              {
+                listData && listData.length ?
+                  listData.map((item, ind) => {
+                    console.log('listData', item)
+                    return (
+                      <View style={{ marginTop: 15 }}>
+                        <Text style={styles.titleText}>{item.iCategoryName + ''}</Text>
+                        <TouchableOpacity style={styles.itemBox}
+                          onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
+                          <Image source={{ uri: item.tImage }}
+                            style={{ width: 80, height: 80, borderRadius: wp(2) }}
+                            resizeMode={'contain'} />
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  })
+                  : <></>
+              }
+              {/* <FlatList
+                data={listData}
+                renderItem={item => renderItem(item)}
+                keyExtractor={kry => kry.id}
+              /> */}
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>
       </View>
+    </View>
   )
 }
 
 export default Home;
+
+
+
+
 const styles = StyleSheet.create({
   body: {
     flex: 1,
@@ -181,6 +187,5 @@ const styles = StyleSheet.create({
   itemBox: {
     marginHorizontal: 5,
     paddingTop: wp(1),
-    alignItems: 'center'
   }
 });

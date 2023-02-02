@@ -20,7 +20,7 @@ export async function apiAction(formData, urlKey,isLogin=false) {
         if (resStatus.data.status == 402) {
             return false;
         }else {
-            //console.log('object res ', resStatus.data.status) 
+            console.log('object res ', resStatus.data) 
             return resStatus.data
         }
        
