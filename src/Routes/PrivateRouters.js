@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 
-const homeScreenStack = ({ navigation, props }) => {
+const HomeScreenStack = ({ navigation, props }) => {
   const loggedData = useSelector((state) => state.userLoggedData );
   return (
     <Stack.Navigator initialRouteName={loggedData.isRole?RoutName.ADMIN_DASHBOARD:'BottomTabStack'}>
@@ -147,7 +147,7 @@ function PrivateRoutes() {
       <Drawer.Screen
         name={'homeScreenStack'}
         options={{ headerShown: false }}
-        component={homeScreenStack}
+        component={HomeScreenStack}
       />
     </Drawer.Navigator>
 

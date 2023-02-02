@@ -48,8 +48,7 @@ const CategoryDetailsList = ({navigation}) => {
       <Loader loading={loading} />
       <View style={styles.tophead}>
         <Text style={styles.mainTitle}>Category Detail List</Text>
-        {/* onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:"",name:""})}  */}
-        <TouchableOpacity style={styles.TopHeadBtn}>
+        <TouchableOpacity onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_DET_ADD,{data:{id:"",name:""}})} style={styles.TopHeadBtn}>
           <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={25} IconColor={theme.primaryDark}/>
         </TouchableOpacity>
       </View>
