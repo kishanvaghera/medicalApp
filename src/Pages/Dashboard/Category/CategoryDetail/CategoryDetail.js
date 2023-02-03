@@ -7,7 +7,8 @@ import {
     SafeAreaView,
     ScrollView,
     KeyboardAvoidingView,
-    Dimensions
+    Dimensions,
+    Image
 } from 'react-native'
 import {
     widthPercentageToDP as wp,
@@ -18,12 +19,22 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Header } from '../../../../Layouts';
 
-const CategoryDetail = ({ navigation, props, route }) => {
+const CategoryDetail = ({ route, navigation }) => {
 
+    const { catData } = route.params;
+
+    const [pageDatail, setPageDetail] = useState({
+        categoryName: catData.iCategoryName,
+        iCategoryId: catData.iCategoryId,
+        imagePath: catData.tImage,
+        categoryDec: catData.tText
+    })
+
+//    console.log('catData', catData)
     const [pageTitle, setPageTitle] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
-   
+
 
     useEffect(() => {
         setPageTitle(route.params.pageTitle);
@@ -32,23 +43,23 @@ const CategoryDetail = ({ navigation, props, route }) => {
 
     function setOrientation() {
         if (Dimensions.get('window').height > Dimensions.get('window').width) {
-    
-          //Device is in portrait mode, rotate to landscape mode.
-          ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    
+
+            //Device is in portrait mode, rotate to landscape mode.
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+
         }
         else {
-          
-          //Device is in landscape mode, rotate to portrait mode.
-          ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    
+
+            //Device is in landscape mode, rotate to portrait mode.
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+
         }
-      }
+    }
 
     return (
         <View style={styles.body}>
 
-            <Header iconName={'left'} title={pageTitle} />
+            <Header iconName={'left'} title={pageDatail.categoryName} />
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{
@@ -58,21 +69,29 @@ const CategoryDetail = ({ navigation, props, route }) => {
                 }} >
                 <KeyboardAvoidingView enabled>
                     <SafeAreaView style={styles.container}>
-                        <Video
-                            ref={video}
-                            style={styles.videoView}
-                            source={{
-                                uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-                            }}
-                            useNativeControls
-                            resizeMode="contain"
-                            isLooping
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        />
-                        <Text style={styles.titleText}>Video Title</Text>
+                        {
+                            pageDatail.imagePath != '' ?
+                                <Image
+                                    source={{ uri: pageDatail.imagePath }}
+                                    style={styles.videoView} 
+                                    resizeMode={'contain'}/>
+                                : <Video
+                                    ref={video}
+                                    style={styles.videoView}
+                                    source={{
+                                        uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                                    }}
+                                    useNativeControls
+                                    resizeMode="contain"
+                                    isLooping
+                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                    onFullscreenUpdate={setOrientation}
+                                />
+                        }
+
+                        <Text style={styles.titleText}>Description</Text>
                         <View style={{ marginTop: 8 }}>
-                            <Text style={styles.textStyle}>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</Text>
+                            <Text style={styles.textStyle}>{pageDatail.categoryDec}</Text>
                         </View>
                     </SafeAreaView>
                 </KeyboardAvoidingView>
@@ -109,6 +128,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         textAlign: 'left',
-        lineHeight:18
+        lineHeight: 18
     }
 });

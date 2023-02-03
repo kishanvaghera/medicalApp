@@ -21,7 +21,6 @@ import apiUrls from './../../../../Middleware/apiUrls';
 import { Loader } from '../../../../Components';
 import { Header } from '../../../../Layouts'
 import RoutName from '../../../../Routes/RoutName';
-import images from '../../../../../assets/index'
 import { Colors as theme } from '../../../../utils/useTheme';
 
 const SubCategoryList = ({ route, navigation }) => {
@@ -33,7 +32,7 @@ const SubCategoryList = ({ route, navigation }) => {
         iCategoryId: itemData.iCategoryId
     })
 
-    console.log('itemData', itemData)
+
     const dispatch = useDispatch();
     const uToken = useSelector((state) => state.userLoggedData.isUserData.vAuthToken);
     const [loading, setLoading] = useState(false);
@@ -55,7 +54,7 @@ const SubCategoryList = ({ route, navigation }) => {
         };
         APIService.apiAction(postData, apiUrls.category).then(res => {
             setLoading(false);
-             console.log('categoryViseData', res)
+            //  console.log('categoryViseData', res)
             if (res) {
                 if (res.status == 200) {
                     let newDataArr = [];
@@ -76,22 +75,23 @@ const SubCategoryList = ({ route, navigation }) => {
             <Loader loading={loading} />
             <SafeAreaView style={styles.container}>
                 <View style={{ marginTop: 5 }}>
-                <FlatList
+                    <FlatList
                         data={subCategorytList}
                         renderItem={({ item }) => {
-                            console.log('object', item.tImage)
-                            return(
-                                <View
-                                style={styles.gridView}>
-                                <Image
-                                    style={styles.imageThumbnail}
-                                    source={{ uri: item.tImage }}
-                                />
-                            </View>
+                            // console.log('object', item.tImage)
+                            return (
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate(RoutName.USER_CATEGORY_DETAIL, { catData: item })}
+                                    style={styles.gridView}>
+                                    <Image
+                                        style={styles.imageThumbnail}
+                                        source={{ uri: item.tImage }}
+                                    />
+                                </TouchableOpacity>
                             )
                         }
-                           
-                           
+
+
                         }
                         //Setting the number of column
                         numColumns={2}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         marginTop: 1,
         alignContent: 'center',
         justifyContent: 'center',
-        marginHorizontal:wp(4),
+        marginHorizontal: wp(4),
         marginBottom: wp(5),
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -159,6 +159,6 @@ const styles = StyleSheet.create({
         width: wp(44),
         height: 50,
         marginHorizontal: wp(5),
-        
+
     }
 });
