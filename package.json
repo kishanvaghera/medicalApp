@@ -22,6 +22,7 @@
     "axios": "^1.2.5",
     "expo": "~47.0.9",
     "expo-av": "~13.0.2",
+    "expo-image-picker": "~14.0.2",
     "expo-screen-orientation": "^5.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
@@ -37,8 +38,7 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
-    "redux": "^4.2.0",
-    "sharingan-rn-modal-dropdown": "^1.4.0"
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -82,6 +82,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '500',
       },
+      chooseFile:{
+        marginTop:wp(3),
+        width:wp(55),
+        height:wp(15),
+        backgroundColor:'#a276e9',
+        borderRadius:wp(2),
+        flexDirection:'row'
+      }
 })
 
 export default styles
