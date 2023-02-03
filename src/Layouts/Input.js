@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Input = ({ inputContainerStyle, inputStyle, placeholder, keyboardType, onChangeText, returnKeyType, numberOfLines, multiline, maxLength, onSubmitEditing, value, isIcon, iconSource, autoComplete, secureTextEntry }, props) => {
+const Input = ({ inputContainerStyle, inputStyle, placeholder, keyboardType, onChangeText, returnKeyType, numberOfLines, multiline, maxLength, onSubmitEditing, value, isIcon, iconSource, autoComplete, secureTextEntry,clickHandle }, props) => {
 
   const styles = useMemo(() =>
     StyleSheet.create({
@@ -62,6 +62,7 @@ const Input = ({ inputContainerStyle, inputStyle, placeholder, keyboardType, onC
         blurOnSubmit={false}
         value={value}
         secureTextEntry={secureTextEntry}
+        onPressIn={clickHandle}
       />
     </View>
   );
