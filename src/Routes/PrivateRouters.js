@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
-import { Home, Meditation, Music, Live, Profile, ProductList, ProductDetail, MusicList, MusicPlayer } from '../Pages/Dashboard';
+import { Home, Meditation, Music, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer } from '../Pages/Dashboard';
 import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList} from '../Admin/'
 
 import RoutName from './RoutName';
@@ -22,8 +22,9 @@ const homeScreenStack = ({ navigation, props }) => {
   return (
     <Stack.Navigator initialRouteName={loggedData.isRole?RoutName.ADMIN_DASHBOARD:'BottomTabStack'}>
       <Stack.Screen name={'BottomTabStack'} component={BottomTabStack} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.PRODUCT_LIST} component={ProductList} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.PRODUCT_DETAIL} component={ProductDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.USER_CATEGORY_LIST} component={CategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.SUB_CATAGORY_LIST} component={SubCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.USER_CATEGORY_DETAIL} component={CategoryDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
 
