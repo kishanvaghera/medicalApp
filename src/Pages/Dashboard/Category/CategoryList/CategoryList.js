@@ -3,29 +3,55 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList,
-    SafeAreaView
+    SafeAreaView,
+    TouchableOpacity
 } from 'react-native'
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import { Header } from '../../../../Layouts';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Loader } from '../../../../Components';
+import * as APIService from './../../../../Middleware/APIService';
+import apiUrls from './../../../../Middleware/apiUrls';
 import RoutName from '../../../../Routes/RoutName';
+import { Colors as theme } from '../../../../utils/useTheme';
 
+const CategorytList = ({ navigation, props, route }) => {
 
-const ProductList = ({ navigation, props, route }) => {
-
-    // let pageTitle = props.pageTitle;
+    const dispatch = useDispatch();
     const [pageTitle, setPageTitle] = useState('');
-    useEffect(() => {
-        setPageTitle(route.params.pageTitle);
-        return () => { }
-    }, [pageTitle])
+    const uToken = useSelector((state) => state.userLoggedData.isUserData.vAuthToken);
 
+
+    const [loading, setLoading] = useState(false);
+    const [categorytList, setCategorytList] = useState([]);
+
+    useEffect(() => {
+        getCalagotyList();
+        return () => { }
+    }, [])
+
+    const getCalagotyList = () => {
+        setLoading(true);
+        const postData = {
+            action: 'getCategoryList',
+            vAuthToken: uToken,
+        };
+        APIService.apiAction(postData, apiUrls.category).then(res => {
+            setLoading(false);
+            console.log('listData', res)
+            if (res) {
+                if (res.status == 200) {
+                    setCategorytList([...res.data])
+                }
+            }
+        })
+    }
 
     const DATA = [
         {
@@ -68,7 +94,7 @@ const ProductList = ({ navigation, props, route }) => {
     const renderItem = ({ item }) => {
         return (
             <TouchableOpacity style={styles.itemContainer}
-                onPress={() => navigation.navigate(RoutName.PRODUCT_DETAIL, { pageTitle: item.title })}>
+                onPress={() => navigation.navigate(RoutName.USER_CATEGORY_DETAIL, { pageTitle: item.title })}>
                 <MaterialCommunityIcons name={item.icon} size={30} color="black" />
                 <Text style={styles.titleText}>{item.title}</Text>
             </TouchableOpacity>
@@ -77,20 +103,29 @@ const ProductList = ({ navigation, props, route }) => {
 
     return (
         <View style={styles.body}>
-            <Header iconName={'left'} title={pageTitle} />
+            <Header iconName={'left'} title={'Category List'} />
+            <Loader loading={loading} />
             <SafeAreaView style={styles.container}>
-                <FlatList
-                    data={DATA}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    style={{ marginTop: 10 }}
-                />
+                {
+                    categorytList && categorytList.length ?
+                        categorytList.map((curEle, index) => {
+                            return (
+                                <TouchableOpacity style={styles.itemContainer}
+                                    onPress={() => navigation.navigate(RoutName.SUB_CATAGORY_LIST, { itemData: curEle })}>
+                                    <MaterialCommunityIcons name={'yoga'} size={30} color="black" />
+                                    <Text style={styles.titleText}>{curEle.iCategoryName}</Text>
+                                </TouchableOpacity>
+                            )
+                        })
+                        : <></>
+                }
+
             </SafeAreaView>
         </View>
     )
 }
 
-export default ProductList;
+export default CategorytList;
 const styles = StyleSheet.create({
     body: {
         flex: 1,
@@ -106,14 +141,22 @@ const styles = StyleSheet.create({
     itemContainer: {
         width: wp(95),
         height: wp(15),
-        marginBottom: 8,
+        marginBottom: wp(3),
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'flex-start',
         borderRadius: 8,
         flexDirection: 'row',
-        backgroundColor: '#C8C8C8',
-        paddingHorizontal: 8
+        paddingHorizontal: 8,
+        backgroundColor: theme.BgWhite,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     titleText: {
         fontSize: 17,

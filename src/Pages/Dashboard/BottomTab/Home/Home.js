@@ -70,10 +70,8 @@ const Home = ({ navigation }) => {
       vAuthToken: uToken,
       iCategoryId: '1'
     };
-    // console.log('getCategoryList postData', postData)
     APIService.apiAction(postData, apiUrls.category).then(res => {
       setLoading(false);
-      // console.log('getCategoryList', res.data)
       if (res) {
         if (res.status == 200) {
           let newDataArr = [];
@@ -91,14 +89,12 @@ const Home = ({ navigation }) => {
 
 
   const renderItem = ({ item, index }) => {
-    //   console.log('renderItem ==>', item)
-
     return (
       <View style={{ marginTop: 15 }}>
         <Text style={styles.titleText}>{item.iCategoryName + ''}</Text>
 
         <TouchableOpacity style={styles.itemBox}
-          onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
+          onPress={() => navigation.navigate(RoutName.USER_CATEGORY_LIST, { pageTitle: item.iCategoryName })}>
           <Image source={{ uri: item.tImage }}
             style={{ width: 80, height: 80, borderRadius: wp(2) }}
             resizeMode={'contain'} />
@@ -127,12 +123,12 @@ const Home = ({ navigation }) => {
               {
                 listData && listData.length ?
                   listData.map((item, ind) => {
-                    console.log('listData', item)
+                   
                     return (
                       <View style={{ marginTop: 15 }}>
                         <Text style={styles.titleText}>{item.iCategoryName + ''}</Text>
                         <TouchableOpacity style={styles.itemBox}
-                          onPress={() => navigation.navigate(RoutName.PRODUCT_LIST, { pageTitle: item.item.name })}>
+                          onPress={() => navigation.navigate(RoutName.USER_CATEGORY_LIST)}>
                           <Image source={{ uri: item.tImage }}
                             style={{ width: 80, height: 80, borderRadius: wp(2) }}
                             resizeMode={'contain'} />

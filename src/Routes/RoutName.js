@@ -10,8 +10,9 @@ export default {
     MUSIC: 'Music',
     LIVE: 'Live',
     PROFILE: 'Profile',
-    PRODUCT_LIST: 'ProductList',
-    PRODUCT_DETAIL: 'ProductDetail',
+    USER_CATEGORY_LIST: 'UserCategoryList',
+    SUB_CATAGORY_LIST: 'SubCategoryList',
+    USER_CATEGORY_DETAIL: 'UserCategoryDetail',
     MUSIC_LIST: 'MusicList',
     MUSIC_PLAYER: 'MusicPlayer',
 

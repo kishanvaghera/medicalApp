@@ -18,7 +18,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Header } from '../../../../Layouts';
 
-const ProductDetail = ({ navigation, props, route }) => {
+const CategoryDetail = ({ navigation, props, route }) => {
 
     const [pageTitle, setPageTitle] = useState('');
     const video = React.useRef(null);
@@ -80,7 +80,7 @@ const ProductDetail = ({ navigation, props, route }) => {
         </View>
     )
 }
-export default ProductDetail;
+export default CategoryDetail;
 const styles = StyleSheet.create({
     body: {
         flex: 1,
