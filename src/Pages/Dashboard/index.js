@@ -8,3 +8,5 @@ export { default as SubCategoryList } from './Category/SubCategoryList/SubCatego
 export { default as CategoryDetail } from './Category/CategoryDetail/CategoryDetail';
 export { default as MusicList } from './MusicScreen/MusicList/MusicList';
 export { default as MusicPlayer } from './MusicScreen/MusicPlayer/MusicPlayer';
+export { default as SubYogaList } from './Yoga/SubYogaList/SubYogaList';
+export { default as YogaDetail } from './Yoga/YogaDetail/YogaDetail';

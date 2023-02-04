@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
-import { Home, Meditation, Music, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer } from '../Pages/Dashboard';
+import { Home, Meditation, Music, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer, SubYogaList, YogaDetail } from '../Pages/Dashboard';
 import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList} from '../Admin/'
 
 import RoutName from './RoutName';
@@ -27,6 +27,9 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.USER_CATEGORY_DETAIL} component={CategoryDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.SUB_YOGA_LIST} component={SubYogaList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_DETAIL} component={YogaDetail} options={{ headerShown: false }} />
+
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_YOGA_ADD} component={AdminYogaAdd} options={{ headerShown: false }} />

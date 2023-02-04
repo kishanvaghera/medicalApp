@@ -15,6 +15,8 @@ export default {
     USER_CATEGORY_DETAIL: 'UserCategoryDetail',
     MUSIC_LIST: 'MusicList',
     MUSIC_PLAYER: 'MusicPlayer',
+    SUB_YOGA_LIST: 'SubYogaList',
+    YOGA_DETAIL: 'YogaDetail',
 
     ADMIN_DASHBOARD:'AdminDashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',
