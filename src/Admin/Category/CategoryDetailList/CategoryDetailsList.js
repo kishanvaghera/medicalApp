@@ -78,10 +78,11 @@ const BoxRows=(props)=>{
                       <Text style={styles.boxHeadDesc}>{string.substring(0,70)}......</Text>
                     </View>
                   </View>
-                  {/* onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_DET_ADD)}} */}
-                  <TouchableOpacity style={styles.boxEditButton}>
-                      <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
-                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity style={styles.boxEditButton} onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_DET_ADD,{data:props.data})}}>
+                        <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
+                    </TouchableOpacity>
+                  </View>
               </View>
             </View>
   }

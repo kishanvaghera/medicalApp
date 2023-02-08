@@ -17,11 +17,12 @@ const CategoryDetailAdd = ({navigation, route}) => {
 
   const {data}=route.params;
   const [CategoryForm,setCategoryForm]=useState({
-    iDetailId:data?data.id:"",
-    iCategoryId:{label:"",value:""},
-    tImage:null,
-    tText:"",
+    iDetailId:data?data.iDetailId:"",
+    iCategoryId:data?{label:data.iCategoryName,value:data.iCategoryId}:{label:"",value:""},
+    tImage:data?data.tImage:null,
+    tText:data?data.tText:"",
   });
+
 
   const handleChange=(e,name="")=>{
     setCategoryForm(prevState=>{
@@ -41,8 +42,16 @@ const CategoryDetailAdd = ({navigation, route}) => {
   const [isSubmit,setIsSubmit]=useState(false);
   const OnSubmit=()=>{
     // setIsSubmit(true);
-    const file='data:'+CategoryForm.tImage.base64+'/'+fileExt(CategoryForm.tImage.FileName)+';base64,'+CategoryForm.tImage.base64;
-    const postData={action:'addCategoryDetail',iDetailId:0,iCategoryId:CategoryForm.iCategoryId.value,tImage:file,tText:CategoryForm.tText};
+    let file="";
+    if(CategoryForm.tImage!=""){
+      if(CategoryForm.tImage.base64){
+        file='data:'+CategoryForm.tImage.type+'/'+fileExt(CategoryForm.tImage.FileName)+';base64,'+CategoryForm.tImage.base64;
+      }else{
+        file=CategoryForm.tImage;
+      }
+    }
+
+    const postData={action:'addCategoryDetail',iDetailId:CategoryForm.iDetailId,iCategoryId:CategoryForm.iCategoryId.value,tImage:file,tText:CategoryForm.tText};
     APIService.apiAction(postData, apiUrls.category).then(res => {
       setIsSubmit(false);
       if (res.status == 200) {
@@ -143,8 +152,6 @@ const CategoryDetailAdd = ({navigation, route}) => {
 
       <Text style={{marginTop:wp(5),fontSize:18}}>Image<Text style={{color:"red"}}>*</Text></Text>
 
-      {
-        CategoryForm.tImage==null?
         <TouchableOpacity onPress={()=>{setImagePickSts(!imagePickSts)}} style={styles.chooseFile}>
           <View style={{width:wp(15),paddingLeft:wp(4),paddingTop:wp(2)}}>
             <Icon IconName='upload' LibraryName='FontAwesome' IconSize={wp(10)} IconColor={'white'}/>
@@ -153,17 +160,26 @@ const CategoryDetailAdd = ({navigation, route}) => {
             <Text style={{alignSelf:'center',marginTop:wp(3),color:'white',fontSize:20}}>Choose Image</Text>
           </View>
         </TouchableOpacity>
-        :""
-      }
 
       {
-        CategoryForm.tImage?.base64?
-        <Image
-          style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
-          source={{
-            uri: 'data:'+CategoryForm.tImage.base64+'/'+fileExt(CategoryForm.tImage.FileName)+';base64,'+CategoryForm.tImage.base64,
-          }}
-        />
+        CategoryForm.tImage!=null && CategoryForm.tImage!=""?
+        <>
+          {
+            CategoryForm.tImage.base64?
+            <Image
+              style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
+              source={{
+                uri: 'data:'+CategoryForm.tImage.type+'/'+fileExt(CategoryForm.tImage.FileName)+';base64,'+CategoryForm.tImage.base64,
+              }}
+            />
+            :<Image
+            style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
+            source={{
+              uri: CategoryForm.tImage,
+            }}
+          />
+          }
+        </>
         :""
       }
 
@@ -191,8 +207,8 @@ const ImagePickerCommon=(props)=>{
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 5],
-      quality: 1,
+      aspect: [18, 18],
+      quality: 0.5,
       base64:true,
       fileName:true
     });
