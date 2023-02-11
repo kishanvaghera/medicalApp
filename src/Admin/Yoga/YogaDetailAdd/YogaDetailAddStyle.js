@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     },
     boxRows:{
         marginTop:wp(6),
+
     },
     boxCard:{
         borderRadius:wp(5),
@@ -65,40 +66,30 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         fontSize:18,
     },
-    checkBox:{
-        width:wp(10),
-        height:wp(10),
-        backgroundColor:"white",
+    dropDownView: {
+        width: wp(80),
+        height: 40,
+        marginTop: 20,
+        color: '#000',
+        justifyContent: 'center',
+        borderWidth: 0.8,
+        borderColor: '#808080',
+        borderRadius: 10,
+        paddingLeft: 5,
+      },
+      dropDownText: {
+        color: '#000000',
+        fontSize: 14,
+        fontWeight: '500',
+      },
+      chooseFile:{
         marginTop:wp(3),
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        borderRadius:wp(3),
-        alignItems:'center',
-        paddingTop:wp(1)
-    },
-    checkBoxChecked:{
-        width:wp(10),
-        height:wp(10),
-        backgroundColor:theme.primaryDark,
-        marginTop:wp(3),
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        borderRadius:wp(3),
-        alignItems:'center',
-        paddingTop:wp(1)
-    },
+        width:wp(55),
+        height:wp(15),
+        backgroundColor:'#a276e9',
+        borderRadius:wp(2),
+        flexDirection:'row'
+      }
 })
 
 export default styles

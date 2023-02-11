@@ -54,7 +54,6 @@ const SubCategoryList = ({ route, navigation }) => {
         };
         APIService.apiAction(postData, apiUrls.category).then(res => {
             setLoading(false);
-            //  console.log('categoryViseData', res)
             if (res) {
                 if (res.status == 200) {
                     let newDataArr = [];
@@ -78,7 +77,6 @@ const SubCategoryList = ({ route, navigation }) => {
                     <FlatList
                         data={subCategorytList}
                         renderItem={({ item }) => {
-                            // console.log('object', item.tImage)
                             return (
                                 <TouchableOpacity
                                     onPress={() => navigation.navigate(RoutName.USER_CATEGORY_DETAIL, { catData: item })}
@@ -100,7 +98,6 @@ const SubCategoryList = ({ route, navigation }) => {
                     {/* {
                         subCategorytList && subCategorytList.length ?
                             subCategorytList.map((curEle, index) => {
-                                console.log('map', curEle)
                                 return (
                                     <View style={styles.gridView}>
                                         <TouchableOpacity style={styles.cardView}>

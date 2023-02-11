@@ -61,7 +61,6 @@ const Register = ({ navigation }) => {
     };
     APIService.apiAction(postData, apiUrls.category).then(res => {
       setLoading(false);
-      console.log('UserGenerateCode', res)
       if (res) {
         if (res.status == 200) {
           setMainForm(prevState => {
@@ -90,10 +89,8 @@ const Register = ({ navigation }) => {
     //   vPassword: mainForm['password']
     // };
 
-    // console.log('postdat', postData)
     // APIService.apiAction(postData, apiUrls.auth).then(res => {
     //   setLoading(false);
-    //   console.log('addUser', res)
     //   if (res) {
     //     if (res.status == 200) {
     //         navigation.navigate(RoutName.OTHER_DETILS, { userId: res.data });
@@ -122,7 +119,6 @@ const Register = ({ navigation }) => {
               <Picker
                 selectedValue={mainForm.planType['lable']}
                 onValueChange={(item) => {
-                  //console.log('Picker', item)
                   setMainForm(prevState => {
                     return {
                       ...prevState,

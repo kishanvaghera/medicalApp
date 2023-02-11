@@ -49,14 +49,14 @@ const YogaDetailList = ({navigation}) => {
       <View style={styles.tophead}>
         <Text style={styles.mainTitle}>Yoga Detail List</Text>
         {/* onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:"",name:""})}  */}
-        <TouchableOpacity style={styles.TopHeadBtn}>
+        <TouchableOpacity style={styles.TopHeadBtn} onPress={()=>navigation.navigate(RoutName.ADMIN_YOGA_DET_ADD,{data:{}})}>
           <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={25} IconColor={theme.primaryDark}/>
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={{paddingBottom:50,paddingLeft:1,paddingRight:5}}>
         {
           YogaList.map((curEle,index)=>{
-            return <BoxRows data={curEle} navigation={navigation} key={index} />
+            return <BoxRows data={curEle} navigation={navigation} key={index} ApiCall={ApiCall} />
           })
         }
       </ScrollView>
@@ -67,6 +67,16 @@ const YogaDetailList = ({navigation}) => {
 export default YogaDetailList
 
 const BoxRows=(props)=>{
+  const deleteRecord=(id)=>{
+    const postData={action:"deleteCommon",tableName:"yoga",id:id,whrIdName:'iYogaId'}
+    APIService.apiAction(postData, apiUrls.general).then(res => {
+      if (res.status == 200) {
+        ToastMessage(1,res.message);
+        props.ApiCall();
+      }
+    })
+  }
+
     const string=props.data.tYogaDesc;
     return <View style={styles.boxRows}>
               <View style={styles.boxCard}>
@@ -79,10 +89,16 @@ const BoxRows=(props)=>{
                       <Text style={styles.tYogaDesc}>{string.substring(0,70)}......</Text>
                     </View>
                   </View>
-                  {/* onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_DET_ADD)}} */}
-                  <TouchableOpacity style={styles.boxEditButton}>
-                      <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
-                  </TouchableOpacity>
+                  <View style={styles.boxEditButton}>
+                    <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_YOGA_DET_ADD,{data:props.data})}}>
+                        <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.boxDelButton}>
+                    <TouchableOpacity onPress={()=>{deleteRecord(props.data.iYogaId)}}>
+                        <Icon LibraryName='FontAwesome' IconName='trash' IconSize={25} IconColor={theme.primaryDark}/>
+                    </TouchableOpacity>
+                  </View>
               </View>
             </View>
   }

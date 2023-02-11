@@ -42,7 +42,7 @@ const CategoryList = ({navigation}) => {
       <Loader loading={loading} />
       <View style={styles.tophead}>
         <Text style={styles.mainTitle}>Category List</Text>
-        <TouchableOpacity onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:"",name:""})} style={styles.TopHeadBtn}>
+        <TouchableOpacity onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:"",name:"",aSubCategoryList:[]})} style={styles.TopHeadBtn}>
           <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={25} IconColor={theme.primaryDark}/>
         </TouchableOpacity>
       </View>
@@ -74,7 +74,7 @@ const BoxRows=(props)=>{
             <View style={styles.boxCard}>
                 <Text style={styles.boxEditButton}>
                   <View style={styles.boxButtonRow}>
-                    <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:props.data.iCategoryId,name:props.data.iCategoryName})}}>
+                    <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:props.data.iCategoryId,name:props.data.iCategoryName,aSubCategoryList:props.data.aSubCategoryList})}}>
                       <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>deleteRecord(props.data.iCategoryId)}>

@@ -87,13 +87,10 @@ const OtherDetails = ({ route, navigation }) => {
             vPregDueDate: mainForm['pDouDate'],
             vPregWeek: mainForm['pWeek']
         };
-        console.log('addUser', postData)
         APIService.apiAction(postData, apiUrls.auth).then(res => {
           setLoading(false);
-          console.log('addUser', res)
           if (res) {
             if (res.status == 200) {
-                console.log('addUser', res.message)
               navigation.navigate(RoutName.LOGIN);
             }
           }

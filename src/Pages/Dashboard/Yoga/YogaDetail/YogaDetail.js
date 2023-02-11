@@ -30,7 +30,6 @@ const YogaDetail = ({ route, navigation }) => {
         yogaDec: yogaData.tYogaDesc
     })
 
-//    console.log('catData', catData)
     const [pageTitle, setPageTitle] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});

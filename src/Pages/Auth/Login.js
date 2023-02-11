@@ -19,7 +19,7 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
      //userName: "admin",
-    userName: "GTGSA0001",
+    userName: "Admin",
     password: "123456"
   });
 

@@ -9,6 +9,13 @@ if($_POST['action']=="getActivityCategory"){
     $dataArr=array();
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
+            $row['aSubCategoryList']=array();
+            $sqlSubCat=$mfp->mf_query("SELECT iSubActivityId,vSubActivityName FROM sub_activity WHERE iActivityCatId=".$row['iActivityCatId']." AND eStatus='y'");
+            if($mfp->mf_affected_rows()>0){
+                while($subRows=$mfp->mf_fetch_array($sqlSubCat)){
+                    $row['aSubCategoryList'][]=$subRows;
+                }
+            }
             $dataArr[]=$row;
         }
     }
@@ -27,6 +34,8 @@ if($_POST['action']=="getActivityCategory"){
     $LogedData=$mfp->LoginCheck($_POST['vAuthToken']);
     $iActivityCatId=$_POST['iActivityCatId'];
     $vActivitCatName=$_POST['vActivitCatName'];
+    $subCategory=(array)$_POST['subCategory'];
+    $isChecked=$_POST['isChecked'];
     
     if($iActivityCatId>0){
         $updArr=array();
@@ -38,6 +47,54 @@ if($_POST['action']=="getActivityCategory"){
         $insArr['dCreatedDate']=$mfp->curTimedate();
         $insArr['iCreatedBy']=$LogedData;
         $mfp->mf_dbinsert("activity_category",$insArr);
+        $iActivityCatId=$mfp->mf_dbinsert_id();
+    }
+
+    $deleteSubCategory=array();
+
+    $oldSubCatData=array();
+    $sqlOldSubCate=$mfp->mf_query("SELECT iSubActivityId FROM sub_activity WHERE iActivityCatId=".$iActivityCatId."  AND eStatus='y'");
+    if($mfp->mf_affected_rows()>0){
+        while($row=$mfp->mf_fetch_array($sqlOldSubCate)){
+            $oldSubCatData[]=$row['iSubActivityId'];
+        }
+    }
+
+    $newSubCatDataArr=array();
+    if(is_array($subCategory) || $isChecked){
+        foreach($subCategory as $val){
+            $insSubCat=array();
+            $insSubCat['vSubActivityName']=$val['vSubActivityName'];
+            $insSubCat['iActivityCatId']=$iActivityCatId;
+            $insSubCat['dCreatedDate']=$mfp->curTimedate();
+            $insSubCat['iCreatedBy']=$LogedData;
+
+            $newSubCatDataArr[]=(int)$val['iSubActivityId'];
+
+            if($isChecked){
+                if((int)$val['iSubActivityId']>0){
+                    $mfp->mf_dbupdate("sub_activity",$insSubCat," WHERE iSubActivityId=".(int)$val['iSubActivityId']."");
+                }else{
+                    $mfp->mf_dbinsert("sub_activity",$insSubCat);
+                }
+            }
+        }
+    }
+
+    if(!$isChecked){
+        foreach($oldSubCatData as $value){
+            $updArr=array();
+            $updArr['eStatus']='d';
+            $mfp->mf_dbupdate("sub_activity",$updArr," WHERE iSubActivityId=".(int)$value."");
+        }
+    }else{
+        foreach($oldSubCatData as $value){
+            if(!in_array($value,$newSubCatDataArr)){
+                $updArr=array();
+                $updArr['eStatus']='d';
+                $mfp->mf_dbupdate("sub_activity",$updArr," WHERE iSubActivityId=".(int)$value."");
+            }
+        }
     }
     
     $returArr=array();
@@ -52,7 +109,7 @@ if($_POST['action']=="getActivityCategory"){
     exit;
 }else if($_POST['action']=="addActivityDetail"){
     $LogedData=$mfp->LoginCheck($_POST['vAuthToken']);
-    $iActivityId=$_POST['iActivityId'];
+    $iActivityId=$_POST['iDetailId'];
     $iActivityCatId=$_POST['iActivityCatId'];
     $tActivityFile=$_POST['tActivityFile'];
     $tActivityDesc=$_POST['tActivityDesc'];
@@ -61,7 +118,10 @@ if($_POST['action']=="getActivityCategory"){
     if($iActivityId>0){
         $insArr=array();
         $insArr['iActivityCatId']=$iActivityCatId;
-        $insArr['tActivityFile']=$mfp->file_decode($tActivityFile,'uploads/activity/',$iActivityId);
+         $base64Imgs=$mfp->file_decode($tActivityFile,'uploads/activity/',$iActivityId);
+        if($base64Imgs!=""){
+            $insArr['tActivityFile']=$base64Imgs;
+        }
         $insArr['tActivityDesc']=$tActivityDesc;
         $insArr['vActivityName']=$vActivityName;
         $insArr['dUpdatedDate']=$mfp->curTimedate();
@@ -102,7 +162,7 @@ if($_POST['action']=="getActivityCategory"){
     $sql=$mfp->mf_query("SELECT a.iActivityId,a.iActivityCatId,a.vActivityName,a.tActivityFile,a.tActivityDesc,ac.vActivitCatName
                         FROM activity as a
                             LEFT JOIN activity_category as ac ON ac.iActivityCatId=a.iActivityCatId
-                        WHERE a.eStatus='y' ".$where."");
+                        WHERE a.eStatus='y' AND ac.eStatus='y' ".$where."");
     if($mfp->mf_affected_rows()>0){
         while($row=$mfp->mf_fetch_array($sql)){
             $row['tActivityFile']=$MAIN_URL."uploads/activity/".$row['tActivityFile'];

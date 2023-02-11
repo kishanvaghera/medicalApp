@@ -34,5 +34,6 @@ export default {
     ADMIN_YOGA_DET_ADD:'AdminYogaDetAdd',
     ADMIN_YOGA_DET_LIST:'AdminYogaDetList',
     ADMIN_MUSIC_DET_ADD:'adminMusicDetAdd',
-    ADMIN_MUSIC_DET_LIST:'AdminMusicDetList'
+    ADMIN_MUSIC_DET_LIST:'AdminMusicDetList',
+    ADMIN_ACTIVITY_DETAIL_ADD:'AdminActivityDetailAdd'
 };

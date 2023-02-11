@@ -41,7 +41,6 @@ const Meditation = ({ navigation }) => {
     };
     APIService.apiAction(postData, apiUrls.yoga).then(res => {
       setLoading(false);
-      console.log('Yoga listData', res)
       if (res) {
         if (res.status == 200) {
           setYogatList([...res.data])

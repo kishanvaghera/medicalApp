@@ -121,7 +121,6 @@ const Music = ({ navigation }) => {
     };
     APIService.apiAction(postData, apiUrls.music).then(res => {
       setLoading(false);
-     /// console.log('getMusicCategory', res)
       if (res) {
         if (res.status == 200) {
           setMCategorytList([...res.data])
@@ -144,7 +143,6 @@ const Music = ({ navigation }) => {
   //   };
   //   APIService.apiAction(postData, apiUrls.music).then(res => {
   //     setLoading(false);
-  //     console.log('MusicData', res)
   //     if (res) {
   //       if (res.status == 200) {
   //         let newDataArr = [];

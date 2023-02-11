@@ -30,7 +30,6 @@ const CategoryDetail = ({ route, navigation }) => {
         categoryDec: catData.tText
     })
 
-//    console.log('catData', catData)
     const [pageTitle, setPageTitle] = useState('');
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});

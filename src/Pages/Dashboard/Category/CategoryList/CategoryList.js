@@ -44,7 +44,6 @@ const CategorytList = ({ navigation, props, route }) => {
         };
         APIService.apiAction(postData, apiUrls.category).then(res => {
             setLoading(false);
-           // console.log('listData', res)
             if (res) {
                 if (res.status == 200) {
                     setCategorytList([...res.data])

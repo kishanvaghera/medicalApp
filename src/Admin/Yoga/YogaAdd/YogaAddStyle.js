@@ -65,7 +65,41 @@ const styles = StyleSheet.create({
         color:theme.BgWhite,
         alignSelf:'center',
         fontSize:18,
-    }
+    },
+    checkBox:{
+        width:wp(10),
+        height:wp(10),
+        backgroundColor:"white",
+        marginTop:wp(3),
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        borderRadius:wp(3),
+        alignItems:'center',
+        paddingTop:wp(1)
+    },
+    checkBoxChecked:{
+        width:wp(10),
+        height:wp(10),
+        backgroundColor:theme.primaryDark,
+        marginTop:wp(3),
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        borderRadius:wp(3),
+        alignItems:'center',
+        paddingTop:wp(1)
+    },
 })
 
 export default styles

@@ -65,6 +65,12 @@ const styles = StyleSheet.create({
         top:wp(4),
         marginRight:wp(4)
     },
+    boxDelButton:{
+        width:wp(8),
+        top:45,
+        right:6,
+        position:'absolute'
+    },
     tophead:{
         flexDirection:'row',
         justifyContent:'space-between'

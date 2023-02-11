@@ -4,7 +4,7 @@ include ("includes/connect.php");
 
 if($_POST['action'] == "login"){
     $vUsername = $_POST['vUsername'];
-    $vPassword =sha1($_POST['vPassword']);
+    $vPassword = sha1($_POST['vPassword']);
 
     $rtnArr = array();
     $checkUserExist=$mfp->mf_query("SELECT * FROM user WHERE vUsername='".$vUsername."' AND eStatus='y' ");

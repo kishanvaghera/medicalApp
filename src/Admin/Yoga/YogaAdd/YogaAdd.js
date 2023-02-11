@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styles from './YogaAddStyle'
 import * as APIService from '../../../Middleware/APIService';
 import apiUrls from '../../../Middleware/apiUrls';
@@ -7,9 +7,11 @@ import { Input } from '../../../Layouts';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import {ToastMessage} from '../../../utils/ToastMessage'
 import RoutName from '../../../Routes/RoutName';
+import Icon from '../../../utils/Icon';
+import {Colors as theme}  from '../../adminTheme';
 
 const YogaAdd = ({navigation, route}) => {
-  const {id,name}=route.params;
+  const {id,name,aSubCategoryList}=route.params;
 
   const [YogaForm,setYogaForm]=useState({
     iYogaCatId:id?id:"",
@@ -36,7 +38,7 @@ const YogaAdd = ({navigation, route}) => {
         setisRequired({
           vYogaCategoryName:{status:true}
         });
-        const postData={action:"addYogaCategory",iYogaCatId:YogaForm.iYogaCatId,vYogaCategoryName:YogaForm.vYogaCategoryName};
+        const postData={action:"addYogaCategory",iYogaCatId:YogaForm.iYogaCatId,vYogaCategoryName:YogaForm.vYogaCategoryName,subCategory:SubCategoryList,isChecked:isChecked};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
           setIsSubmit(false);
           if (res.status == 200) {
@@ -52,6 +54,49 @@ const YogaAdd = ({navigation, route}) => {
         });
       }
   }
+
+
+  const [SubCategoryList,setSubCategoryList]=useState([{iSubYogaCatId:'',vSubYogaName:''}]);
+
+  useEffect(()=>{
+    if(aSubCategoryList.length){
+      setSubCategoryList([...aSubCategoryList]);
+    }else{
+      setSubCategoryList([{iSubYogaCatId:'',vSubYogaName:''}]);
+    }
+  },[aSubCategoryList])
+  
+  const handleSubCategory=(e,index)=>{
+    let tempData=SubCategoryList;
+    tempData[index]={
+      ...tempData[index],
+      vSubYogaName:e
+    }
+    setSubCategoryList([...tempData]);
+  }
+
+  const addMoreSubCat=()=>{
+    let tempData=SubCategoryList;
+    tempData.push({iSubYogaCatId:'',vSubYogaName:''});
+    setSubCategoryList([...tempData]);
+  }
+
+  const removeCategory=(index)=>{
+    const filterData=SubCategoryList.filter((curEle,ind)=>{
+      return ind!=index
+    })
+    setSubCategoryList([...filterData]);
+  }
+
+  const [isChecked,setIsChecked]=useState(aSubCategoryList.length);
+
+  useEffect(()=>{
+    if(!isChecked){
+      setSubCategoryList([{iSubYogaCatId:'',vSubYogaName:''}]);
+    }
+  },[isChecked])
+
+
 
   return (
     <View style={styles.mainScreen}>
@@ -72,6 +117,54 @@ const YogaAdd = ({navigation, route}) => {
         />
         {
           isSubmit && !isRequires.vYogaCategoryName?<Text style={{color:"red"}}>Yoga name field is required!</Text>:""
+        }
+
+        <Text style={{marginTop:wp(5),fontSize:18}}>Is any sub Yoga?</Text>  
+        
+        <TouchableOpacity style={isChecked?styles.checkBoxChecked:styles.checkBox} onPress={()=>{setIsChecked(!isChecked)}}>
+          {
+            isChecked?
+            <Icon LibraryName='FontAwesome' IconName='check' IconSize={28} IconColor={"white"}/>
+            :""
+          }
+        </TouchableOpacity> 
+
+        {
+          SubCategoryList.length>0 && isChecked?
+          <>
+            <Text style={{marginTop:wp(5),fontSize:18}}>Sub Yoga Name</Text>
+            <>
+              {
+                SubCategoryList.map((curEle,index)=>{
+                  const indexNum=index+1;
+                  return <View style={{flexDirection:'row',justifyContent:'space-between'}} key={index}>
+                            <Input
+                              placeholder={'Enter Sub Yoga Name'}
+                              onChangeText={(text) => handleSubCategory(text, index)}
+                              value={curEle.vSubYogaName}
+                              keyboardType={'text'}
+                              multiline={false}
+                              returnKeyType={'next'}
+                              inputContainerStyle={{
+                                width:wp(75),
+                                marginTop:wp(3)
+                              }}
+                            />
+                            {
+                              SubCategoryList.length==indexNum?
+                              <TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={addMoreSubCat}>
+                                <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={35} IconColor={theme.primaryDark}/>
+                              </TouchableOpacity>
+                              :<TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={()=>removeCategory(index)}>
+                              <Icon LibraryName='FontAwesome' IconName='minus-circle' IconSize={35} IconColor={theme.primaryDark}/>
+                            </TouchableOpacity>
+                            }
+                          </View>
+                })
+              }
+            </>
+          </>
+          :""
         }
 
         <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>

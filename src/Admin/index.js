@@ -12,3 +12,6 @@ export { default as AdminCategoryDetailAdd } from './Category/CategoryDetailAdd/
 export { default as AdminMusicDetailList } from './Music/MusicDetailList/MusicDetailList';
 export { default as AdminYogaDetailList } from './Yoga/YogaDetailList/YogaDetailList';
 export { default as AdminActivityDetailList } from './Activity/ActivityDetailList/ActivityDetailList';
+export { default as AdminYogaDetailAdd } from './Yoga/YogaDetailAdd/YogaDetailAdd';
+export { default as AdminMusicDetailAdd } from './Music/MusicDetailAdd/MusicDetailAdd';
+export { default as AdminActivityDetailAdd } from './Activity/ActivityDetailAdd/ActivityDetailAdd'

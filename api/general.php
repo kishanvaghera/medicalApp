@@ -13,4 +13,6 @@ if($_POST['action']=="deleteCommon"){
 
     $returArr['status']=200;
     $returArr['message']="Record has been deleted successfully.";
+    echo json_encode($returArr);
+    exit;
 }

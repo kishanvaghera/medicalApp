@@ -31,7 +31,6 @@ const SubYogaList = ({ route, navigation }) => {
         yogaName: itemData.vYogaCategoryName,
         yogaId: itemData.iYogaCatId
     })
-    console.log('SubYogaList', pageDatail)
 
     const dispatch = useDispatch();
     const uToken = useSelector((state) => state.userLoggedData.isUserData.vAuthToken);
@@ -54,7 +53,6 @@ const SubYogaList = ({ route, navigation }) => {
         };
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
             setLoading(false);
-            //  console.log('categoryViseData', res)
             if (res) {
                 if (res.status == 200) {
                     let newDataArr = [];
@@ -78,7 +76,6 @@ const SubYogaList = ({ route, navigation }) => {
                     <FlatList
                         data={subYogaList}
                         renderItem={({ item }) => {
-                            // console.log('object', item.tImage)
                             return (
                                 <TouchableOpacity
                                     onPress={() => navigation.navigate(RoutName.YOGA_DETAIL, { yogaData: item })}

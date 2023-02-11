@@ -55,7 +55,7 @@ const CategoryDetailsList = ({navigation}) => {
       <ScrollView contentContainerStyle={{paddingBottom:50,paddingLeft:1,paddingRight:5}}>
         {
           CategoryListData.map((curEle,index)=>{
-            return <BoxRows data={curEle} navigation={navigation} key={index} />
+            return <BoxRows data={curEle} navigation={navigation} key={index} ApiCall={ApiCall}/>
           })
         }
       </ScrollView>
@@ -66,6 +66,16 @@ const CategoryDetailsList = ({navigation}) => {
 export default CategoryDetailsList
 
 const BoxRows=(props)=>{
+  const deleteRecord=(id)=>{
+    const postData={action:"deleteCommon",tableName:"category_detail",id:id,whrIdName:'iDetailId'}
+    APIService.apiAction(postData, apiUrls.general).then(res => {
+      if (res.status == 200) {
+        ToastMessage(1,res.message);
+        props.ApiCall();
+      }
+    })
+  }
+  
     const string=props.data.tText;
     return <View style={styles.boxRows}>
               <View style={styles.boxCard}>
@@ -78,9 +88,14 @@ const BoxRows=(props)=>{
                       <Text style={styles.boxHeadDesc}>{string.substring(0,70)}......</Text>
                     </View>
                   </View>
-                  <View>
-                    <TouchableOpacity style={styles.boxEditButton} onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_DET_ADD,{data:props.data})}}>
+                  <View style={styles.boxEditButton}>
+                    <TouchableOpacity  onPress={()=>{props.navigation.navigate(RoutName.ADMIN_CATEGORY_DET_ADD,{data:props.data})}}>
                         <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.boxDelButton}>
+                    <TouchableOpacity onPress={()=>{deleteRecord(props.data.iDetailId)}}>
+                        <Icon LibraryName='FontAwesome' IconName='trash' IconSize={25} IconColor={theme.primaryDark}/>
                     </TouchableOpacity>
                   </View>
               </View>

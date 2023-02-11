@@ -54,7 +54,6 @@ const MusicPlayer = () => {
   }
 
   async function pauseSound() {
-    console.log('pushhh',sound)
     await sound.pauseSound();
     setIsPlay(false);
   }
@@ -68,7 +67,6 @@ const MusicPlayer = () => {
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
-    // console.log('time', minutes + ":" + seconds);
     let time = minutes + ":" + seconds;
     setETime(time);
     return minutes + ":" + seconds + "." + milliseconds;
@@ -79,8 +77,6 @@ const MusicPlayer = () => {
     getSound();
     return sound
       ? () => {
-
-        // console.log('Unloading Sound');
         sound.unloadAsync();
       }
       : undefined;
