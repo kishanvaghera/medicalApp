@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     },
     boxRows:{
         marginTop:wp(6),
-
     },
     boxCard:{
         borderRadius:wp(5),

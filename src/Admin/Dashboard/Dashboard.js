@@ -12,9 +12,9 @@ const Dashboard = ({navigation}) => {
             <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_CATEGORY_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Category</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_CATEGORY_DET_LIST)}} style={styles.boxCard}>
+            {/* <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_CATEGORY_DET_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Category Detail</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_YOGA_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Yoga</Text>
             </TouchableOpacity>

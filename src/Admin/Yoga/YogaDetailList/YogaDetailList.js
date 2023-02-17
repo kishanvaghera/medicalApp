@@ -86,7 +86,7 @@ const BoxRows=(props)=>{
                     />
                     <View style={styles.boxHead}>
                       <Text style={styles.boxHeadTitle}>{props.data.vYogaName}</Text>
-                      <Text style={styles.tYogaDesc}>{string.substring(0,70)}......</Text>
+                      <Text style={styles.boxHeadTitle}>{props.data.vYogaCategoryName} - {props.data.vSubYogaName}</Text>
                     </View>
                   </View>
                   <View style={styles.boxEditButton}>

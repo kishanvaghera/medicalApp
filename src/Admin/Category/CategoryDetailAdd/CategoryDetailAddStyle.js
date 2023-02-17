@@ -89,6 +89,20 @@ const styles = StyleSheet.create({
         backgroundColor:'#a276e9',
         borderRadius:wp(2),
         flexDirection:'row'
+      },
+      radioButton:{
+        width:wp(4),
+        backgroundColor:'#E80F88',
+        padding:wp(5),
+        alignSelf:'center',
+        borderRadius:wp(5)
+      },
+      radioButtonActive:{
+        width:wp(4),
+        backgroundColor:'#790252',
+        padding:wp(5),
+        alignSelf:'center',
+        borderRadius:wp(5)
       }
 })
 

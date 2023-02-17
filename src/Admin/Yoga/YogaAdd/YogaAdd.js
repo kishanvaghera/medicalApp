@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import styles from './YogaAddStyle'
 import * as APIService from '../../../Middleware/APIService';
@@ -96,14 +96,12 @@ const YogaAdd = ({navigation, route}) => {
     }
   },[isChecked])
 
-
-
   return (
     <View style={styles.mainScreen}>
       <Text style={styles.mainTitle}>{id?'Edit':'Add'} Yoga</Text>
-      
-      <Text style={{marginTop:wp(5),fontSize:18}}>Yoga Name<Text style={{color:"red"}}>*</Text></Text>
-      <Input
+      <ScrollView contentContainerStyle={{paddingBottom:50}} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+        <Text style={{marginTop:wp(5),fontSize:18}}>Yoga Name<Text style={{color:"red"}}>*</Text></Text>
+        <Input
           placeholder={'Enter Yoga Name'}
           onChangeText={(text) => handleChange(text, 'vYogaCategoryName')}
           value={YogaForm.vYogaCategoryName}
@@ -170,6 +168,8 @@ const YogaAdd = ({navigation, route}) => {
         <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>
             <Text style={styles.submitBtnText}>Submit</Text>
         </TouchableOpacity>
+
+      </ScrollView>
     </View>
   )
 }

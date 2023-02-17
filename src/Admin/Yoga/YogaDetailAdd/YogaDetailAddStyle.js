@@ -89,6 +89,16 @@ const styles = StyleSheet.create({
         backgroundColor:'#a276e9',
         borderRadius:wp(2),
         flexDirection:'row'
+      },
+      uploadVideoBtnStyle:{
+        width:wp(55),
+        height:wp(15),
+        backgroundColor:'#a276e9',
+        borderRadius:wp(2),
+        marginTop:wp(5),
+        marginBottom:wp(5),
+        paddingBottom:wp(2),
+        paddingLeft:wp(5)
       }
 })
 

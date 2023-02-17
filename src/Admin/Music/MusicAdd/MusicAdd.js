@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import styles from './MusicAddStyle'
 import * as APIService from '../../../Middleware/APIService';
@@ -100,75 +100,76 @@ const MusicAdd = ({navigation, route}) => {
   return (
     <View style={styles.mainScreen}>
       <Text style={styles.mainTitle}>{id?'Edit':'Add'} Music</Text>
-      
-      <Text style={{marginTop:wp(5),fontSize:18}}>Music Name<Text style={{color:"red"}}>*</Text></Text>
-      <Input
-          placeholder={'Enter Music Name'}
-          onChangeText={(text) => handleChange(text, 'vMusicCategoryName')}
-          value={MusicForm.vMusicCategoryName}
-          keyboardType={'text'}
-          multiline={false}
-          returnKeyType={'next'}
-          inputContainerStyle={{
-            width:wp(90),
-            marginTop:wp(3)
-          }}
-        />
-        {
-          isSubmit && !isRequires.vMusicCategoryName?<Text style={{color:"red"}}>Music name field is required!</Text>:""
-        }
-
-        <Text style={{marginTop:wp(5),fontSize:18}}>Is any sub music category?</Text>  
-        
-        <TouchableOpacity style={isChecked?styles.checkBoxChecked:styles.checkBox} onPress={()=>{setIsChecked(!isChecked)}}>
+      <ScrollView contentContainerStyle={{paddingBottom:50}} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+        <Text style={{marginTop:wp(5),fontSize:18}}>Music Name<Text style={{color:"red"}}>*</Text></Text>
+        <Input
+            placeholder={'Enter Music Name'}
+            onChangeText={(text) => handleChange(text, 'vMusicCategoryName')}
+            value={MusicForm.vMusicCategoryName}
+            keyboardType={'text'}
+            multiline={false}
+            returnKeyType={'next'}
+            inputContainerStyle={{
+              width:wp(90),
+              marginTop:wp(3)
+            }}
+          />
           {
-            isChecked?
-            <Icon LibraryName='FontAwesome' IconName='check' IconSize={28} IconColor={"white"}/>
+            isSubmit && !isRequires.vMusicCategoryName?<Text style={{color:"red"}}>Music name field is required!</Text>:""
+          }
+
+          <Text style={{marginTop:wp(5),fontSize:18}}>Is any sub music category?</Text>  
+          
+          <TouchableOpacity style={isChecked?styles.checkBoxChecked:styles.checkBox} onPress={()=>{setIsChecked(!isChecked)}}>
+            {
+              isChecked?
+              <Icon LibraryName='FontAwesome' IconName='check' IconSize={28} IconColor={"white"}/>
+              :""
+            }
+          </TouchableOpacity> 
+
+          {
+            SubCategoryList.length>0 && isChecked?
+            <>
+              <Text style={{marginTop:wp(5),fontSize:18}}>Sub Music Name</Text>
+              <>
+                {
+                  SubCategoryList.map((curEle,index)=>{
+                    const indexNum=index+1;
+                    return <View style={{flexDirection:'row',justifyContent:'space-between'}} key={index}>
+                              <Input
+                                placeholder={'Enter Sub Music Name'}
+                                onChangeText={(text) => handleSubCategory(text, index)}
+                                value={curEle.vSubMusicCatName}
+                                keyboardType={'text'}
+                                multiline={false}
+                                returnKeyType={'next'}
+                                inputContainerStyle={{
+                                  width:wp(75),
+                                  marginTop:wp(3)
+                                }}
+                              />
+                              {
+                                SubCategoryList.length==indexNum?
+                                <TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={addMoreSubCat}>
+                                  <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={35} IconColor={theme.primaryDark}/>
+                                </TouchableOpacity>
+                                :<TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={()=>removeCategory(index)}>
+                                <Icon LibraryName='FontAwesome' IconName='minus-circle' IconSize={35} IconColor={theme.primaryDark}/>
+                              </TouchableOpacity>
+                              }
+                            </View>
+                  })
+                }
+              </>
+            </>
             :""
           }
-        </TouchableOpacity> 
 
-        {
-          SubCategoryList.length>0 && isChecked?
-          <>
-            <Text style={{marginTop:wp(5),fontSize:18}}>Sub Music Name</Text>
-            <>
-              {
-                SubCategoryList.map((curEle,index)=>{
-                  const indexNum=index+1;
-                  return <View style={{flexDirection:'row',justifyContent:'space-between'}} key={index}>
-                            <Input
-                              placeholder={'Enter Sub Music Name'}
-                              onChangeText={(text) => handleSubCategory(text, index)}
-                              value={curEle.vSubMusicCatName}
-                              keyboardType={'text'}
-                              multiline={false}
-                              returnKeyType={'next'}
-                              inputContainerStyle={{
-                                width:wp(75),
-                                marginTop:wp(3)
-                              }}
-                            />
-                            {
-                              SubCategoryList.length==indexNum?
-                              <TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={addMoreSubCat}>
-                                <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={35} IconColor={theme.primaryDark}/>
-                              </TouchableOpacity>
-                              :<TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={()=>removeCategory(index)}>
-                              <Icon LibraryName='FontAwesome' IconName='minus-circle' IconSize={35} IconColor={theme.primaryDark}/>
-                            </TouchableOpacity>
-                            }
-                          </View>
-                })
-              }
-            </>
-          </>
-          :""
-        }
-
-        <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>
-            <Text style={styles.submitBtnText}>Submit</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>
+              <Text style={styles.submitBtnText}>Submit</Text>
+          </TouchableOpacity>
+      </ScrollView>
     </View>
   )
 }

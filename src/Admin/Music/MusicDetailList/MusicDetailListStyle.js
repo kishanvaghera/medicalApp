@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     },
     boxCard:{
         borderRadius:wp(5),
-        height:wp(30),
         width:wp(90),
+        paddingBottom:wp(3),
         backgroundColor:theme.BgWhite,
         shadowColor: "#000",
         shadowOffset: {
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:'500',
         color:theme.primaryDark,
+        width:wp(40)
     },
     boxHeadDesc:{
         width:wp(58),
