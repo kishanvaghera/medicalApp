@@ -68,7 +68,7 @@ const MusicDetailAdd = ({navigation, route}) => {
     // setIsSubmit(true);
     let file="";
     if(MusicForm.tMusicImage!=""){
-      if(MusicForm.tMusicImage.base64){
+      if(MusicForm?.tMusicImage?.base64){
         file='data:'+MusicForm.tMusicImage.type+'/'+fileExt(MusicForm.tMusicImage.FileName)+';base64,'+MusicForm.tMusicImage.base64;
       }else{
         file=MusicForm.tMusicImage;
@@ -268,7 +268,7 @@ const MusicDetailAdd = ({navigation, route}) => {
           MusicForm.tMusicImage!=null && MusicForm.tMusicImage!=""?
           <>
             {
-              MusicForm.tMusicImage.base64?
+              MusicForm?.tMusicImage?.base64?
               <Image
                 style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
                 source={{

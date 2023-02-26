@@ -19,7 +19,7 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
      //userName: "admin",
-    userName: "Admin",
+    userName: "GTGSA0001",
     password: "123456"
   });
 
@@ -46,7 +46,7 @@ const Login = ({ navigation }) => {
       if (res) {
         if (res.status == 200) {
           setIsInvalidErr(false);
-          if(res.iRole){
+          if(res.iRole==1){
             dispatch(AdminLogin())
           }
           dispatch(LoginSuccess({ userLoggedId: res.data.iUserId }));

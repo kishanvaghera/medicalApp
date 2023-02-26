@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView,Image} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './ActivityAddStyle'
 import * as APIService from '../../../Middleware/APIService';
@@ -9,13 +9,15 @@ import {ToastMessage} from '../../../utils/ToastMessage'
 import RoutName from '../../../Routes/RoutName';
 import Icon from '../../../utils/Icon'
 import {Colors as theme}  from '../../adminTheme';
+import * as ImagePicker from 'expo-image-picker';
 
 const ActivityAdd = ({navigation, route}) => {
-  const {id,name,aSubCategoryList}=route.params;
+  const {id,name,tImage,aSubCategoryList}=route.params;
 
   const [ActivityForm,setActivityForm]=useState({
     iActivityCatId:id?id:"",
     vActivitCatName:name?name:"",
+    tImage:tImage && tImage!=""?tImage:null,
   });
 
   const handleChange=(e,name="")=>{
@@ -38,7 +40,17 @@ const ActivityAdd = ({navigation, route}) => {
         setisRequired({
           vActivitCatName:{status:true}
         });
-        const postData={action:"addActivityCategory",iActivityCatId:ActivityForm.iActivityCatId,vActivitCatName:ActivityForm.vActivitCatName,subCategory:SubCategoryList,isChecked:isChecked};
+
+        let file="";
+        if(ActivityForm.tImage!=""){
+          if(ActivityForm?.tImage?.base64){
+            file='data:'+ActivityForm.tImage.type+'/'+fileExt(ActivityForm.tImage.FileName)+';base64,'+ActivityForm.tImage.base64;
+          }else{
+            file=ActivityForm.tImage;
+          }
+        }
+
+        const postData={action:"addActivityCategory",iActivityCatId:ActivityForm.iActivityCatId,vActivitCatName:ActivityForm.vActivitCatName,subCategory:SubCategoryList,isChecked:isChecked,tImage:file};
         APIService.apiAction(postData, apiUrls.activity).then(res => {
           console.log("res",res)
           setIsSubmit(false);
@@ -95,6 +107,24 @@ const ActivityAdd = ({navigation, route}) => {
       setSubCategoryList([{iSubActivityId:'',vSubActivityName:''}]);
     }
   },[isChecked])
+
+  const [imagePickSts,setImagePickSts]=useState(false);
+
+  const handlePickImage=(data)=>{
+    const fileName=data.uri.substring(data.uri.lastIndexOf('/') + 1, data.uri.length);
+    let tempData=data;
+    tempData['FileName']=fileName
+    setActivityForm(prevState=>{
+      return{
+        ...prevState,
+        tImage:tempData
+      }
+    });
+  }
+
+  const fileExt=(uri)=>{
+    return uri.split('.').pop();
+  }
 
   return (
     <View style={styles.mainScreen}>
@@ -165,12 +195,77 @@ const ActivityAdd = ({navigation, route}) => {
             :""
           }
 
+
+          <Text style={{marginTop:wp(5),fontSize:18}}>Image</Text>
+
+          <TouchableOpacity onPress={()=>{setImagePickSts(!imagePickSts)}} style={styles.chooseFile}>
+            <View style={{width:wp(15),paddingLeft:wp(4),paddingTop:wp(2)}}>
+              <Icon IconName='upload' LibraryName='FontAwesome' IconSize={wp(10)} IconColor={'white'}/>
+            </View>
+            <View style={{width:wp(40)}}>
+              <Text style={{alignSelf:'center',marginTop:wp(3),color:'white',fontSize:20}}>Choose Image</Text>
+            </View>
+          </TouchableOpacity>
+
+          {
+            ActivityForm.tImage!=null && ActivityForm.tImage!=""?
+            <>
+              {
+                ActivityForm?.tImage?.base64?
+                <Image
+                  style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
+                  source={{
+                    uri: 'data:'+ActivityForm.tImage.type+'/'+fileExt(ActivityForm.tImage.FileName)+';base64,'+ActivityForm.tImage.base64,
+                  }}
+                />
+                :<Image
+                style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
+                source={{
+                  uri: ActivityForm.tImage,
+                }}
+              />
+              }
+            </>
+            :""
+          }
+
+
           <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>
               <Text style={styles.submitBtnText}>Submit</Text>
           </TouchableOpacity>
       </ScrollView>
+
+      <ImagePickerCommon  show={imagePickSts} close={setImagePickSts} handlePickImage={handlePickImage} setImage={setActivityForm} fieldName='tImage'/>
     </View>
   )
 }
 
 export default ActivityAdd
+
+
+const ImagePickerCommon=(props)=>{
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [18, 18],
+      quality: 0.5,
+      base64:true,
+      fileName:true
+    });
+
+    if (!result.canceled) {
+      props.handlePickImage(result.assets[0])
+      props.close(false)
+    }
+  };
+
+  useEffect(()=>{
+    if(props.show===true){
+      pickImage();
+    }
+  },[props.show])
+
+  return <></>;
+}

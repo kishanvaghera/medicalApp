@@ -10,16 +10,32 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation , useRoute } from '@react-navigation/native';
+import { scale, verticalScale, moderateScale} from '../utils/scalling';
+import Icon from '../utils/Icon'
 
 const Header = ({ title, iconName, customClick, setIconBG }, props) => {
   const navigation = useNavigation();
+  const route = useRoute();
+  console.log("props",route.name)
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
-       {iconName == 'menu' ? <Ionicons name={iconName} size={22} color="black" /> : 
+      {
+        route.name=="Home"?
+        <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.toggleDrawer()}>
+          <Ionicons name={'menu'} size={22} color="black" />
+        </TouchableOpacity>:""
+      }
+      {
+        route.name!="Home"?
+        <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
+          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'black'}/>
+        </TouchableOpacity>:""
+      }
+      {/* <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
+       {iconName == 'menu' ? <Ionicons name={'menu'} size={22} color="black" /> : 
        <AntDesign name={iconName} size={22} color="black" /> }
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Text style={styles.textStyle}>{title}</Text>
     </View>
   )
@@ -27,13 +43,13 @@ const Header = ({ title, iconName, customClick, setIconBG }, props) => {
 export default Header;
 const styles = StyleSheet.create({
   headerContainer: {
-    width: wp(95),
-    height: 65,
+    width: moderateScale(320),
+    height: verticalScale(50),
     flexDirection: 'row',
     alignItems: 'center',
     alignContent:'center',
     justifyContent: 'center',
-    marginTop:wp(6),
+    marginTop:scale(5),
   },
   textStyle: {
     fontSize: 20,

@@ -19,10 +19,11 @@ const YogaDetailAdd = ({navigation, route}) => {
   const {data}=route.params;
   const [YogaForm,setYogaForm]=useState({
     iDetailId:data?data.iYogaId:"",
-    iYogaCatId:data?{label:data.vYogaCategoryName,value:data.iYogaCatId}:{label:"",value:""},
+    iYogaCatId:data?{label:'',value:data.iYogaCatId}:{label:"",value:""},
     tYogaFile:data?data.tYogaFile:null,
     tYogaDesc:data?data.tYogaDesc:"",
     iSubYogaCatId:data?{label:data.vSubYogaName,value:data.iSubYogaCatId}:{label:"",value:""},
+    iSubSubYogaCatId:data?{label:data.vSubSubYogaName,value:data.iSubSubYogaCatId}:{label:"",value:""},
     vYogaName:data?data.vYogaName:"",
     tVideoLink:data?data.tVideoLink:"",
   });
@@ -70,10 +71,11 @@ const YogaDetailAdd = ({navigation, route}) => {
   },[YogaForm])
 
   const [isSubmit,setIsSubmit]=useState(false);
-  const OnSubmit=async()=>{
-    setIsSubmit(true);
+  const OnSubmit=()=>{
+    // setIsSubmit(true);
+    let file="";
     if(YogaForm.tYogaFile!=""){
-      if(YogaForm.tYogaFile.base64){
+      if(YogaForm?.tYogaFile?.base64){
         file='data:'+YogaForm.tYogaFile.type+'/'+fileExt(YogaForm.tYogaFile.FileName)+';base64,'+YogaForm.tYogaFile.base64;
       }else{
         file=YogaForm.tYogaFile;
@@ -81,12 +83,12 @@ const YogaDetailAdd = ({navigation, route}) => {
     }
    
 
-   const postData={action:'addYogaDetail',iDetailId:YogaForm.iDetailId,iYogaCatId:YogaForm.iYogaCatId.value,tYogaFile:file,tYogaDesc:YogaForm.tYogaDesc};
+   const postData={action:'addYogaDetail',iDetailId:YogaForm.iDetailId,iYogaCatId:YogaForm.iYogaCatId.value,tYogaFile:file,tYogaDesc:YogaForm.tYogaDesc,iSubSubYogaCatId:YogaForm.iSubSubYogaCatId.value,iSubYogaCatId:YogaForm.iSubYogaCatId.value,tVideoLink:YogaForm.tVideoLink};
     APIService.apiAction(postData, apiUrls.yoga).then(res => {
       setIsSubmit(false);
       if (res.status == 200) {
           ToastMessage(1,res.message);
-          navigation.navigate(RoutName.ADMIN_YOGA_DET_LIST);
+          navigation.navigate(RoutName.ADMIN_YOGA_DET_LIST,{id:data.iYogaCatId});
       }else{
         ToastMessage(0,res.message);
       }
@@ -95,6 +97,7 @@ const YogaDetailAdd = ({navigation, route}) => {
 
   const [CategoryListData,setCategoryListData]=useState([]);
   const [SubCategoryList,SetSubCategoryList]=useState([]);
+  const [SubSubCategoryList,setSubSubCategoryList]=useState([]);
 
   const handleCheck=(data,name)=>{
     setYogaForm(prevState=>{
@@ -148,6 +151,8 @@ const YogaDetailAdd = ({navigation, route}) => {
       setDropDownList([...CategoryListData]);
     }else if(name=="iSubYogaCatId"){
       setDropDownList([...SubCategoryList]);
+    }else if(name=="iSubSubYogaCatId"){
+      setDropDownList([...SubSubCategoryList]);
     }
     setModalVisible(!modalVisible)
   }
@@ -175,84 +180,40 @@ const YogaDetailAdd = ({navigation, route}) => {
     return ()=>{}
   },[YogaForm.iYogaCatId])
 
-  //Video Code Start
+  useEffect(()=>{
+    if(YogaForm.iSubYogaCatId.value>0){
+      const postData={action:"SubSubYogaCategoryList",iSubYogaCatId:YogaForm.iSubYogaCatId.value};
+      APIService.apiAction(postData, apiUrls.yoga).then(res => {
+        if (res.status == 200) {
+          let NewDataArr=[];
+          res.data.map((curEle,index)=>{
+            NewDataArr.push({label:curEle.vSubSubYogaName,value:curEle.iSubSubYogaCatId});
+          })
 
-  const video = React.useRef(null);
-  const selectVideo = async () => {
-    const data = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-    });
-
-    // const base64File=base64(data['assets'][0]['uri']);
-    // console.log("base64File",base64File)
-  //   RNFS.readFile(data['assets'][0]['uri'], 'base64').then(res => {
-  //     console.log("rees",res)
-  // })
-  // .catch(err => {
-     
-  //     console.log(err.message, err.code);
-  // });
-    setVideoUri(data['assets'][0]);
-  };
-  
-  const [videoUri, setVideoUri] = useState(null);
-
-  function setOrientation() {
-      if (Dimensions.get('window').height > Dimensions.get('window').width) {
-          ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-      }
-      else {
-          ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-      }
-  }
-  const [status, setStatus] = React.useState({});
+          setSubSubCategoryList(NewDataArr);
+        }else{
+          setSubSubCategoryList([]);
+        }
+      })
+    }else{
+      setSubSubCategoryList([]);
+      setYogaForm(prevSTate=>{
+        return{
+          ...prevSTate,
+          iSubSubYogaCatId:{label:"",value:""},
+        }
+      })
+    }
+  },[YogaForm.iSubYogaCatId])
 
   return (
     <View style={styles.mainScreen}>
-      <Text style={styles.mainTitle}>{data.id?'Edit':'Add'} Yoga Detail</Text>
+      <Text style={styles.mainTitle}>{data?.id?'Edit':'Add'} Yoga Detail</Text>
       <ScrollView contentContainerStyle={{paddingBottom:50}} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-        <Text style={{marginTop:wp(5),fontSize:18}}>Yoga Name<Text style={{color:"red"}}>*</Text></Text>
-        <View>
-          <Input
-            placeholder={'Enter Yoga Name'}
-            onChangeText={(text) => handleChange(text, 'vYogaName')}
-            value={YogaForm.vYogaName}
-            keyboardType={'text'}
-            multiline={false}
-            returnKeyType={'next'}
-            inputContainerStyle={{
-              width:wp(90),
-              marginTop:wp(3)
-            }}
-          />
-        </View>
-        {
-          isSubmit && !isRequires.vYogaName?<Text style={{color:"red"}}>Yoga name field is required!</Text>:""
-        }
-      
-        <Text style={{marginTop:wp(5),fontSize:18}}>Yoga Category Name<Text style={{color:"red"}}>*</Text></Text>
-        <View>
-          <Input
-              placeholder={'Select Category'}
-              value={YogaForm.iYogaCatId.label}
-              keyboardType={'text'}
-              multiline={false}
-              returnKeyType={'next'}
-              inputContainerStyle={{
-                width:wp(90),
-                marginTop:wp(3)
-              }}
-              clickHandle={()=>{handleDropModal('iYogaCatId')}}
-          />
-        </View>
-        {
-          isSubmit && !isRequires.iYogaCatId?<Text style={{color:"red"}}>Yoga name field is required!</Text>:""
-        }
-
         {
           SubCategoryList.length>0?
           <>
-            <Text style={{marginTop:wp(5),fontSize:18}}>Sub Yoga Category Name<Text style={{color:"red"}}>*</Text></Text>
+            <Text style={{marginTop:wp(5),fontSize:18}}>Sub Yoga Name</Text>
             <View>
               <Input
                   placeholder={'Select Sub Yoga Category'}
@@ -268,38 +229,59 @@ const YogaDetailAdd = ({navigation, route}) => {
               />
             </View>
             {
-              isSubmit && !isRequires.iSubYogaCatId?<Text style={{color:"red"}}>Sub Yoga Category name field is required!</Text>:""
+              isSubmit && !isRequires.iSubYogaCatId?<Text style={{color:"red"}}>Sub Yoga name field is required!</Text>:""
             }
           </>
           :"" 
         }
 
-        <View>
-          <TouchableOpacity onPress={selectVideo} style={styles.uploadVideoBtnStyle}><Text style={{marginTop:wp(3),color:'white',fontSize:20}}>Select Video</Text></TouchableOpacity>
-          {
-            videoUri?.uri?
-            <Video
-                ref={video}
-                style={{width: wp(90),
-                  height: hp(35),backgroundColor:'white'}}
-                source={{
-                    uri: videoUri?.uri,
-                }}
-                useNativeControls
-                resizeMode="contain"
-                isLooping
-                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                onFullscreenUpdate={setOrientation}
+        {
+          YogaForm.iSubYogaCatId.value>0?<>
+          <Text style={{marginTop:wp(5),fontSize:18}}>Sub-Sub Yoga Name</Text>
+          <View>
+            <Input
+               placeholder={'Select Sub Category'}
+               value={YogaForm.iSubSubYogaCatId.label}
+               keyboardType={'text'}
+               multiline={false}
+               returnKeyType={'next'}
+               inputContainerStyle={{
+                 width:wp(90),
+                 marginTop:wp(3)
+               }}
+               clickHandle={()=>{handleDropModal('iSubSubYogaCatId')}}
             />
-            :""
-          }
-        </View>
+          </View>
+          </>:""
+        }
 
-        <Text style={{marginTop:wp(5),fontSize:18}}>Yoga Detail Description<Text style={{color:"red"}}>*</Text></Text>
+        <Text style={{marginTop:wp(5),fontSize:18}}>Yoga Detail Description</Text>
         <Input
             placeholder={'Enter Yoga Description'}
             onChangeText={(text) => handleChange(text, 'tYogaDesc')}
             value={YogaForm.tYogaDesc}
+            keyboardType={'text'}
+            multiline={true}
+            returnKeyType={'next'}
+            numberOfLines={4}
+            inputContainerStyle={{
+              width:wp(90),
+              height:wp(40),
+              marginTop:wp(3),
+              paddingLeft:wp(3),
+              paddingRight:wp(3)
+            }}
+        />
+        {
+          isSubmit && !isRequires.tYogaDesc?<Text style={{color:"red"}}>Yoga Description field is required!</Text>:""
+        }
+
+        <Text style={{marginTop:wp(5),fontSize:18}}>Video Link</Text>
+        <View>
+          <Input
+            placeholder={'Enter Yoga Name'}
+            onChangeText={(text) => handleChange(text, 'tVideoLink')}
+            value={YogaForm.tVideoLink}
             keyboardType={'text'}
             multiline={false}
             returnKeyType={'next'}
@@ -307,27 +289,25 @@ const YogaDetailAdd = ({navigation, route}) => {
               width:wp(90),
               marginTop:wp(3)
             }}
-        />
-        {
-          isSubmit && !isRequires.tYogaDesc?<Text style={{color:"red"}}>Yoga Description field is required!</Text>:""
-        }
+          />
+        </View>
 
-        <Text style={{marginTop:wp(5),fontSize:18}}>Image<Text style={{color:"red"}}>*</Text></Text>
+        <Text style={{marginTop:wp(5),fontSize:18}}>Image</Text>
 
-          <TouchableOpacity onPress={()=>{setYogaFilePickSts(!imagePickSts)}} style={styles.chooseFile}>
-            <View style={{width:wp(15),paddingLeft:wp(4),paddingTop:wp(2)}}>
-              <Icon IconName='upload' LibraryName='FontAwesome' IconSize={wp(10)} IconColor={'white'}/>
-            </View>
-            <View style={{width:wp(40)}}>
-              <Text style={{alignSelf:'center',marginTop:wp(3),color:'white',fontSize:20}}>Choose Image</Text>
-            </View>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={()=>{setYogaFilePickSts(!imagePickSts)}} style={styles.chooseFile}>
+          <View style={{width:wp(15),paddingLeft:wp(4),paddingTop:wp(2)}}>
+            <Icon IconName='upload' LibraryName='FontAwesome' IconSize={wp(10)} IconColor={'white'}/>
+          </View>
+          <View style={{width:wp(40)}}>
+            <Text style={{alignSelf:'center',marginTop:wp(3),color:'white',fontSize:20}}>Choose Image</Text>
+          </View>
+        </TouchableOpacity>
 
         {
           YogaForm.tYogaFile!=null && YogaForm.tYogaFile!=""?
           <>
             {
-              YogaForm.tYogaFile.base64?
+              YogaForm?.tYogaFile?.base64?
               <Image
                 style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
                 source={{

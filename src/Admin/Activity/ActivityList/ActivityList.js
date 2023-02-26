@@ -74,7 +74,7 @@ const BoxRows=(props)=>{
             <View style={styles.boxCard}>
                 <Text style={styles.boxEditButton}>
                   <View style={styles.boxButtonRow}>
-                    <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_ACTIVITY_ADD,{id:props.data.iActivityCatId,name:props.data.vActivitCatName,aSubCategoryList:props.data.aSubCategoryList})}}>
+                    <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_ACTIVITY_ADD,{id:props.data.iActivityCatId,name:props.data.vActivitCatName,aSubCategoryList:props.data.aSubCategoryList,tImage:props.data.tImage})}}>
                       <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>deleteRecord(props.data.iActivityCatId)}>

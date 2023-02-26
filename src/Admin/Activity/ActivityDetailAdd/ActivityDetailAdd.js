@@ -75,7 +75,7 @@ const ActivityDetailAdd = ({navigation, route}) => {
     setIsSubmit(true);
     let file="";
     if(ActivityForm.tActivityFile!=""){
-      if(ActivityForm.tActivityFile.base64){
+      if(ActivityForm?.tActivityFile?.base64){
         file='data:'+ActivityForm.tActivityFile.type+'/'+fileExt(ActivityForm.tActivityFile.FileName)+';base64,'+ActivityForm.tActivityFile.base64;
       }else{
         file=ActivityForm.tActivityFile;
@@ -291,7 +291,7 @@ const ActivityDetailAdd = ({navigation, route}) => {
           ActivityForm.tActivityFile!=null && ActivityForm.tActivityFile!=""?
           <>
             {
-              ActivityForm.tActivityFile.base64?
+              ActivityForm?.tActivityFile?.base64?
               <Image
                 style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
                 source={{

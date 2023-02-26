@@ -10,7 +10,7 @@ import {
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import React, { useEffect, useState } from 'react'
-import { Header } from '../../../../Layouts';
+import { Header } from '../../Layouts';
 
 
 const Live = () => {

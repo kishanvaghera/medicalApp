@@ -7,11 +7,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
 import { Home, Meditation, Music, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer, SubYogaList, YogaDetail } from '../Pages/Dashboard';
-import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList, AdminYogaDetailAdd, AdminMusicDetailAdd, AdminActivityDetailAdd} from '../Admin/'
+import MainActivityList from '../Pages/Activity/MainActivityList';
+import ActvitySubCategoryList from '../Pages/Activity/ActvitySubCategoryList';
+import ActivityCategoryList from '../Pages/Activity/ActivityCategoryList';
+import ActivityDetail from '../Pages/Activity/ActivityDetail';
+import YogaCategoryList from '../Pages/Yoga/YogaCategoryList';
+import YogaSubCategoryList from '../Pages/Yoga/YogaSubCategoryList';
+import YogaMainList from '../Pages/Yoga/YogaMainList';
+import YogaMainDetail from '../Pages/Yoga/YogaMainDetail';
+
+import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList,AdminActivityDetailAdd, AdminMusicDetailAdd, AdminYogaDetailAdd} from '../Admin/'
 
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import { useSelector, useDispatch } from 'react-redux'
+import YogaSubSubCateList from '../Pages/Yoga/YogaSubSubCateList';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,6 +39,15 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_YOGA_LIST} component={SubYogaList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.YOGA_DETAIL} component={YogaDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ACTIVITY_LIST} component={ActivityCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.SUB_ACTIVITY_LIST} component={ActvitySubCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MAIN_ACTIVITY_LIST} component={MainActivityList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ACTIVITY_DETAIL} component={ActivityDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_CATEGORY_LIST} component={YogaCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_SUBCATEGORY_LIST} component={YogaSubCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_MAIN_CATEGORY_LIST} component={YogaMainList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_MAIN_DETAIL} component={YogaMainDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_SUB_SUB_CAT_LIST} component={YogaSubSubCateList} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -45,9 +64,9 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.ADMIN_MUSIC_DET_LIST} component={AdminMusicDetailList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_YOGA_DET_LIST} component={AdminYogaDetailList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_ACTIVITY_DET_LIST} component={AdminActivityDetailList} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.ADMIN_YOGA_DET_ADD} component={AdminYogaDetailAdd} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.ADMIN_MUSIC_DET_ADD} component={AdminMusicDetailAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_ACTIVITY_DETAIL_ADD} component={AdminActivityDetailAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_MUSIC_DET_ADD} component={AdminMusicDetailAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_YOGA_DET_ADD} component={AdminYogaDetailAdd} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
@@ -83,10 +102,10 @@ const BottomTabStack = () => {
       />
       <Tab.Screen
         name={RoutName.MEDITATION}
-        component={Meditation}
+        component={YogaCategoryList}
         options={{
           headerShown: false,
-          tabBarLabel: RoutName.MEDITATION,
+          tabBarLabel: 'Meditation',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="meditation"
@@ -153,9 +172,22 @@ function PrivateRoutes() {
 
       <Drawer.Screen
         name={'homeScreenStack'}
-        options={{ headerShown: false }}
+        options={{ headerShown: false,drawerItemStyle: { display: 'none' }}}
         component={HomeScreenStack}
       />
+
+      <Drawer.Screen
+        name={'Activity'}
+        options={{ headerShown: false }}
+        component={ActivityCategoryList}
+      />
+
+      <Drawer.Screen
+        name={'Meditation'}
+        options={{ headerShown: false }}
+        component={YogaCategoryList}
+      />
+      
     </Drawer.Navigator>
 
     // <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown : false }}>

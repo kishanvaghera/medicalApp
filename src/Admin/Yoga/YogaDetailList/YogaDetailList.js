@@ -10,13 +10,14 @@ import RoutName from '../../../Routes/RoutName'
 import { useFocusEffect } from '@react-navigation/native';
 import { ToastMessage } from '../../../utils/ToastMessage';
 
-const YogaDetailList = ({navigation}) => {
+const YogaDetailList = ({navigation, route}) => {
     const [loading,setLoading]=useState(false);
     const [YogaList,setYogaList]=useState([]);
 
+    const {id}=route.params;
     const ApiCall=()=>{
         setLoading(true);
-        const postData={action:"YogaData"};
+        const postData={action:"YogaData",iYogaCatId:id};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
         setLoading(false);
         if (res.status == 200) {
@@ -48,8 +49,7 @@ const YogaDetailList = ({navigation}) => {
       <Loader loading={loading} />
       <View style={styles.tophead}>
         <Text style={styles.mainTitle}>Yoga Detail List</Text>
-        {/* onPress={()=>navigation.navigate(RoutName.ADMIN_CATEGORY_ADD,{id:"",name:""})}  */}
-        <TouchableOpacity style={styles.TopHeadBtn} onPress={()=>navigation.navigate(RoutName.ADMIN_YOGA_DET_ADD,{data:{}})}>
+        <TouchableOpacity style={styles.TopHeadBtn} onPress={()=>navigation.navigate(RoutName.ADMIN_YOGA_DET_ADD,{data:{iYogaCatId:id}})}>
           <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={25} IconColor={theme.primaryDark}/>
         </TouchableOpacity>
       </View>
@@ -85,7 +85,6 @@ const BoxRows=(props)=>{
                     style = {{...styles.boxImage}}
                     />
                     <View style={styles.boxHead}>
-                      <Text style={styles.boxHeadTitle}>{props.data.vYogaName}</Text>
                       <Text style={styles.boxHeadTitle}>{props.data.vYogaCategoryName} - {props.data.vSubYogaName}</Text>
                     </View>
                   </View>

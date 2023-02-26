@@ -100,6 +100,14 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingTop:wp(1)
     },
+    chooseFile:{
+        marginTop:wp(3),
+        width:wp(55),
+        height:wp(15),
+        backgroundColor:'#a276e9',
+        borderRadius:wp(2),
+        flexDirection:'row'
+    },
 })
 
 export default styles

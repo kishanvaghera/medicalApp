@@ -18,9 +18,9 @@ const Dashboard = ({navigation}) => {
             <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_YOGA_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Yoga</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_YOGA_DET_LIST)}} style={styles.boxCard}>
+            {/* <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_YOGA_DET_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Yoga Detail</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_MUSIC_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Music</Text>
             </TouchableOpacity>

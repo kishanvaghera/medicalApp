@@ -13,12 +13,12 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Header } from '../../../../Layouts';
-import { Loader } from '../../../../Components';
-import * as APIService from './../../../../Middleware/APIService';
-import apiUrls from './../../../../Middleware/apiUrls';
-import RoutName from '../../../../Routes/RoutName';
-import { Colors as theme } from '../../../../utils/useTheme';
+import { Header } from '../../Layouts';
+import { Loader } from '../../Components';
+import * as APIService from '../../Middleware/APIService';
+import apiUrls from '../../Middleware/apiUrls';
+import RoutName from '../../Routes/RoutName';
+import { Colors as theme } from '../../utils/useTheme';
 
 
 const Meditation = ({ navigation }) => {

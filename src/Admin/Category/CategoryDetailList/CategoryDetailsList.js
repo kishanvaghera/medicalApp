@@ -85,7 +85,6 @@ const BoxRows=(props)=>{
                         style = {{...styles.boxImage}}
                         />
                         <View style={styles.boxHead}>
-                          <Text style={styles.boxHeadTitle}>{props.data.vSubjectName}</Text>
                           <Text style={styles.boxHeadTitle}>{props.data.iCategoryName} - {props.data.vSubCategoryName}</Text>
                         </View>
                       </View>

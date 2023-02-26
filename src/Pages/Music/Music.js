@@ -16,12 +16,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
-import * as APIService from './../../../../Middleware/APIService';
-import apiUrls from './../../../../Middleware/apiUrls';
-import { Loader } from '../../../../Components';
-import { Header } from '../../../../Layouts'
-import RoutName from '../../../../Routes/RoutName';
-import { Colors as theme } from '../../../../utils/useTheme';
+import * as APIService from '../../Middleware/APIService';
+import apiUrls from '../../Middleware/apiUrls';
+import { Loader } from '../../Components';
+import { Header } from '../../Layouts'
+import RoutName from '../../Routes/RoutName';
+import { Colors as theme } from '../../utils/useTheme';
 
 const Music = ({ navigation }) => {
 

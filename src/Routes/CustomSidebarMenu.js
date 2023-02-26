@@ -21,11 +21,8 @@ function CustomSidebarMenu(props) {
  
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/*Top Large Image */}
-    
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-       
       </DrawerContentScrollView>
      
     </SafeAreaView>

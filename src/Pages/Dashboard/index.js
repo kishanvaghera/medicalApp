@@ -1,7 +1,7 @@
-export { default as Home } from './BottomTab/Home/Home';
-export { default as Meditation } from './BottomTab/Meditation/Meditation';
-export { default as Music } from './BottomTab/Music/Music';
-export { default as Live } from './BottomTab/Live/Live';
+export { default as Home } from '../Home/Home';
+export { default as Meditation } from '../Meditation/Meditation';
+export { default as Music } from '../Music/Music';
+export { default as Live } from '../Live/Live';
 export { default as Profile } from './BottomTab/Profile/Profile';
 export { default as CategoryList } from './Category/CategoryList/CategoryList';
 export { default as SubCategoryList } from './Category/SubCategoryList/SubCategoryList';

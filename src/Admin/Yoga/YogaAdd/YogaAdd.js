@@ -16,6 +16,7 @@ const YogaAdd = ({navigation, route}) => {
   const [YogaForm,setYogaForm]=useState({
     iYogaCatId:id?id:"",
     vYogaCategoryName:name?name:"",
+    isDefault280Sub:false,
   });
 
   const handleChange=(e,name="")=>{
@@ -38,7 +39,7 @@ const YogaAdd = ({navigation, route}) => {
         setisRequired({
           vYogaCategoryName:{status:true}
         });
-        const postData={action:"addYogaCategory",iYogaCatId:YogaForm.iYogaCatId,vYogaCategoryName:YogaForm.vYogaCategoryName,subCategory:SubCategoryList,isChecked:isChecked};
+        const postData={action:"addYogaCategory",iYogaCatId:YogaForm.iYogaCatId,vYogaCategoryName:YogaForm.vYogaCategoryName,subCategory:SubCategoryList,isChecked:isChecked,isDefault280Sub:YogaForm.isDefault280Sub?1:0};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
           setIsSubmit(false);
           if (res.status == 200) {
@@ -56,13 +57,13 @@ const YogaAdd = ({navigation, route}) => {
   }
 
 
-  const [SubCategoryList,setSubCategoryList]=useState([{iSubYogaCatId:'',vSubYogaName:''}]);
+  const [SubCategoryList,setSubCategoryList]=useState([{iSubYogaCatId:'',vSubYogaName:'',SubCategoryList:[]}]);
 
   useEffect(()=>{
     if(aSubCategoryList.length){
       setSubCategoryList([...aSubCategoryList]);
     }else{
-      setSubCategoryList([{iSubYogaCatId:'',vSubYogaName:''}]);
+      setSubCategoryList([{iSubYogaCatId:'',vSubYogaName:'',SubCategoryList:[]}]);
     }
   },[aSubCategoryList])
   
@@ -77,7 +78,7 @@ const YogaAdd = ({navigation, route}) => {
 
   const addMoreSubCat=()=>{
     let tempData=SubCategoryList;
-    tempData.push({iSubYogaCatId:'',vSubYogaName:''});
+    tempData.push({iSubYogaCatId:'',vSubYogaName:'',SubCategoryList:[]});
     setSubCategoryList([...tempData]);
   }
 
@@ -92,9 +93,33 @@ const YogaAdd = ({navigation, route}) => {
 
   useEffect(()=>{
     if(!isChecked){
-      setSubCategoryList([{iSubYogaCatId:'',vSubYogaName:''}]);
+      setSubCategoryList([{iSubYogaCatId:'',vSubYogaName:'',SubCategoryList:[]}]);
     }
   },[isChecked])
+
+  const handleAddSubSubcategory=(id)=>{
+    let tempData=SubCategoryList;
+    tempData[id]['SubCategoryList'].push({iSubSubYogaCatId:"",vSubSubYogaName:""});
+    setSubCategoryList([...tempData]);
+  }
+
+  const removeSubSubCate=(index,SubInd)=>{
+    let tempData=SubCategoryList;
+    const filterData=tempData[index]['SubCategoryList'].filter((curE,subIndex)=>{
+      return subIndex!=SubInd;
+    })
+    tempData[index]['SubCategoryList']=filterData;
+    setSubCategoryList([...tempData]);
+  }
+
+  const handleSubSubCategory=(text, SubInd,index)=>{
+    let tempData=SubCategoryList;
+    tempData[index]['SubCategoryList'][SubInd]={
+      ...tempData[index]['SubCategoryList'][SubInd],
+      ['vSubSubYogaName']:text
+    }
+    setSubCategoryList([...tempData]);
+  }
 
   return (
     <View style={styles.mainScreen}>
@@ -128,6 +153,22 @@ const YogaAdd = ({navigation, route}) => {
         </TouchableOpacity> 
 
         {
+          isChecked?
+          <>
+          <Text style={{marginTop:wp(5),fontSize:18}}>Is Default 280 Sub Category?</Text>
+          <TouchableOpacity style={YogaForm['isDefault280Sub']?styles.checkBoxChecked:styles.checkBox} onPress={()=>{
+            handleChange(!YogaForm['isDefault280Sub'], 'isDefault280Sub')
+          }}>
+            {
+              isChecked?
+              <Icon LibraryName='FontAwesome' IconName='check' IconSize={28} IconColor={"white"}/>
+              :""
+            }
+          </TouchableOpacity> 
+          </>:""
+        }
+
+        {
           SubCategoryList.length>0 && isChecked?
           <>
             <Text style={{marginTop:wp(5),fontSize:18}}>Sub Yoga Name</Text>
@@ -135,7 +176,9 @@ const YogaAdd = ({navigation, route}) => {
               {
                 SubCategoryList.map((curEle,index)=>{
                   const indexNum=index+1;
-                  return <View style={{flexDirection:'row',justifyContent:'space-between'}} key={index}>
+                  return  <React.Fragment key={index}>
+                          <View style={{flexDirection:'row',justifyContent:'space-between'}} >
+                            <Text style={{marginTop:wp(5),fontSize:20}}>{indexNum}.</Text>
                             <Input
                               placeholder={'Enter Sub Yoga Name'}
                               onChangeText={(text) => handleSubCategory(text, index)}
@@ -144,20 +187,49 @@ const YogaAdd = ({navigation, route}) => {
                               multiline={false}
                               returnKeyType={'next'}
                               inputContainerStyle={{
-                                width:wp(75),
+                                width:wp(60),
                                 marginTop:wp(3)
                               }}
                             />
+
+                           <TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={()=>{handleAddSubSubcategory(index)}}>
+                                  <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={35} IconColor={'#362FD9'}/>
+                            </TouchableOpacity>
+
                             {
                               SubCategoryList.length==indexNum?
-                              <TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={addMoreSubCat}>
+                              <TouchableOpacity style={{marginTop:wp(4)}} onPress={addMoreSubCat}>
                                 <Icon LibraryName='FontAwesome' IconName='plus-circle' IconSize={35} IconColor={theme.primaryDark}/>
                               </TouchableOpacity>
-                              :<TouchableOpacity style={{marginRight:wp(3),marginTop:wp(4)}} onPress={()=>removeCategory(index)}>
+                              :<TouchableOpacity style={{marginTop:wp(4)}} onPress={()=>removeCategory(index)}>
                               <Icon LibraryName='FontAwesome' IconName='minus-circle' IconSize={35} IconColor={theme.primaryDark}/>
                             </TouchableOpacity>
                             }
                           </View>
+                          {
+                            curEle['SubCategoryList'].map((curSub,SubInd)=>{
+                                const SubIndexNumber=SubInd+1;
+                                return <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:wp(5)}} key={SubInd}>
+                                          <Text style={{marginTop:wp(5),fontSize:20}}>{SubIndexNumber}.</Text>
+                                          <Input
+                                            placeholder={'Enter Sub Category Yoga Name'}
+                                            onChangeText={(text) => handleSubSubCategory(text, SubInd,index)}
+                                            value={curSub.vSubSubYogaName}
+                                            keyboardType={'text'}
+                                            multiline={false}
+                                            returnKeyType={'next'}
+                                            inputContainerStyle={{
+                                              width:wp(60),
+                                              marginTop:wp(3)
+                                            }}
+                                          />
+                                          <TouchableOpacity style={{marginTop:wp(4)}} onPress={()=>removeSubSubCate(index,SubInd)}>
+                                            <Icon LibraryName='FontAwesome' IconName='minus-circle' IconSize={35} IconColor={'#362FD9'}/>
+                                          </TouchableOpacity>
+                                        </View>
+                            })
+                          }
+                          </React.Fragment>
                 })
               }
             </>

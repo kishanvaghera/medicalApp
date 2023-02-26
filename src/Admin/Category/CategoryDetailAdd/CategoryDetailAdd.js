@@ -187,7 +187,7 @@ const CategoryDetailAdd = ({navigation, route}) => {
     // setIsSubmit(true);
     let file="";
     if(CategoryForm.tImage!=""){
-      if(CategoryForm.tImage.base64){
+      if(CategoryForm?.tImage?.base64){
         file='data:'+CategoryForm.tImage.type+'/'+fileExt(CategoryForm.tImage.FileName)+';base64,'+CategoryForm.tImage.base64;
       }else{
         file=CategoryForm.tImage;
@@ -316,44 +316,6 @@ const CategoryDetailAdd = ({navigation, route}) => {
     <View style={styles.mainScreen}>
       <Text style={styles.mainTitle}>{data.id?'Edit':'Add'} Category Detail</Text>
       <ScrollView contentContainerStyle={{paddingBottom:50}} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-        {/* <Text style={{marginTop:wp(5),fontSize:18}}>Subject Name<Text style={{color:"red"}}>*</Text></Text>
-        <View>
-          <Input
-            placeholder={'Enter Subject Name'}
-            onChangeText={(text) => handleChange(text, 'vSubjectName')}
-            value={CategoryForm.vSubjectName}
-            keyboardType={'text'}
-            multiline={false}
-            returnKeyType={'next'}
-            inputContainerStyle={{
-              width:wp(90),
-              marginTop:wp(3)
-            }}
-          />
-        </View>
-        {
-          isSubmit && !isRequires.vSubjectName?<Text style={{color:"red"}}>Subject name field is required!</Text>:""
-        } */}
-      
-        {/* <Text style={{marginTop:wp(5),fontSize:18}}>Category Name<Text style={{color:"red"}}>*</Text></Text>
-        <View>
-          <Input
-              placeholder={'Select Category'}
-              value={CategoryForm.iCategoryId.label}
-              keyboardType={'text'}
-              multiline={false}
-              returnKeyType={'next'}
-              inputContainerStyle={{
-                width:wp(90),
-                marginTop:wp(3)
-              }}
-              clickHandle={()=>{handleDropModal('iCategoryId')}}
-          />
-        </View>
-        {
-          isSubmit && !isRequires.iCategoryId?<Text style={{color:"red"}}>Category name field is required!</Text>:""
-        } */}
-
         {
         SubCategoryList.length>0?
         <>
@@ -478,24 +440,6 @@ const CategoryDetailAdd = ({navigation, route}) => {
           />
           </>:""
         }
-        
-
-        {/* <Text style={{marginTop:wp(5),fontSize:18}}>Seen on which day</Text>
-        <View>
-          <Input
-              placeholder={'Select Day'}
-              value={CategoryForm.iSubCategoryId.label}
-              keyboardType={'text'}
-              multiline={false}
-              returnKeyType={'next'}
-              inputContainerStyle={{
-                width:wp(90),
-                marginTop:wp(3),
-                paddingTop:wp(2)
-              }}
-              clickHandle={()=>{handleDropModal('iSubCategoryId')}}
-          />
-        </View> */}
 
         <Text style={{marginTop:wp(5),fontSize:18}}>Category Detail Description<Text style={{color:"red"}}>*</Text></Text>
         <Input
@@ -563,7 +507,7 @@ const CategoryDetailAdd = ({navigation, route}) => {
           CategoryForm.tImage!=null && CategoryForm.tImage!=""?
           <>
             {
-              CategoryForm.tImage.base64?
+              CategoryForm?.tImage?.base64?
               <Image
                 style={{width:wp(40),height:wp(40),marginTop:wp(2)}}
                 source={{

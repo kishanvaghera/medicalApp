@@ -39,6 +39,7 @@ const CategoryAdd = ({navigation, route}) => {
         setisRequired({
           iCategoryName:{status:true}
         });
+
         const postData={action:"addCategory",iCategoryId:CategoryForm.iCategoryId,iCategoryName:CategoryForm.iCategoryName,subCategory:SubCategoryList,isChecked:isChecked,isDefault280Sub:CategoryForm.isDefault280Sub?1:0};
         APIService.apiAction(postData, apiUrls.category).then(res => {
           console.log("re",res);
@@ -129,21 +130,21 @@ const CategoryAdd = ({navigation, route}) => {
           }
         </TouchableOpacity> 
 
-          {
-            isChecked?
-            <>
-            <Text style={{marginTop:wp(5),fontSize:18}}>Is Default 280 Sub Category?</Text>
-            <TouchableOpacity style={CategoryForm['isDefault280Sub']?styles.checkBoxChecked:styles.checkBox} onPress={()=>{
-              handleChange(!CategoryForm['isDefault280Sub'], 'isDefault280Sub')
-            }}>
-              {
-                isChecked?
-                <Icon LibraryName='FontAwesome' IconName='check' IconSize={28} IconColor={"white"}/>
-                :""
-              }
-            </TouchableOpacity> 
-            </>:""
-          }
+        {
+          isChecked?
+          <>
+          <Text style={{marginTop:wp(5),fontSize:18}}>Is Default 280 Sub Category?</Text>
+          <TouchableOpacity style={CategoryForm['isDefault280Sub']?styles.checkBoxChecked:styles.checkBox} onPress={()=>{
+            handleChange(!CategoryForm['isDefault280Sub'], 'isDefault280Sub')
+          }}>
+            {
+              isChecked?
+              <Icon LibraryName='FontAwesome' IconName='check' IconSize={28} IconColor={"white"}/>
+              :""
+            }
+          </TouchableOpacity> 
+          </>:""
+        }
 
         {
           SubCategoryList.length>0 && isChecked?
@@ -182,10 +183,12 @@ const CategoryAdd = ({navigation, route}) => {
           </>
           :""
         }
+        
         <TouchableOpacity onPress={()=>OnSubmit()} style={styles.submitBtn}>
             <Text style={styles.submitBtnText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
+
     </View>
   )
 }

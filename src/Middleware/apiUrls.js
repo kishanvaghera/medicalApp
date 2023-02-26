@@ -6,6 +6,7 @@ const general = 'general.php';
 const activity = 'activity.php';
 const music = 'music.php';
 const yoga = 'yoga.php';
+const home = 'home.php';
 export default {
     BASE_URL,
     auth,
@@ -13,5 +14,6 @@ export default {
     general,
     activity,
     music,
-    yoga
+    yoga,
+    home
 }

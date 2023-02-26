@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './YogaListStyle'
 import Icon from '../../../utils/Icon'
@@ -71,24 +71,30 @@ const BoxRows=(props)=>{
       }
     })
   }
+
+  const onPress=()=>{
+    props.navigation.navigate(RoutName.ADMIN_YOGA_DET_LIST,{id:props.data.iYogaCatId});
+  }
   
-  return <View style={styles.boxRows}>
-            <View style={styles.boxCard}>
-                <Text style={styles.boxEditButton}>
-                  <View style={styles.boxButtonRow}>
-                    <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_YOGA_ADD,{id:props.data.iYogaCatId,name:props.data.vYogaCategoryName,aSubCategoryList:props.data.aSubCategoryList})}}>
-                      <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>deleteRecord(props.data.iYogaCatId)}>
-                      <Icon LibraryName='FontAwesome' IconName='trash' IconSize={25} IconColor={theme.primaryDark}/>
-                    </TouchableOpacity>
+  return <TouchableWithoutFeedback onPress={onPress}>
+            <View style={styles.boxRows}>
+              <View style={styles.boxCard}>
+                  <Text style={styles.boxEditButton}>
+                    <View style={styles.boxButtonRow}>
+                      <TouchableOpacity onPress={()=>{props.navigation.navigate(RoutName.ADMIN_YOGA_ADD,{id:props.data.iYogaCatId,name:props.data.vYogaCategoryName,aSubCategoryList:props.data.aSubCategoryList})}}>
+                        <Icon LibraryName='FontAwesome' IconName='pencil-square-o' IconSize={25} IconColor={theme.primaryDark}/>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={()=>deleteRecord(props.data.iYogaCatId)}>
+                        <Icon LibraryName='FontAwesome' IconName='trash' IconSize={25} IconColor={theme.primaryDark}/>
+                      </TouchableOpacity>
+                    </View>
+                  </Text>
+                  <View style={styles.boxInner}>
+                    <View style={styles.boxHead}>
+                      <Text style={styles.boxHeadTitle}>{props.number}. {props.data.vYogaCategoryName}</Text>
+                    </View>
                   </View>
-                </Text>
-                <View style={styles.boxInner}>
-                  <View style={styles.boxHead}>
-                    <Text style={styles.boxHeadTitle}>{props.number}. {props.data.vYogaCategoryName}</Text>
-                  </View>
-                </View>
+              </View>
             </View>
-          </View>
+        </TouchableWithoutFeedback> 
 }
