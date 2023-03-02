@@ -16,12 +16,13 @@ import YogaSubCategoryList from '../Pages/Yoga/YogaSubCategoryList';
 import YogaMainList from '../Pages/Yoga/YogaMainList';
 import YogaMainDetail from '../Pages/Yoga/YogaMainDetail';
 
-import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList,AdminActivityDetailAdd, AdminMusicDetailAdd, AdminYogaDetailAdd} from '../Admin/'
+import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList,AdminActivityDetailAdd, AdminMusicDetailAdd, AdminYogaDetailAdd, AdminAddDiet, AdminDietList} from '../Admin/'
 
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import { useSelector, useDispatch } from 'react-redux'
 import YogaSubSubCateList from '../Pages/Yoga/YogaSubSubCateList';
+import DietList from '../Pages/Diet/DietList';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,6 +49,7 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.YOGA_MAIN_CATEGORY_LIST} component={YogaMainList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.YOGA_MAIN_DETAIL} component={YogaMainDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.YOGA_SUB_SUB_CAT_LIST} component={YogaSubSubCateList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.DIET_LIST} component={DietList} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -67,6 +69,8 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.ADMIN_ACTIVITY_DETAIL_ADD} component={AdminActivityDetailAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_MUSIC_DET_ADD} component={AdminMusicDetailAdd} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ADMIN_YOGA_DET_ADD} component={AdminYogaDetailAdd} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_DIET_ADD} component={AdminAddDiet} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.ADMIN_DIET_LIST} component={AdminDietList} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
@@ -129,28 +133,28 @@ const BottomTabStack = () => {
         }}
       />
       <Tab.Screen
-        name={RoutName.LIVE}
-        component={Live}
+        name={RoutName.DIET_LIST}
+        component={DietList}
         options={{
           headerShown: false,
-          tabBarLabel: RoutName.LIVE,
+          tabBarLabel: 'Diet',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons
-              name="live-tv"
+              name="emoji-food-beverage"
               color={color}
               size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name={RoutName.PROFILE}
-        component={Profile}
+        name={RoutName.ACTIVITY_LIST}
+        component={ActivityCategoryList}
         options={{
           headerShown: false,
-          tabBarLabel: RoutName.PROFILE,
+          tabBarLabel: 'Activity',
           tabBarIcon: ({ color, size }) => (
-            <Feather
-              name="user"
+            <MaterialCommunityIcons
+              name="timetable"
               color={color}
               size={size} />
           ),

@@ -3,7 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -17,9 +18,12 @@ import Icon from '../utils/Icon'
 const Header = ({ title, iconName, customClick, setIconBG }, props) => {
   const navigation = useNavigation();
   const route = useRoute();
-  console.log("props",route.name)
   return (
     <View style={styles.headerContainer}>
+      <StatusBar
+        animated={true}
+        backgroundColor="#FB2576"
+      />
       {
         route.name=="Home"?
         <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.toggleDrawer()}>
@@ -36,7 +40,7 @@ const Header = ({ title, iconName, customClick, setIconBG }, props) => {
        {iconName == 'menu' ? <Ionicons name={'menu'} size={22} color="black" /> : 
        <AntDesign name={iconName} size={22} color="black" /> }
       </TouchableOpacity> */}
-      <Text style={styles.textStyle}>{title}</Text>
+      <Text style={{...styles.textStyle,fontSize:title.length>20?15:25}}>{title}</Text>
     </View>
   )
 }
@@ -49,10 +53,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent:'center',
     justifyContent: 'center',
-    marginTop:scale(5),
+    // marginTop:scale(5),
   },
   textStyle: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
     alignSelf: 'center',
     alignItems: 'center',

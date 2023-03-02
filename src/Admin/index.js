@@ -15,3 +15,5 @@ export { default as AdminActivityDetailList } from './Activity/ActivityDetailLis
 export { default as AdminYogaDetailAdd } from './Yoga/YogaDetailAdd/YogaDetailAdd';
 export { default as AdminMusicDetailAdd } from './Music/MusicDetailAdd/MusicDetailAdd';
 export { default as AdminActivityDetailAdd } from './Activity/ActivityDetailAdd/ActivityDetailAdd'
+export { default as AdminAddDiet } from './Diet/AddDiet'
+export { default as AdminDietList } from './Diet/DietList'

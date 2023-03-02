@@ -33,6 +33,9 @@ const Dashboard = ({navigation}) => {
             <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_ACTIVITY_DET_LIST)}} style={styles.boxCard}>
               <Text style={styles.boxCardText}>Activity Detail</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate(RoutName.ADMIN_DIET_LIST)}} style={styles.boxCard}>
+              <Text style={styles.boxCardText}>Diet</Text>
+            </TouchableOpacity>
           </View>
           </ScrollView>
     </View>
