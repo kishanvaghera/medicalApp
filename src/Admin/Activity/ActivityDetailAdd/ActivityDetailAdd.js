@@ -23,7 +23,6 @@ const ActivityDetailAdd = ({navigation, route}) => {
     tActivityFile:data?data.tActivityFile:null,
     tActivityDesc:data?data.tActivityDesc:"",
     iSubActivityId:data?{label:data.vSubActivityName,value:data.iSubActivityId}:{label:"",value:""},
-    vActivityName:data?data.vActivityName:"",
     tVideoLink:data?data.tVideoLink:"",
   });
 
@@ -52,7 +51,6 @@ const ActivityDetailAdd = ({navigation, route}) => {
         tActivityFile:{status:false},
         tActivityDesc:{status:false},
         iSubActivityId:{status:false},
-        vActivityName:{status:false},
         tVideoLink:{status:false}
       }
       setisRequired(tempRequired);
@@ -62,7 +60,6 @@ const ActivityDetailAdd = ({navigation, route}) => {
         iActivityCatId:{status:false},
         tActivityFile:{status:false},
         tActivityDesc:{status:false},
-        vActivityName:{status:false},
         tVideoLink:{status:false}
       }
       setisRequired(tempRequired);
@@ -183,7 +180,7 @@ const ActivityDetailAdd = ({navigation, route}) => {
     <View style={styles.mainScreen}>
       <Text style={styles.mainTitle}>{data.id?'Edit':'Add'} Activity Detail</Text>
       <ScrollView contentContainerStyle={{paddingBottom:50}} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-        <Text style={{marginTop:wp(5),fontSize:18}}>Activity Name<Text style={{color:"red"}}>*</Text></Text>
+        {/* <Text style={{marginTop:wp(5),fontSize:18}}>Activity Name<Text style={{color:"red"}}>*</Text></Text>
         <View>
           <Input
             placeholder={'Enter Activity Name'}
@@ -200,7 +197,7 @@ const ActivityDetailAdd = ({navigation, route}) => {
         </View>
         {
           isSubmit && !isRequires.vActivityName.status?<Text style={{color:"red"}}>Activity name field is required!</Text>:""
-        }
+        } */}
 
         <Text style={{marginTop:wp(5),fontSize:18}}>Activity Category Name<Text style={{color:"red"}}>*</Text></Text>
         <View>

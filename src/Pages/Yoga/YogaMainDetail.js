@@ -7,7 +7,7 @@ import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 const YogaMainDetail = ({navigation,route}) => {
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
     const video = React.useRef(null);
@@ -36,13 +36,13 @@ const YogaMainDetail = ({navigation,route}) => {
             contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
                 <View style={styles.mainData}>
                     {
-                        data.tYogaFile?
+                        data?.tYogaFile?
                         <Image source={{ uri: data.tYogaFile }} style={styles.imageView} resizeMode={'contain'}/>
                         :""
                     }
 
                     {
-                        data.tYogaFile=="" && data.tVideoLink!=""?
+                        data?.tYogaFile=="" && data?.tVideoLink!=""?
                             <Video
                             ref={video}
                             style={styles.imageView}
@@ -65,7 +65,7 @@ const YogaMainDetail = ({navigation,route}) => {
                     </View>
                     
                     {
-                        data.tYogaFile!="" && data.tVideoLink!=""?
+                        data?.tYogaFile!="" && data?.tVideoLink!=""?
                         <View style={{marginTop:scale(20)}}>
                             <Video
                             ref={video}

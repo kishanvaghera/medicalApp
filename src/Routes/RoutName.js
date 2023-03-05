@@ -27,6 +27,8 @@ export default {
     YOGA_MAIN_DETAIL:'YogaMainDetail',
     YOGA_SUB_SUB_CAT_LIST:'YogaSubSubCatList',
     DIET_LIST:'DietList',
+    SUB_MUSIC_LIST:'SubMusicList',
+    MUSIC_DETAIL:'MusicDetail',
 
     ADMIN_DASHBOARD:'Admin Dashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',

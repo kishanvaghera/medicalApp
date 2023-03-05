@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
+import * as APIService from '../../Middleware/APIService';
+import apiUrls from '../../Middleware/apiUrls';
 import { Loader } from '../../Components';
 import { Header } from '../../Layouts';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-const ActivityDetail = ({navigation, route}) => {
+const MusicDetail = ({navigation,route}) => {
+
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
@@ -19,12 +22,47 @@ const ActivityDetail = ({navigation, route}) => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
         }
     }
+    
+    const PageName=data?.iSubMusicCatId?data.vSubMusicCatName:data?.iMusicCategoryId?data.vMusicCategoryName:""
+
+    const [MusicDetailData,setMusicDetailData]=useState({
+        tMusicImage:"",
+        tVideoLink:"",
+        tMusicDesc:"",
+    });
+
+    useEffect(() => {
+        setLoading(true);
+        const postData={action:"MusicData",iMusicCategoryId:data.iMusicCategoryId,iSubMusicCatId:data?.iSubMusicCatId?data.iSubMusicCatId:0};
+        APIService.apiAction(postData, apiUrls.music).then(res => {
+            setLoading(false);
+            if(res.status==200){
+                if(res.data[data.iMusicCategoryId] && res.data[data.iMusicCategoryId].length>0){
+                    setMusicDetailData(res.data[data.iMusicCategoryId][0]);
+                }else{
+                    setMusicDetailData({
+                        tMusicImage:"",
+                        tVideoLink:"",
+                        tMusicDesc:"",
+                    });
+                }
+            }else{
+                setMusicDetailData({
+                    tMusicImage:"",
+                    tVideoLink:"",
+                    tMusicDesc:"",
+                });
+            }
+        })
+      return () => {}
+    }, [])
+    
 
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
         <SafeAreaView>
-            <Header iconName={'menu'} title={data?.vSubActivityName} />
+            <Header iconName={'menu'} title={PageName} />
         </SafeAreaView>
         <View style={styles.container}>
             <ScrollView
@@ -34,18 +72,18 @@ const ActivityDetail = ({navigation, route}) => {
             contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
                 <View style={styles.mainData}>
                     {
-                        data?.tActivityFile?
-                        <Image source={{ uri: data.tActivityFile }} style={styles.imageView} resizeMode={'contain'}/>
+                        MusicDetailData?.tMusicImage?
+                        <Image source={{ uri: MusicDetailData.tMusicImage }} style={styles.imageView} resizeMode={'contain'}/>
                         :""
                     }
 
                     {
-                        data?.tActivityFile=="" && data?.tVideoLink!=""?
+                        MusicDetailData?.tMusicImage=="" && MusicDetailData?.tVideoLink!=""?
                             <Video
                             ref={video}
                             style={styles.imageView}
                             source={{
-                                uri: data.tVideoLink,
+                                uri: MusicDetailData.tVideoLink,
                             }}
                             useNativeControls
                             rate={1.0}
@@ -58,19 +96,18 @@ const ActivityDetail = ({navigation, route}) => {
                     }
                     <View style={styles.textView}>
                         <Text style={styles.textDesc}>
-                            {data?.tActivityDesc}
+                            {MusicDetailData?.tMusicDesc}
                         </Text>
                     </View>
-
-
+                    
                     {
-                        data?.tActivityFile!="" && data?.tVideoLink!=""?
+                        MusicDetailData?.tMusicImage!="" && MusicDetailData?.tVideoLink!=""?
                         <View style={{marginTop:scale(20)}}>
                             <Video
                             ref={video}
                             style={styles.imageView}
                             source={{
-                                uri: data.tVideoLink,
+                                uri: MusicDetailData.tVideoLink,
                             }}
                             useNativeControls
                             rate={1.0}
@@ -89,7 +126,7 @@ const ActivityDetail = ({navigation, route}) => {
   )
 }
 
-export default ActivityDetail
+export default MusicDetail
 
 const styles = StyleSheet.create({
     body: {
@@ -104,7 +141,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     mainData:{
-
+  
     },
     imageView:{
         width:moderateScale(355),
@@ -121,4 +158,4 @@ const styles = StyleSheet.create({
         width:moderateScale(320),
         marginLeft:scale(20)
     }
-})
+  })

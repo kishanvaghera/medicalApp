@@ -8,6 +8,7 @@ import { Loader } from '../../Components';
 import { Header } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const DietList = () => {
     const [loading,setLoading]=useState(false);
@@ -38,19 +39,12 @@ const DietList = () => {
     const [DataImagesArr,setDataImagesArr]=useState([]);
 
     const ApiData=()=>{
+        setLoading(true);
         const postData={action:"getDietDetail",iDietId:IsActiveTab=='Fixed'?TypeIds.iFixedId:TypeIds.iMonthlyId}
             APIService.apiAction(postData, apiUrls.diet).then(res => {
+                setLoading(false);
                 if(res.status==200){
-                    let newDataArr=[];
-                    res.data.tImageArr.map((curEle,index)=>{
-                        let temSubData=curEle;
-                        Image.getSize(curEle.tImage, (width, height) => {
-                            temSubData['width']=width;
-                            temSubData['height']=height;
-                        }, (error) => {});
-                        newDataArr.push(temSubData);
-                    })
-                    setDataImagesArr([...newDataArr]);
+                    setDataImagesArr([...res.data.tImageArr]);
                 }
             })
     }
@@ -88,7 +82,7 @@ const DietList = () => {
                         data={DataImagesArr?DataImagesArr:[]} 
                         renderItem={(curEle) => (
                         <View style={styles.imageRows}>
-                            <Image source={{uri:curEle.item.tImage}}  style={{...styles.boxImage,width:curEle.item.width,height:curEle.item.height}} resizeMode="contain"/>
+                            <Image source={{uri:curEle.item.tImage}}  style={{...styles.boxImage,width:320,height:heightPercentageToDP(100)}} resizeMode="contain"/>
                         </View>
                         )}
                     />
@@ -130,7 +124,7 @@ const styles = StyleSheet.create({
         paddingBottom:scale(5)
     },
     imageRows:{
-        marginTop:scale(10),
+        marginTop:scale(0),
         paddingTop:scale(0)
     },
     boxImage:{

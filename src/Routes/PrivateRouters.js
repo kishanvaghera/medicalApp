@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
-import { Home, Meditation, Music, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer, SubYogaList, YogaDetail } from '../Pages/Dashboard';
+import { Home, Meditation, MusicCategoryList, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer, SubYogaList, YogaDetail,MusicSubCategoryList,MusicDetail} from '../Pages/Dashboard';
 import MainActivityList from '../Pages/Activity/MainActivityList';
 import ActvitySubCategoryList from '../Pages/Activity/ActvitySubCategoryList';
 import ActivityCategoryList from '../Pages/Activity/ActivityCategoryList';
@@ -23,6 +23,7 @@ import CustomSidebarMenu from './CustomSidebarMenu';
 import { useSelector, useDispatch } from 'react-redux'
 import YogaSubSubCateList from '../Pages/Yoga/YogaSubSubCateList';
 import DietList from '../Pages/Diet/DietList';
+import { LogOut } from '../Redux/reducer';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,7 +37,7 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.USER_CATEGORY_LIST} component={CategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_CATAGORY_LIST} component={SubCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.USER_CATEGORY_DETAIL} component={CategoryDetail} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_YOGA_LIST} component={SubYogaList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.YOGA_DETAIL} component={YogaDetail} options={{ headerShown: false }} />
@@ -50,6 +51,8 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.YOGA_MAIN_DETAIL} component={YogaMainDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.YOGA_SUB_SUB_CAT_LIST} component={YogaSubSubCateList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.DIET_LIST} component={DietList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.SUB_MUSIC_LIST} component={MusicSubCategoryList} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MUSIC_DETAIL} component={MusicDetail} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -88,8 +91,9 @@ const BottomTabStack = () => {
         labelStyle: {
           textAlign: 'center',
           fontSize: 16,
-        }
-      }}>
+        },
+      }}
+      >
       <Tab.Screen
         name={RoutName.HOME}
         component={Home}
@@ -120,7 +124,7 @@ const BottomTabStack = () => {
       />
       <Tab.Screen
         name={RoutName.MUSIC}
-        component={Music}
+        component={MusicCategoryList}
         options={{
           headerShown: false,
           tabBarLabel: RoutName.MUSIC,
