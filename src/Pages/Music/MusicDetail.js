@@ -66,6 +66,21 @@ const MusicDetail = ({navigation,route}) => {
     const [position, setPosition] = useState(0);
     const [buffer, setBuffer] = useState(0);
     const [isStart,setIsStart]=useState(false);
+
+    const getMusicDuration=async()=>{
+        const { sound } = await Audio.Sound.createAsync(
+            { uri:MusicDetailData?.tMusicFile},
+            { shouldPlay: false }
+          );
+        sound.setOnPlaybackStatusUpdate((status) => {
+            setDuration(status.durationMillis);
+        });
+    }
+    useEffect(()=>{
+        if(MusicDetailData?.tMusicFile!=""){
+            getMusicDuration();
+        }
+    },[MusicDetailData])
   
     useEffect(() => {
       return sound
@@ -75,10 +90,19 @@ const MusicDetail = ({navigation,route}) => {
         : undefined;
     }, [sound]);
   
-    async function playSound() {
+    async function playSound(isNewPosition="") {
         if(isStart){
-            resumeAudio(position);
-            setIsPlaying(true);
+            if(isNewPosition!=''){
+                if(isNewPosition>0){
+                    await sound.playFromPositionAsync(isNewPosition);
+                }else{
+                    await sound.playFromPositionAsync(0);
+                }
+                setIsPlaying(true);
+            }else{
+                resumeAudio(position);
+                setIsPlaying(true);
+            }
         }else{
             const { sound } = await Audio.Sound.createAsync(
               { uri:MusicDetailData?.tMusicFile},
@@ -100,11 +124,6 @@ const MusicDetail = ({navigation,route}) => {
       setIsPlaying(false);
     }
   
-    async function stopSound() {
-      await sound.stopAsync();
-      setIsPlaying(false);
-    }
-  
     function formatTime(time) {
       const minutes = Math.floor(time / 60000);
       const seconds = ((time % 60000) / 1000).toFixed(0);
@@ -118,9 +137,17 @@ const MusicDetail = ({navigation,route}) => {
           console.log(error);
         }
     }
-  
  
     const isPlayying=isPlaying?{paddingLeft:0}:{paddingLeft:scale(5)}
+
+    const backForwordsMusic=()=>{
+        playSound(position-5000);
+    }
+
+    const FastForwordsMusic=()=>{
+        playSound(position+5000);
+    }
+
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
@@ -134,11 +161,13 @@ const MusicDetail = ({navigation,route}) => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
                 <View style={styles.mainData}>
-                    {
-                        MusicDetailData?.tMusicImage?
-                        <Image source={{ uri: MusicDetailData.tMusicImage }} style={styles.imageView} resizeMode={'contain'}/>
-                        :""
-                    }
+                    <View style={styles.musicProfileShadow}>
+                        {
+                            MusicDetailData?.tMusicImage?
+                            <Image source={{ uri: MusicDetailData.tMusicImage }} style={styles.imageView} resizeMode={'contain'}/>
+                            :""
+                        }
+                    </View>
                     
                     <Text style={styles.songName}>Baby Song</Text>
                     <View style={styles.MusicScreen}>
@@ -154,10 +183,22 @@ const MusicDetail = ({navigation,route}) => {
                             <View style={[styles.progressBar, { width: (position / duration) * 100 + '%' }]}></View>
                             <View style={[styles.progressBar, { width: (buffer / duration) * 100 + '%', backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}></View>
                         </View>
-                        <View style={{alignSelf:'center'}}>
-                            <TouchableOpacity style={{...styles.button,...isPlayying}} onPress={() => isPlaying ? pauseSound() : playSound()}>
-                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={32} IconColor='white' />
-                            </TouchableOpacity>
+                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <View style={{alignSelf:'center'}}>
+                                <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
+                                    <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={32} IconColor='#FB2576' />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{alignSelf:'center'}}>
+                                <TouchableOpacity style={{...styles.button,...isPlayying}} onPress={() => isPlaying ? pauseSound() : playSound()}>
+                                    <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={32} IconColor='white' />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{alignSelf:'center'}}>
+                                <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
+                                    <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={32} IconColor='#FB2576' />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
 
@@ -214,7 +255,7 @@ const styles = StyleSheet.create({
     imageView:{
         width:moderateScale(200),
         height:verticalScale(200),
-        borderRadius:scale(110)
+        // borderRadius:scale(110)
         // backgroundColor:'red'
     },
     textDesc:{
@@ -284,5 +325,19 @@ const styles = StyleSheet.create({
         fontSize:scale(18),
         color:'#FB2576',
         fontWeight:'600'
+    },
+    musicProfileShadow:{
+        backgroundColor:'white',
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        padding:scale(15),
+        borderRadius:scale(10),
+        marginTop:verticalScale(5)
     }
   })
