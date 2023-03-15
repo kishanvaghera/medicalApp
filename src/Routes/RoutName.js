@@ -29,6 +29,8 @@ export default {
     DIET_LIST:'DietList',
     SUB_MUSIC_LIST:'SubMusicList',
     MUSIC_DETAIL:'MusicDetail',
+    CALANDER_VIEW:'CalanderView',
+    CALANDER_ADD:'CalanderAdd',
 
     ADMIN_DASHBOARD:'Admin Dashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',

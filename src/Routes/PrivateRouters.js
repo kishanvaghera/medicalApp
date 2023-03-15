@@ -15,6 +15,7 @@ import YogaCategoryList from '../Pages/Yoga/YogaCategoryList';
 import YogaSubCategoryList from '../Pages/Yoga/YogaSubCategoryList';
 import YogaMainList from '../Pages/Yoga/YogaMainList';
 import YogaMainDetail from '../Pages/Yoga/YogaMainDetail';
+import DispCalanderData from '../Pages/Calander/DispCalanderData'
 
 import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategoryAdd,AdminYogaList,AdminMusicList,AdminActivityList,AdminCategoryList,AdminCategoryDetailsList,AdminCategoryDetailAdd,AdminMusicDetailList,AdminYogaDetailList,AdminActivityDetailList,AdminActivityDetailAdd, AdminMusicDetailAdd, AdminYogaDetailAdd, AdminAddDiet, AdminDietList} from '../Admin/'
 
@@ -24,6 +25,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import YogaSubSubCateList from '../Pages/Yoga/YogaSubSubCateList';
 import DietList from '../Pages/Diet/DietList';
 import { LogOut } from '../Redux/reducer';
+import SetCalanderData from '../Pages/Calander/SetCalanderData';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,6 +55,8 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.DIET_LIST} component={DietList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_MUSIC_LIST} component={MusicSubCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_DETAIL} component={MusicDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.CALANDER_VIEW} component={DispCalanderData} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.CALANDER_ADD} component={SetCalanderData} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -194,6 +198,12 @@ function PrivateRoutes() {
         name={'Meditation'}
         options={{ headerShown: false }}
         component={YogaCategoryList}
+      />
+
+      <Drawer.Screen
+        name={'Calander'}
+        options={{ headerShown: false }}
+        component={DispCalanderData}
       />
       
     </Drawer.Navigator>

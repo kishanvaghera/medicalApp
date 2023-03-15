@@ -14,8 +14,9 @@ import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { useNavigation , useRoute } from '@react-navigation/native';
 import { scale, verticalScale, moderateScale} from '../utils/scalling';
 import Icon from '../utils/Icon'
+import RoutName from '../Routes/RoutName';
 
-const Header = ({ title, iconName, customClick, setIconBG }, props) => {
+const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScreenName}, props) => {
   const navigation = useNavigation();
   const route = useRoute();
   return (
@@ -32,7 +33,7 @@ const Header = ({ title, iconName, customClick, setIconBG }, props) => {
       }
       {
         route.name!="Home"?
-        <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={styles.iconStyle} onPress={() => backScreenName?navigation.navigate(backScreenName):navigation.goBack()}>
           <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'black'}/>
         </TouchableOpacity>:""
       }
@@ -41,6 +42,13 @@ const Header = ({ title, iconName, customClick, setIconBG }, props) => {
        <AntDesign name={iconName} size={22} color="black" /> }
       </TouchableOpacity> */}
       <Text style={{...styles.textStyle,fontSize:title.length>20?15:25}}>{title}</Text>
+
+      {
+        isCalanderAdd?
+        <TouchableOpacity style={styles.RightIcon} onPress={() => navigation.navigate(RoutName.CALANDER_ADD)}>
+          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'#FB2576'}/>
+        </TouchableOpacity>:""
+      }
     </View>
   )
 }
@@ -69,4 +77,12 @@ const styles = StyleSheet.create({
     left: 0,
     position:'absolute',
   },
+  RightIcon:{
+    width: 35,
+    height: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 0,
+    position:'absolute',
+  }
 });

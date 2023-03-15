@@ -9,6 +9,7 @@ import { Header } from '../../Layouts'
 import CategorySection from './CategorySection';
 import DayWiseBox from './DayWiseBox';
 import ActivityCards from './ActivityCards';
+import CalanderComp from './Calander';
 
 
 const Home = ({ navigation }) => {
@@ -30,7 +31,7 @@ const Home = ({ navigation }) => {
           <CategorySection setLoading={setLoading}/>
           <DayWiseBox/>
           <ActivityCards setLoading={setLoading}/>
-          
+          {/* <CalanderComp setLoading={setLoading}/> */}
         </ScrollView>
       </View>
     </View>
