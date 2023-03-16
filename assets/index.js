@@ -5,6 +5,7 @@ const images = {
     bg: require('./bg.png'), 
     music: require('./music.jpg'), 
     theme1: require('./theme1.jpg'), 
-    gradientBg:require('./gradient-bg.png')
+    gradientBg:require('./gradient-bg.png'),
+    baby1:require('./baby1.png')
 }
 export default images;

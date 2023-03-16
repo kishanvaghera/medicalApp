@@ -23,19 +23,21 @@ function CategorySection(props) {
     },[])
     
   return (
-    <SwiperFlatList
-        autoplay
-        autoplayDelay={5}
-        autoplayLoop
-        index={0}
-        data={TodayCategoryList?TodayCategoryList:[]} 
-        renderItem={(curEle) => (
-        <View style={styles.imageRows}>
-            <Image source={images.theme1}  style={{...styles.boxImage}} resizeMode={'stretch'}/>
-            <Text style={{...styles.categoryImageText}}>{curEle.item?.tText}</Text>
-        </View>
-        )}
-    />
+    <View style={{marginTop:scale(30)}}>
+        <SwiperFlatList
+            autoplay
+            autoplayDelay={5}
+            autoplayLoop
+            index={0}
+            data={TodayCategoryList?TodayCategoryList:[]} 
+            renderItem={(curEle) => (
+            <View style={styles.imageRows}>
+                <Image source={images.theme1}  style={{...styles.boxImage}} resizeMode={'stretch'}/>
+                <Text style={{...styles.categoryImageText}}>{curEle.item?.tText}</Text>
+            </View>
+            )}
+        />
+    </View>
   )
 }
 
