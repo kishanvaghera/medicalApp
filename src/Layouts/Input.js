@@ -4,6 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { scale } from '../utils/scalling';
 
 const Input = ({ inputContainerStyle, inputStyle, placeholder, keyboardType, onChangeText, returnKeyType, numberOfLines, multiline, maxLength, onSubmitEditing, value, isIcon, iconSource, autoComplete, secureTextEntry,clickHandle }, props) => {
 
@@ -17,13 +18,13 @@ const Input = ({ inputContainerStyle, inputStyle, placeholder, keyboardType, onC
         borderWidth: 0.8,
         borderColor: '#808080',
         borderRadius: 10,
-        paddingLeft: 5,
+        paddingLeft: scale(20),
+        paddingTop:scale(8),
         ...inputContainerStyle
-
       },
       input: {
         color: '#000000',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '500',
         ...inputStyle
 

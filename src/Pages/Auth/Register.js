@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
+  SafeAreaView,
 } from 'react-native'
 import {
   widthPercentageToDP as wp,
@@ -19,15 +20,20 @@ import RoutName from '../../Routes/RoutName';
 import * as APIService from './../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import { Loader } from '../../Components';
+import { moderateScale, scale } from '../../utils/scalling';
+import validator from 'validator';
 
 const Register = ({ navigation }) => {
 
   const [options, setOptions] = useState([
-    { value: 0, lable: 'Selct Paln' },
-    { value: 1, lable: 'Pre-Planning' },
+    { value: 0, lable: 'Select Plan' },
+    { value: 1, lable: 'Pre - Planning' },
     { value: 2, lable: 'Pregnancy' },
-    { value: 3, lable: 'Post Pregnancy' }]);
+    { value: 3, lable: 'Post Pregnancy' }]
+  );
+
   const [loading, setLoading] = useState(false);
+
   const [mainForm, setMainForm] = useState({
     planType: { value: 0, lable: 'Selct Paln' },
     firstName: '',
@@ -36,7 +42,6 @@ const Register = ({ navigation }) => {
     mobileNo: '',
     userName: '',
     password: '',
-    confirmPassword: ''
   })
 
   const handleChange = (e, name) => {
@@ -59,7 +64,7 @@ const Register = ({ navigation }) => {
     const postData = {
       action: 'UserGenerateCode',
     };
-    APIService.apiAction(postData, apiUrls.category).then(res => {
+    APIService.apiAction(postData, apiUrls.auth).then(res => {
       setLoading(false);
       if (res) {
         if (res.status == 200) {
@@ -74,33 +79,43 @@ const Register = ({ navigation }) => {
     })
   }
 
+  const [isSubmitErrShow,setIsSubmitErrShow]=useState(false);
   const handalNextBtn = () => {
-    navigation.navigate(RoutName.OTHER_DETILS, { userId:'3' });
-    // setLoading(true);
-    // const postData = {
-    //   action: 'addUser',
-    //   step: '1',
-    //   iPlanId: mainForm.planType['value'],
-    //   vFirstName: mainForm['firstName'],
-    //   vLastName: mainForm['lastName'],
-    //   vEmail: mainForm['email'],
-    //   vMobileNo: mainForm['mobileNo'],
-    //   vUsername: mainForm['userName'],
-    //   vPassword: mainForm['password']
-    // };
+    setIsSubmitErrShow(true);
+    const {planType,firstName,lastName,email,mobileNo,userName,password}=mainForm;
 
-    // APIService.apiAction(postData, apiUrls.auth).then(res => {
-    //   setLoading(false);
-    //   if (res) {
-    //     if (res.status == 200) {
-    //         navigation.navigate(RoutName.OTHER_DETILS, { userId: res.data });
-    //     }
-    //   }
-    // })
+    if(planType.value>0 && firstName!="" && lastName!="" && email!="" && validator.isEmail(mainForm['email']) && mobileNo!="" && userName!="" && password!=""){
+        navigation.navigate(RoutName.OTHER_DETILS, { userId: '3' });
+        setLoading(true);
+        const postData = {
+          action: 'addUser',
+          step: '1',
+          iPlanId: mainForm.planType['value'],
+          vFirstName: mainForm['firstName'],
+          vLastName: mainForm['lastName'],
+          vEmail: mainForm['email'],
+          vMobileNo: mainForm['mobileNo'],
+          vUsername: mainForm['userName'],
+          vPassword: mainForm['password']
+        };
+    
+        APIService.apiAction(postData, apiUrls.auth).then(res => {
+          setLoading(false);
+          if (res) {
+            if (res.status == 200) {
+              navigation.navigate(RoutName.OTHER_DETILS, { userId: res.data });
+            }
+          }
+        })
+    }
   }
+
+  const regex = /^\d{10}$/;
 
   return (
     <View style={styles.body}>
+      <SafeAreaView>
+      </SafeAreaView>
       <Loader loading={loading} />
       <View style={styles.backBtbView}>
         <AntDesign name="left" size={22} color="black" />
@@ -115,6 +130,12 @@ const Register = ({ navigation }) => {
           <View style={styles.formContaner}>
             <Text style={styles.boldText}>Register</Text>
             <Text style={styles.lableText}>Create your new account</Text>
+
+            <Text style={styles.userText}>{'User Name Code'}</Text>
+            <View style={[styles.dropDownView, { marginTop: 5, paddingLeft: scale(20), backgroundColor: '#DDDDDD' }]}>
+              <Text style={styles.dropDownText}>{mainForm.userName ? mainForm.userName : '-'}</Text>
+            </View>
+
             <View style={styles.dropDownView}>
               <Picker
                 selectedValue={mainForm.planType['lable']}
@@ -130,13 +151,12 @@ const Register = ({ navigation }) => {
                 style={{ color: '#000' }}>
                 {
                   options.map((curElm, index) => {
-                    return <Picker.Item label={curElm.lable} value={curElm.value} />
+                    return <Picker.Item style={{ fontSize: scale(16), fontWeight: '800', color: '#000000' }} label={curElm.lable} value={curElm.value} />
                   })
                 }
-
               </Picker>
             </View>
-
+            {mainForm.planType['value']==0 && isSubmitErrShow?<Text style={styles.err}>Plan Type is required!</Text>:""}
 
             <Input
               placeholder={'First Name'}
@@ -146,6 +166,8 @@ const Register = ({ navigation }) => {
               multiline={false}
               returnKeyType={'next'}
             />
+            {mainForm['firstName']=="" && isSubmitErrShow?<Text style={styles.err}>First Name is required!</Text>:""}
+
             <Input
               placeholder={'Last Name'}
               onChangeText={(text) => handleChange(text, 'lastName')}
@@ -154,6 +176,8 @@ const Register = ({ navigation }) => {
               multiline={false}
               returnKeyType={'next'}
             />
+            {mainForm['lastName']=="" && isSubmitErrShow?<Text style={styles.err}>Last Name is required!</Text>:""}
+
             <Input
               placeholder={'Email'}
               onChangeText={(text) => handleChange(text, 'email')}
@@ -162,6 +186,8 @@ const Register = ({ navigation }) => {
               multiline={false}
               returnKeyType={'next'}
             />
+            {(mainForm['email']=="" || !validator.isEmail(mainForm['email'])) && isSubmitErrShow?<Text style={styles.err}>{mainForm['email']==""?"Email is required!":"Email type is not valid!"}</Text>:""}
+
             <Input
               placeholder={'Mobile Number'}
               onChangeText={(text) => handleChange(text, 'mobileNo')}
@@ -170,10 +196,8 @@ const Register = ({ navigation }) => {
               multiline={false}
               returnKeyType={'next'}
             />
-            <Text style={styles.userText}>{'User Name'}</Text>
-            <View style={[styles.dropDownView, { marginTop: 5 }]}>
-              <Text style={styles.dropDownText}>{mainForm.userName ? mainForm.userName : '-'}</Text>
-            </View>
+            {(mainForm['mobileNo']=="" || !regex.test(mainForm['mobileNo'])) && isSubmitErrShow?<Text style={styles.err}>{mainForm['mobileNo']==""?"Mobile Number is required!":"Mobile Number is not valid!"}</Text>:""}
+
             <Input
               placeholder={'Password'}
               onChangeText={(text) => handleChange(text, 'password')}
@@ -184,16 +208,7 @@ const Register = ({ navigation }) => {
               autoComplete={'password'}
               secureTextEntry={true}
             />
-            <Input
-              placeholder={'Confirm Password'}
-              onChangeText={(text) => handleChange(text, 'confirmPassword')}
-              value={mainForm.confirmPassword}
-              keyboardType={'text'}
-              multiline={false}
-              returnKeyType={'next'}
-              autoComplete={'password'}
-              secureTextEntry={true}
-            />
+            {(mainForm['password']=="" || !validator.isLength(mainForm['password'], { min: 8 })) && isSubmitErrShow?<Text style={styles.err}>{mainForm['password']==""?"Password is required!":"Password minimum length is 8."}</Text>:""}
 
             <Button
               width={wp(80)}
@@ -201,9 +216,6 @@ const Register = ({ navigation }) => {
               title={'Next'}
               buttonStyle={{ marginTop: 20 }}
               customClick={() => handalNextBtn()} />
-
-            <Text style={[styles.lableText, { marginTop: 5, fontSize: 15 }]}>By Signing you agree to team of use</Text>
-            <Text style={[styles.lableText, { fontSize: 15 }]}>and privacy notic</Text>
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
@@ -223,7 +235,7 @@ const styles = StyleSheet.create({
   formContaner: {
     width: '100%',
     paddingHorizontal: '10%',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginTop: '10%'
   },
   boldText: {
@@ -237,13 +249,11 @@ const styles = StyleSheet.create({
   backBtbView: {
     width: 40,
     height: 40,
-    borderRadius: 40 / 2,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-start',
     marginLeft: '5%',
-    marginTop: '5%',
-    backgroundColor: '#D3D3D3'
+    marginTop: scale(40),
   },
   dropDownView: {
     width: wp(80),
@@ -258,18 +268,23 @@ const styles = StyleSheet.create({
   },
   dropDownText: {
     color: '#000000',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
   },
   userText: {
     color: '#000000',
-    fontSize: 14,
-    fontWeight: '800',
+    fontSize: 16,
+    fontWeight: '600',
     width: wp(80),
     marginTop: wp(5)
   },
   lableBtn: {
     alignSelf: 'flex-end',
     marginTop: 5
+  },
+  err:{
+    fontSize:scale(16),
+    color:'red',
+    marginTop:scale(5)
   }
 });

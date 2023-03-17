@@ -19,6 +19,8 @@ import RoutName from '../../Routes/RoutName';
 import { Loader } from '../../Components';
 import * as APIService from './../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
+import moment from 'moment';
+import { scale } from '../../utils/scalling';
 
 const OtherDetails = ({ route, navigation }) => {
 
@@ -26,16 +28,12 @@ const OtherDetails = ({ route, navigation }) => {
     const [loading, setLoading] = useState(false);
 
     const [mainForm, setMainForm] = useState({
-        brithDate: new Date(),
+        brithDate: null,
         hight: '',
         weight: '',
-        pDouDate: new Date(),
+        pDouDate: null,
         pWeek: '',
     })
-
-    const [hight, setHight] = useState('');
-    const [weight, setWeight] = useState('');
-    const [pWeek, setPWeek] = useState('');
 
     const [dateType, setDateType] = useState('');
 
@@ -52,14 +50,14 @@ const OtherDetails = ({ route, navigation }) => {
             setMainForm(prevState => {
                 return {
                     ...prevState,
-                    brithDate: Moment(currentDate).format('DD-MM-YYYY')
+                    brithDate: Moment(currentDate).format('DD/MM/YYYY')
                 }
             })
         } else if (dateType == 'pDouDate') {
             setMainForm(prevState => {
                 return {
                     ...prevState,
-                    pDouDate: Moment(currentDate).format('DD-MM-YYYY')
+                    pDouDate: Moment(currentDate).format('DD/MM/YYYY')
                 }
             })
         }
@@ -74,28 +72,35 @@ const OtherDetails = ({ route, navigation }) => {
         })
     }
 
+    const [isSubmitErrShow,setIsSubmitErrShow]=useState(false);
     const handleSubmit = (isSkip) => {
-        setLoading(true);
-        const postData = {
-            action: 'addUser',
-            iUserId: userId,
-            step: '2',
-            skip: isSkip,
-            vDateOfBirth: mainForm['brithDate'],
-            vHeight: mainForm['hight'],
-            vWeight: mainForm['weight'],
-            vPregDueDate: mainForm['pDouDate'],
-            vPregWeek: mainForm['pWeek']
-        };
-        APIService.apiAction(postData, apiUrls.auth).then(res => {
-          setLoading(false);
-          if (res) {
-            if (res.status == 200) {
-              navigation.navigate(RoutName.LOGIN);
-            }
-          }
-        })
+        setIsSubmitErrShow(true);
+
+        const {brithDate,hight,weight,pDouDate,pWeek}=mainForm;
+        if((brithDate!=null && hight!="" && weight!="" && pDouDate!=null && pWeek!="") || isSkip==1){
+            setLoading(true);
+            const postData = {
+                action: 'addUser',
+                iUserId: userId,
+                step: '2',
+                skip: isSkip,
+                vDateOfBirth: mainForm['brithDate'],
+                vHeight: mainForm['hight'],
+                vWeight: mainForm['weight'],
+                vPregDueDate: mainForm['pDouDate'],
+                vPregWeek: mainForm['pWeek']
+            };
+            APIService.apiAction(postData, apiUrls.auth).then(res => {
+              setLoading(false);
+              if (res) {
+                if (res.status == 200) {
+                  navigation.navigate(RoutName.LOGIN);
+                }
+              }
+            })
+        }
     }
+
 
     return (
         <View style={styles.body}>
@@ -109,24 +114,26 @@ const OtherDetails = ({ route, navigation }) => {
                 <KeyboardAvoidingView enabled>
                 <View style={styles.formContaner}>
                     <Text style={[styles.boldText, { marginTop: 20 }]}>Other Detils</Text>
-                    <Text style={styles.lableText}>This Information is not required,</Text>
-                    <Text style={styles.lableText}>you may skip also.</Text>
+                    <Text style={styles.lableText}>This Information is not required, you may skip also.</Text>
 
                     <TouchableOpacity
                         onPress={() => oprnDataPiker('DOB')}
                         style={styles.dropDownView}>
-                        <Text style={styles.dropDownText}>{mainForm['brithDate'] == '' ? 'Data of Brith' : '' + mainForm['brithDate']}</Text>
+                        <Text style={styles.dropDownText}>{mainForm['brithDate'] == '' || mainForm['brithDate'] == null? 'Data of Birth' : '' + mainForm['brithDate']}</Text>
                     </TouchableOpacity>
+                    {mainForm.brithDate==null && isSubmitErrShow?<Text style={styles.err}>Data of Birth is required!</Text>:""}
+                    
                     {show && (
                         <DateTimePicker
                             testID="dateTimePicker"
                             value={new Date()}
                             mode={'date'}
                             is24Hour={true}
-                            format="DD-MM-YYYY"
+                            format="DD/MM/YYYY"
                             onChange={onChange}
                         />
                     )}
+                    
                     <Input
                         placeholder={'Hight'}
                         onChangeText={(text) => handleChange(text, 'hight')}
@@ -136,6 +143,8 @@ const OtherDetails = ({ route, navigation }) => {
                         maxLength={3}
                         returnKeyType={'next'}
                     />
+                    {mainForm.hight=="" && isSubmitErrShow?<Text style={styles.err}>Hight is required!</Text>:""}
+
                     <Input
                         placeholder={'Weight'}
                         onChangeText={(text) => handleChange(text, 'weight')}
@@ -145,14 +154,15 @@ const OtherDetails = ({ route, navigation }) => {
                         maxLength={3}
                         returnKeyType={'next'}
                     />
+                    {mainForm.weight=="" && isSubmitErrShow?<Text style={styles.err}>Weight is required!</Text>:""}
+
                     <TouchableOpacity
                         onPress={() => oprnDataPiker('pDouDate')}
                         style={styles.dropDownView}>
-                        <Text style={styles.dropDownText}>{mainForm['pDouDate'] == '' ? 'Add Your Dou Date' : '' + mainForm['pDouDate']}</Text>
+                        <Text style={styles.dropDownText}>{mainForm['pDouDate'] == '' || mainForm['pDouDate'] == null ? 'Add Your Dou Date' : '' + mainForm['pDouDate']}</Text>
                     </TouchableOpacity>
-                    {/* <View style={styles.dropDownView}>
-                    <Text style={styles.dropDownText}>Add Your Dou Date</Text>
-                </View> */}
+                    {mainForm.pDouDate==null && isSubmitErrShow?<Text style={styles.err}>Your Dou Date is required!</Text>:""}
+
                     <Input
                         placeholder={'Add Your Pregnancy Week'}
                         onChangeText={(text) => handleChange(text, 'pWeek')}
@@ -162,17 +172,18 @@ const OtherDetails = ({ route, navigation }) => {
                         maxLength={3}
                         returnKeyType={'next'}
                     />
+                    {mainForm.pWeek=="" && isSubmitErrShow?<Text style={styles.err}>Your Pregnancy Week is required!</Text>:""}
 
                     <Button
                         width={wp(55)}
                         height={40}
                         title={'Submit'}
-                        buttonStyle={{ marginTop: 30 }}
+                        buttonStyle={{ marginTop: 30,alignSelf:'center' }}
                         customClick={() => handleSubmit('0')} />
 
                     <TouchableOpacity style={{ marginTop: 15 }}
                         onPress={() => handleSubmit('1')}>
-                        <Text style={[styles.boldText, { fontSize: 15 }]}>SKIP</Text>
+                        <Text style={[styles.boldText, { fontSize: 15,alignSelf:'center' }]}>SKIP</Text>
                     </TouchableOpacity>
                 </View>
                 </KeyboardAvoidingView>
@@ -192,7 +203,7 @@ const styles = StyleSheet.create({
     formContaner: {
         width: '100%',
         paddingHorizontal: '10%',
-        alignItems: 'center',
+        // alignItems: 'center',
         marginTop: '10%'
     },
     boldText: {
@@ -200,7 +211,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     lableText: {
-        fontSize: 20,
+        fontSize: 16,
+        // textAlign:'center',
         fontWeight: '400'
     },
     dropDownView: {
@@ -211,11 +223,16 @@ const styles = StyleSheet.create({
         borderWidth: 0.8,
         borderColor: '#808080',
         borderRadius: 10,
-        paddingLeft: 5,
+        paddingLeft: 20,
     },
     dropDownText: {
         color: '#000000',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '500',
     },
+    err:{
+    fontSize:scale(16),
+    color:'red',
+    marginTop:scale(5)
+  }
 });

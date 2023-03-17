@@ -11,10 +11,9 @@ const MoniterScreen = () => {
 
     const renderTab = (title,ind) => (
         <Tab
-          title={title}
-          titleStyle={styles.tabTitle}
-          style={selectedIndex===ind?styles.tabSelected:styles.tab}
-        //   selectedStyle={styles.tabSelected}
+            title={title}
+            style={selectedIndex===ind?styles.tabSelected:styles.tab}
+            titleStyle={{ color: 'red', fontWeight: 'bold' }}
         />
     );
 
@@ -26,38 +25,56 @@ const MoniterScreen = () => {
             style={styles.tabBar}
             indicatorStyle={styles.tabIndicator}
             tabStyle={styles.tabContainer}
+            tabTitleSelected={{ color: 'red' }}
+            tabTitleUnselected={{ color: 'black' }}
         >
             {renderTab('BABY',0)}
             {renderTab('MOM',1)}
         </TabBar>
 
-        <View style={styles.babyCardView}>
-            <Text style={styles.lightText} category='p2'>Baby's approximate size:</Text>
-            <Text style={styles.dateFirstText} category='h6'>AVOCADO</Text>
-            
-            <View style={{paddingHorizontal:scale(20),flexDirection:'row',justifyContent:'space-between'}}>
-                <View>
-                    <Text style={styles.lightText2} category='p2'>Weight</Text>
-                    <Text style={styles.dateFirstText2} category='h6'>100 g</Text>
+        {
+            selectedIndex===0?
+            <View style={styles.babyCardView}>
+                <Text style={styles.lightText} category='p2'>Baby's approximate size:</Text>
+                <Text style={styles.dateFirstText} category='h6'>AVOCADO</Text>
+                
+                <View style={{paddingHorizontal:scale(20),flexDirection:'row',justifyContent:'space-between'}}>
+                    <View>
+                        <Text style={styles.lightText2} category='p2'>Weight</Text>
+                        <Text style={styles.dateFirstText2} category='h6'>100 g</Text>
+                    </View>
+                    <View>
+                        <Image style={{width:moderateScale(150),height:verticalScale(150)}} source={images.baby1} resizeMode={'contain'} />
+                    </View>
+                    <View>
+                        <Text style={styles.lightText2} category='p2'>Length</Text>
+                        <Text style={styles.dateFirstText2} category='h6'>11,6 cm</Text>
+                    </View>
                 </View>
                 <View>
-                    <Image style={{width:moderateScale(150),height:verticalScale(150)}} source={images.baby1} resizeMode={'contain'} />
-                </View>
-                <View>
-                    <Text style={styles.lightText2} category='p2'>Length</Text>
-                    <Text style={styles.dateFirstText2} category='h6'>11,6 cm</Text>
+                    <Text style={styles.lightText3} category='p2'>What's going on?</Text>
+                    <Text style={styles.dateFirstText3} category='h6'>
+                        The baby is playing with the umbilical cord,
+                        grabbing and releasing it. The taste buds
+                        and bones are developing, and in girls the
+                        ova are forming.
+                    </Text>
                 </View>
             </View>
-            <View>
-                <Text style={styles.lightText3} category='p2'>What's going on?</Text>
-                <Text style={styles.dateFirstText3} category='h6'>
-                    The baby is playing with the umbilical cord,
-                    grabbing and releasing it. The taste buds
-                    and bones are developing, and in girls the
-                    ova are forming.
-                </Text>
+            :
+            <View style={styles.babyCardView}>
+                <Text style={styles.lightText} category='p2'>Current Month : 1</Text>
+                <View>
+                    <Text style={styles.lightText3} category='p2'>What's going on?</Text>
+                    <Text style={styles.dateFirstText3} category='h6'>
+                        The baby is playing with the umbilical cord,
+                        grabbing and releasing it. The taste buds
+                        and bones are developing, and in girls the
+                        ova are forming.
+                    </Text>
+                </View>
             </View>
-        </View>
+        }
     </View>
   )
 }
@@ -101,9 +118,13 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.30,
         shadowRadius: 4.65,
         elevation: 20,
+        zIndex:1,
     },
     tabTitle: {
-      color: 'white',
+        color: 'white',
+    },
+    unselectedTabTitle: {
+        color: 'black',
     },
     tabIndicator: {
         borderWidth:0,
