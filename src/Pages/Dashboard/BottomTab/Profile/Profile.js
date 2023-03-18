@@ -1,33 +1,58 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { Header } from '../../../../Layouts';
-import { useSelector, useDispatch } from 'react-redux'
-import { LogOut } from '../../../../Redux/reducer';
+import React from 'react';
+import { StyleSheet, View, Text, Image, Button } from 'react-native';
 
-const Profile = () => {
-  const dispatch = useDispatch()
-
-  const Logout=()=>{
-    dispatch(LogOut({}));
-  }
-
+const ProfilePage = () => {
   return (
-    <View style={styles.body}>
-      <Header iconName={'menu'} title={'Profile'} />
-      <TouchableOpacity onPress={Logout}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Image
+        style={styles.profileImage}
+        source={{ uri: 'https://example.com/profile-image.png' }}
+      />
+      <Text style={styles.profileName}>John Doe</Text>
+      <Text style={styles.profileBio}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+      <View style={styles.profileInterests}>
+        <Text style={styles.interestsTitle}>Interests</Text>
+        <Text style={styles.interestsText}>Hiking, Photography, Travel</Text>
+      </View>
+      <Button title="Edit Profile" onPress={() => {}} />
     </View>
-  )
-}
+  );
+};
 
-export default Profile;
 const styles = StyleSheet.create({
-  body: {
+  container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    alignContent: 'flex-start',
-    alignItems: 'center'
+  },
+  profileImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 20,
+  },
+  profileName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  profileBio: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  profileInterests: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  interestsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  interestsText: {
+    fontSize: 16,
   },
 });
+
+export default ProfilePage;

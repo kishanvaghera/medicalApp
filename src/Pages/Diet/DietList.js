@@ -9,14 +9,16 @@ import { Header } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { useRef } from 'react';
 
 const DietList = () => {
     const [loading,setLoading]=useState(false);
-    
     const [IsActiveTab,setIsActiveTab]=useState("Fixed");
+    const swiperRef = useRef(null);
 
     const handleChange=(text)=>{
         setIsActiveTab(text);
+        swiperRef.current.scrollToIndex({ index: 0 });
     }
 
     const [TypeIds,setTypeIds]=useState({
@@ -78,7 +80,7 @@ const DietList = () => {
 
                 <View style={{width:moderateScale(310)}}>
                     <SwiperFlatList
-                        index={0}
+                        ref={swiperRef}
                         data={DataImagesArr?DataImagesArr:[]} 
                         renderItem={(curEle) => (
                         <View style={styles.imageRows}>

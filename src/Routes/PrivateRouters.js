@@ -36,6 +36,7 @@ const HomeScreenStack = ({ navigation, props }) => {
   return (
     <Stack.Navigator initialRouteName={loggedData.isRole?RoutName.ADMIN_DASHBOARD:'BottomTabStack'}>
       <Stack.Screen name={'BottomTabStack'} component={BottomTabStack} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.PROFILE} component={Profile} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.USER_CATEGORY_LIST} component={CategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_CATAGORY_LIST} component={SubCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.USER_CATEGORY_DETAIL} component={CategoryDetail} options={{ headerShown: false }} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {View,StyleSheet,ScrollView,SafeAreaView} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import { Loader } from '../../Components';
@@ -9,11 +9,21 @@ import ActivityCards from './ActivityCards';
 import { Text } from '@ui-kitten/components';
 import HeroSectionTime from './HeroSectionTime';
 import MoniterScreen from './MoniterScreen';
+import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { CustSidebarActive } from '../../Redux/reducer';
 
 
 const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  const dispatch=useDispatch();
 
+  useFocusEffect(
+      useCallback(()=>{
+        dispatch(CustSidebarActive({page:''}));
+      },[navigation])
+  )
+  
   return (
     <View style={styles.body}>
       <Loader loading={loading} />

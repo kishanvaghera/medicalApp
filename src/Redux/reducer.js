@@ -7,6 +7,7 @@ const todosSlice = createSlice({
         isLoggedId:1,
         isUserData:'',
         isRole:'',
+        isCurrentSidebarPage:''
     },
     reducers: {
       LoginSuccess(state, action) {
@@ -21,8 +22,11 @@ const todosSlice = createSlice({
       AdminLogin(state, action){
         return {...state,isLogin:true,isRole:1}
       },
+      CustSidebarActive(state, action){
+        return {...state,isCurrentSidebarPage:action.payload.page}
+      },
     }
   })
   
-  export const { LoginSuccess, LogOut, UserDataStor,AdminLogin  } = todosSlice.actions
+  export const { LoginSuccess, LogOut, UserDataStor,AdminLogin,CustSidebarActive  } = todosSlice.actions
   export default todosSlice.reducer
