@@ -17,17 +17,18 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { Header } from '../../../../Layouts';
+import { Header, Main } from '../../../../Layouts';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const YogaDetail = ({ route, navigation }) => {
 
     const { yogaData } = route.params;
 
     const [pageDatail, setPageDetail] = useState({
-        yogaName: yogaData.vYogaCategoryName,
-        yogaId: yogaData.iYogaId,
-        imagePath: yogaData.tYogaFile,
-        yogaDec: yogaData.tYogaDesc
+        yogaName: yogaData?.vYogaCategoryName,
+        yogaId: yogaData?.iYogaId,
+        imagePath: yogaData?.tYogaFile,
+        yogaDec: yogaData?.tYogaDesc
     })
 
     const [pageTitle, setPageTitle] = useState('');
@@ -57,43 +58,45 @@ const YogaDetail = ({ route, navigation }) => {
 
     return (
         <View style={styles.body}>
-            <Header iconName={'left'} title={pageDatail.yogaName} />
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    marginTop: 5
-                }} >
-                <KeyboardAvoidingView enabled>
-                    <SafeAreaView style={styles.container}>
-                        {
-                            pageDatail.imagePath != '' ?
-                                <Image
-                                    source={{ uri: pageDatail.imagePath }}
-                                    style={styles.videoView} 
-                                    resizeMode={'contain'}/>
-                                : <Video
-                                    ref={video}
-                                    style={styles.videoView}
-                                    source={{
-                                        uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-                                    }}
-                                    useNativeControls
-                                    resizeMode="contain"
-                                    isLooping
-                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                    onFullscreenUpdate={setOrientation}
-                                />
-                        }
+            <Header iconName={'left'} title={yogaData?.vYogaCategoryName} />
+            <Main>
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={{
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                        marginTop: 5
+                    }} >
+                    <KeyboardAvoidingView enabled>
+                        <SafeAreaView style={styles.container}>
+                            {
+                                pageDatail.imagePath != '' ?
+                                    <Image
+                                        source={{ uri: pageDatail.imagePath }}
+                                        style={styles.videoView} 
+                                        resizeMode={'contain'}/>
+                                    : <Video
+                                        ref={video}
+                                        style={styles.videoView}
+                                        source={{
+                                            uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                                        }}
+                                        useNativeControls
+                                        resizeMode="contain"
+                                        isLooping
+                                        onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                        onFullscreenUpdate={setOrientation}
+                                    />
+                            }
 
-                        <Text style={styles.titleText}>Description</Text>
-                        <View style={{ marginTop: 8 }}>
-                            <Text style={styles.textStyle}>{pageDatail.yogaDec}</Text>
-                        </View>
-                    </SafeAreaView>
-                </KeyboardAvoidingView>
-            </ScrollView>
+                            <Text style={styles.titleText}>Description</Text>
+                            <View style={{ marginTop: 8 }}>
+                                <Text style={styles.textStyle}>{pageDatail.yogaDec}</Text>
+                            </View>
+                        </SafeAreaView>
+                    </KeyboardAvoidingView>
+                </ScrollView>
+            </Main>
         </View>
     )
 }
@@ -115,16 +118,16 @@ const styles = StyleSheet.create({
         height: hp(35)
     },
     titleText: {
-        fontSize: 17,
-        fontWeight: 'bold',
+        fontSize: RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         textAlign: 'left',
         marginTop: 15,
         borderBottomWidth: 1.5,
         borderBottomColor: 'red'
     },
     textStyle: {
-        fontSize: 14,
-        fontWeight: '400',
+        fontSize: RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         textAlign: 'left',
         lineHeight: 18
     }

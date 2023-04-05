@@ -17,7 +17,8 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { Header } from '../../../../Layouts';
+import { Header, Main } from '../../../../Layouts';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const CategoryDetail = ({ route, navigation }) => {
 
@@ -57,44 +58,45 @@ const CategoryDetail = ({ route, navigation }) => {
 
     return (
         <View style={styles.body}>
-
             <Header iconName={'left'} title={pageDatail.categoryName} />
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                    marginTop: 5
-                }} >
-                <KeyboardAvoidingView enabled>
-                    <SafeAreaView style={styles.container}>
-                        {
-                            pageDatail.imagePath != '' ?
-                                <Image
-                                    source={{ uri: pageDatail.imagePath }}
-                                    style={styles.videoView} 
-                                    resizeMode={'contain'}/>
-                                : <Video
-                                    ref={video}
-                                    style={styles.videoView}
-                                    source={{
-                                        uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-                                    }}
-                                    useNativeControls
-                                    resizeMode="contain"
-                                    isLooping
-                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                    onFullscreenUpdate={setOrientation}
-                                />
-                        }
+            <Main>
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={{
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                        marginTop: 5
+                    }} >
+                    <KeyboardAvoidingView enabled>
+                        <SafeAreaView style={styles.container}>
+                            {
+                                pageDatail.imagePath != '' ?
+                                    <Image
+                                        source={{ uri: pageDatail.imagePath }}
+                                        style={styles.videoView} 
+                                        resizeMode={'contain'}/>
+                                    : <Video
+                                        ref={video}
+                                        style={styles.videoView}
+                                        source={{
+                                            uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                                        }}
+                                        useNativeControls
+                                        resizeMode="contain"
+                                        isLooping
+                                        onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                        onFullscreenUpdate={setOrientation}
+                                    />
+                            }
 
-                        <Text style={styles.titleText}>Description</Text>
-                        <View style={{ marginTop: 8 }}>
-                            <Text style={styles.textStyle}>{pageDatail.categoryDec}</Text>
-                        </View>
-                    </SafeAreaView>
-                </KeyboardAvoidingView>
-            </ScrollView>
+                            <Text style={styles.titleText}>Description</Text>
+                            <View style={{ marginTop: 8 }}>
+                                <Text style={styles.textStyle}>{pageDatail.categoryDec}</Text>
+                            </View>
+                        </SafeAreaView>
+                    </KeyboardAvoidingView>
+                </ScrollView>
+            </Main>
         </View>
     )
 }
@@ -116,16 +118,16 @@ const styles = StyleSheet.create({
         height: hp(35)
     },
     titleText: {
-        fontSize: 17,
-        fontWeight: 'bold',
+        fontSize: RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         textAlign: 'left',
         marginTop: 15,
         borderBottomWidth: 1.5,
         borderBottomColor: 'red'
     },
     textStyle: {
-        fontSize: 14,
-        fontWeight: '400',
+        fontSize: RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         textAlign: 'left',
         lineHeight: 18
     }

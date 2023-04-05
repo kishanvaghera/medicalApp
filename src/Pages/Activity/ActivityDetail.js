@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const ActivityDetail = ({navigation, route}) => {
     const [loading, setLoading] = useState(false);
@@ -26,65 +27,66 @@ const ActivityDetail = ({navigation, route}) => {
         <SafeAreaView>
             <Header iconName={'menu'} title={data?.vSubActivityName} />
         </SafeAreaView>
-        <View style={styles.container}>
-            <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
-                <View style={styles.mainData}>
-                    {
-                        data?.tActivityFile?
-                        <Image source={{ uri: data.tActivityFile }} style={styles.imageView} resizeMode={'contain'}/>
-                        :""
-                    }
+        <Main>
+            <View style={styles.container}>
+                <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
+                    <View style={styles.mainData}>
+                        {
+                            data?.tActivityFile?
+                            <Image source={{ uri: data.tActivityFile }} style={styles.imageView} resizeMode={'contain'}/>
+                            :""
+                        }
 
-                    {
-                        data?.tActivityFile=="" && data?.tVideoLink!=""?
-                            <Video
-                            ref={video}
-                            style={styles.imageView}
-                            source={{
-                                uri: data.tVideoLink,
-                            }}
-                            useNativeControls
-                            rate={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping   
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        />:""
-                    }
-                    <View style={styles.textView}>
-                        <Text style={styles.textDesc}>
-                            {data?.tActivityDesc}
-                        </Text>
+                        {
+                            data?.tActivityFile=="" && data?.tVideoLink!=""?
+                                <Video
+                                ref={video}
+                                style={styles.imageView}
+                                source={{
+                                    uri: data.tVideoLink,
+                                }}
+                                useNativeControls
+                                rate={1.0}
+                                isMuted={false}
+                                resizeMode="cover"
+                                isLooping   
+                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                onFullscreenUpdate={setOrientation}
+                            />:""
+                        }
+                        <View style={styles.textView}>
+                            <Text style={styles.textDesc}>
+                                {data?.tActivityDesc}
+                            </Text>
+                        </View>
+
+                        {
+                            data?.tActivityFile!="" && data?.tVideoLink!=""?
+                            <View style={{marginTop:scale(20)}}>
+                                <Video
+                                ref={video}
+                                style={styles.imageView}
+                                source={{
+                                    uri: data.tVideoLink,
+                                }}
+                                useNativeControls
+                                rate={1.0}
+                                isMuted={false}
+                                resizeMode="cover"
+                                isLooping   
+                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                onFullscreenUpdate={setOrientation}
+                            />
+                            </View>:""
+                        }
                     </View>
-
-
-                    {
-                        data?.tActivityFile!="" && data?.tVideoLink!=""?
-                        <View style={{marginTop:scale(20)}}>
-                            <Video
-                            ref={video}
-                            style={styles.imageView}
-                            source={{
-                                uri: data.tVideoLink,
-                            }}
-                            useNativeControls
-                            rate={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping   
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        />
-                        </View>:""
-                    }
-                </View>
-            </ScrollView>
-        </View>
+                </ScrollView>
+            </View>
+        </Main>
     </View>
   )
 }
@@ -113,7 +115,8 @@ const styles = StyleSheet.create({
     },
     textDesc:{
         marginTop:scale(20),
-        fontSize:moderateScale(18),
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         lineHeight:moderateScale(30),
         textAlign:'justify',
     },

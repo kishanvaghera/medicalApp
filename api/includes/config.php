@@ -1,11 +1,24 @@
 <?php
- $MAIN_URL="http://schoolopathy.com/MedicalApi/";
+  $mode="LOCAL";
+  if($mode=="LIVE"){
+    $MAIN_URL="http://schoolopathy.com/MedicalApi/";
+  }else{
+    $MAIN_URL="http://localhost/medicalApp/medicalApp/api/";
+  }
+    
  class Dbconnect 
  { 
-  private $_localhost = 'localhost'; 
-  private $_user = 'root'; 
-  private $_password = ''; 
-  private $_dbname = 'geetaclinic'; 
+
+  protected  $_localhost = 'localhost'; 
+  protected  $_user = 'root'; 
+  protected  $_password = ''; 
+  protected  $_dbname = 'geetaclinic'; 
+  
+  // protected  $_localhost = 'localhost'; 
+  // protected  $_user = 'schoolopathy2'; 
+  // protected  $_password = 'Kishan@8219'; 
+  // protected  $_dbname = 'schoolopathydb'; 
+  
    
   protected $connection; 
    

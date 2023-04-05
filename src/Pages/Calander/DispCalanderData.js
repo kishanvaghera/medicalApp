@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import moment from 'moment/moment';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
@@ -95,36 +95,38 @@ const DispCalanderData = ({navigation}) => {
       <SafeAreaView>
           <Header iconName={'menu'} title={'Calendar'} isCalanderAdd={true} />
       </SafeAreaView>
-      <View style={styles.container}>
-        <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
-          <View style={styles.mainBody}>
-            <Layout style={{marginLeft:scale(15)}} level='1'>
-              <RangeCalendar
-                disableMonthPicker={true}
-                disableYearPicker={true}
-                style={{ width: '95%' }}
-                range={range}
-                renderDay={renderDay}
-                date={OvulationNewDate}
-              />
-            </Layout>
-            <View style={{flexDirection:'row',marginTop:scale(10),marginBottom:scale(50),marginLeft:scale(15)}}>
-              <View style={{height:verticalScale(50),width:moderateScale(140)}}>
-                <Text>Period Length: {PeriodLength}</Text>
-                <View style={{height:verticalScale(50),width:moderateScale(50),backgroundColor:"#FB2576",marginTop:scale(10),borderRadius:scale(10)}}></View>
-              </View>
-              <View style={{height:verticalScale(50),width:moderateScale(140),marginLeft:scale(50)}}>
-                <Text>Cycle Length: {cycleLength}</Text>
-                <View style={{height:verticalScale(50),width:moderateScale(50),backgroundColor:"#CB1C8D",marginTop:scale(10),borderRadius:scale(10)}}></View>
+      <Main>
+        <View style={styles.container}>
+          <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+            <View style={styles.mainBody}>
+              <Layout style={{marginLeft:scale(15)}} level='1'>
+                <RangeCalendar
+                  disableMonthPicker={true}
+                  disableYearPicker={true}
+                  style={{ width: '95%' }}
+                  range={range}
+                  renderDay={renderDay}
+                  date={OvulationNewDate}
+                />
+              </Layout>
+              <View style={{flexDirection:'row',marginTop:scale(10),marginBottom:scale(50),marginLeft:scale(15)}}>
+                <View style={{height:verticalScale(50),width:moderateScale(140)}}>
+                  <Text>Period Length: {PeriodLength}</Text>
+                  <View style={{height:verticalScale(50),width:moderateScale(50),backgroundColor:"#FB2576",marginTop:scale(10),borderRadius:scale(10)}}></View>
+                </View>
+                <View style={{height:verticalScale(50),width:moderateScale(140),marginLeft:scale(50)}}>
+                  <Text>Cycle Length: {cycleLength}</Text>
+                  <View style={{height:verticalScale(50),width:moderateScale(50),backgroundColor:"#CB1C8D",marginTop:scale(10),borderRadius:scale(10)}}></View>
+                </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
+      </Main>
     </View>
   )
 }

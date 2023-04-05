@@ -14,12 +14,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-import { Header } from '../../../../Layouts';
+import { Header, Main } from '../../../../Layouts';
 import { Loader } from '../../../../Components';
 import * as APIService from './../../../../Middleware/APIService';
 import apiUrls from './../../../../Middleware/apiUrls';
 import RoutName from '../../../../Routes/RoutName';
 import { Colors as theme } from '../../../../utils/useTheme';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const CategorytList = ({ navigation, props, route }) => {
 
@@ -104,22 +105,24 @@ const CategorytList = ({ navigation, props, route }) => {
         <View style={styles.body}>
             <Header iconName={'left'} title={'Category List'} />
             <Loader loading={loading} />
-            <SafeAreaView style={styles.container}>
-                {
-                    categorytList && categorytList.length ?
-                        categorytList.map((curEle, index) => {
-                            return (
-                                <TouchableOpacity style={styles.itemContainer}
-                                    onPress={() => navigation.navigate(RoutName.SUB_CATAGORY_LIST, { itemData: curEle })}>
-                                    <MaterialCommunityIcons name={'yoga'} size={30} color="black" />
-                                    <Text style={styles.titleText}>{curEle.iCategoryName}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                        : <></>
-                }
+            <Main>
+                <SafeAreaView style={styles.container}>
+                    {
+                        categorytList && categorytList.length ?
+                            categorytList.map((curEle, index) => {
+                                return (
+                                    <TouchableOpacity style={styles.itemContainer}
+                                        onPress={() => navigation.navigate(RoutName.SUB_CATAGORY_LIST, { itemData: curEle })}>
+                                        <MaterialCommunityIcons name={'yoga'} size={30} color="black" />
+                                        <Text style={styles.titleText}>{curEle.iCategoryName}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                            : <></>
+                    }
 
-            </SafeAreaView>
+                </SafeAreaView>
+            </Main>
         </View>
     )
 }
@@ -158,8 +161,8 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     titleText: {
-        fontSize: 17,
-        fontWeight: '500',
+        fontSize: RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         textAlign: 'left',
         paddingLeft: 8
     },

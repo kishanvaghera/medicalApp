@@ -13,12 +13,13 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import { Loader } from '../../Components';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import RoutName from '../../Routes/RoutName';
 import { Colors as theme } from '../../utils/useTheme';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 
 const Meditation = ({ navigation }) => {
@@ -53,22 +54,23 @@ const Meditation = ({ navigation }) => {
     <View style={styles.body}>
       <Header iconName={'menu'} title={'Meditation'} />
       <Loader loading={loading} />
-      <SafeAreaView style={styles.container}>
-        {
-          yogaList && yogaList.length ?
-            yogaList.map((curEle, index) => {
-              return (
-                <TouchableOpacity style={styles.itemContainer}
-                  onPress={() => navigation.navigate(RoutName.SUB_YOGA_LIST, { itemData: curEle })}>
-                  <MaterialCommunityIcons name={'yoga'} size={30} color="black" />
-                  <Text style={styles.titleText}>{curEle.vYogaCategoryName}</Text>
-                </TouchableOpacity>
-              )
-            })
-            : <></>
-        }
-      </SafeAreaView>
-
+      <Main>
+        <SafeAreaView style={styles.container}>
+          {
+            yogaList && yogaList.length ?
+              yogaList.map((curEle, index) => {
+                return (
+                  <TouchableOpacity style={styles.itemContainer}
+                    onPress={() => navigation.navigate(RoutName.SUB_YOGA_LIST, { itemData: curEle })}>
+                    <MaterialCommunityIcons name={'yoga'} size={30} color="black" />
+                    <Text style={styles.titleText}>{curEle.vYogaCategoryName}</Text>
+                  </TouchableOpacity>
+                )
+              })
+              : <></>
+          }
+        </SafeAreaView>
+      </Main>
     </View>
   )
 }
@@ -103,8 +105,8 @@ const styles = StyleSheet.create({
     elevation: 4,
 },
 titleText: {
-    fontSize: 17,
-    fontWeight: '500',
+    fontSize: RFPercentage(3),
+    fontFamily:'Lato_400Regular',
     textAlign: 'left',
     paddingLeft: 8
 },

@@ -1,65 +1,118 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const ActivityCategoryList = ({navigation}) => {
     const [loading, setLoading] = useState(false);
+    const [IsActiveTab,setIsActiveTab]=useState("Daily");
+    const swiperRef = useRef(null);
+
+    const handleChange=(text)=>{
+        setIsActiveTab(text);
+    }
+
+    const [DataImagesArr,setDataImagesArr]=useState([]);
 
     const [ActivityList,setActivityList]=useState([]);
     useEffect(()=>{
         setLoading(true);
-        const postData={action:"getActivityCategory"};
-        APIService.apiAction(postData, apiUrls.activity).then(res => {
-            setLoading(false);
-            if(res.status==200){
-                setActivityList([...res.data]);
-            }else{
-                setActivityList([]);
-            }
-        })
+        if(IsActiveTab=="Daily"){
+            const postData={action:"getActivityCategory"};
+            APIService.apiAction(postData, apiUrls.activity).then(res => {
+                setLoading(false);
+                if(res.status==200){
+                    setActivityList([...res.data]);
+                }else{
+                    setActivityList([]);
+                }
+            })
+
+            setDataImagesArr([]);
+        }else{
+            // swiperRef.current.scrollToIndex({ index: 0 });
+            setActivityList([]);
+
+            const postData={action:"FixedActivityList"};
+            APIService.apiAction(postData, apiUrls.activity).then(res => {
+                setLoading(false);
+                if(res.status==200){
+                    setDataImagesArr([...res.data]);
+                }else{
+                    setDataImagesArr([]);
+                }
+            })
+        }
         return ()=>{}
-    },[])
+    },[IsActiveTab])
 
   return (
-    <View style={styles.body}>
+    <View>
         <Loader loading={loading} />
         <SafeAreaView>
             <Header iconName={'menu'} title={'Activity'} />
         </SafeAreaView>
-        <View style={styles.container}>
-            <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+        <Main>
+            <View style={{paddingBottom:scale(40)}}>
+                <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
 
-                <View style={styles.body2}>
-                    <View style={styles.imageRows}>
-                        {
-                            ActivityList.map((curEle,index)=>{
-                                return <TouchableOpacity activeOpacity={.9} onPress={()=>{navigation.navigate(curEle
-                                .eIsSubCat=='y'?RoutName.SUB_ACTIVITY_LIST:RoutName.MAIN_ACTIVITY_LIST,{data:curEle
-                                    .eIsSubCat=='y'?{id:curEle.iActivityCatId,name:curEle.vActivitCatName}:{iActivityCatId:curEle.iActivityCatId,vSubActivityName:curEle.vActivitCatName,}})}} style={styles.column1} key={index}>
-                                            <Text style={curEle.tImage==""?styles.boxText:styles.boxText2}>{curEle.vActivitCatName}</Text>
-                                            {
-                                                curEle.tImage!=""?
-                                                <Image source={{uri:curEle.tImage}}  style={{...styles.boxImage}} resizeMode={'stretch'}/>
-                                                :<Image source={images.gradientBg}  style={{...styles.boxImage2}} resizeMode={'stretch'}/>
-                                            }
-                                        </TouchableOpacity>
-                            })
-                        }
+                    <View style={styles.mainRows}>
+                        <View style={styles.rows}>
+                            <TouchableOpacity onPress={()=>handleChange('Daily')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Daily'?'#FB2576':'#ebc3d2'}}>
+                                <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Daily</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#FB2576':'#ebc3d2'}}>
+                                <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
 
-            </ScrollView>
-        </View>
+                    {
+                        IsActiveTab=='Daily'?
+                        <View style={styles.boxRow}>
+                            {
+                                ActivityList.map((curEle,index)=>{
+                                    return curEle.isExist>0?<TouchableOpacity style={styles.box} activeOpacity={.9} onPress={()=>{navigation.navigate(curEle
+                                    .eIsSubCat=='y'?RoutName.SUB_ACTIVITY_LIST:RoutName.MAIN_ACTIVITY_LIST,{data:curEle
+                                        .eIsSubCat=='y'?{id:curEle.iActivityCatId,name:curEle.vActivitCatName}:{iActivityCatId:curEle.iActivityCatId,vSubActivityName:curEle.vActivitCatName,}})}} key={index}>
+                                                <View style={styles.imageBox}>
+                                                    <Image source={images.yumIcon} style={styles.imageView} resizeMode={'contain'}/>
+                                                    <Image source={images.om} style={styles.imageView2} resizeMode={'contain'}/>
+                                                </View>
+                                                <Text style={styles.boxText}>{curEle.vActivitCatName}</Text>
+                                            </TouchableOpacity>:""
+                                })
+                            }
+                        </View>
+                        :
+                        <View style={{width:moderateScale(310),alignSelf:'center'}}>
+                            <SwiperFlatList
+                                ref={swiperRef}
+                                data={DataImagesArr?DataImagesArr:[]} 
+                                renderItem={(curEle) => (
+                                <View style={styles.imageRows2}>
+                                    <Image source={{uri:curEle.item.tActivityFile}}  style={{...styles.boxImage3,width:315,height:hp(100)}} resizeMode="contain"/>
+                                </View>
+                                )}
+                            />
+                        </View>
+                    }
+
+                </ScrollView>
+            </View>
+        </Main>
     </View>
   )
 }
@@ -67,78 +120,72 @@ const ActivityCategoryList = ({navigation}) => {
 export default ActivityCategoryList
 
 const styles = StyleSheet.create({
-    body: {
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'flex-start',
-        alignContent: 'flex-start',
-        alignItems: 'center'
+    mainRows:{
+        justifyContent:'center',
+        alignItems:'center',
+        marginBottom:scale(10)
     },
-    container: {
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-    },
-    body2: {
-        marginHorizontal:scale(16),
-        marginVertical:scale(4),
-    },
-    imageRows:{
-        width:moderateScale(320),
+    rows:{
+        width:moderateScale(310),
         flexDirection:'row',
         justifyContent:'space-between',
-        flexWrap:'wrap'
     },
-    column1:{
+    imageBox:{
+        marginLeft:scale(10),
+        marginTop:scale(5)
+    },
+    rowsTab:{
         width:moderateScale(150),
-        height:verticalScale(140),
-        marginBottom:scale(20),
-        backgroundColor:'#544482',
-        borderRadius:moderateScale(15),
-        justifyContent:'center',
-        shadowColor: "black",
-        shadowOffset: {
-        width: 0,
-        height: 3,
+        borderBottomWidth:scale(5),
+        alignItems:'center',
+        paddingBottom:scale(5)
+    },
+    imageRows2:{
+        marginTop:scale(0),
+        paddingTop:scale(0)
+    },
+    boxImage3:{
+        marginTop:scale(0),
+    },
+    boxRow:{
+        alignSelf:'center',
+    },  
+    box:{
+        flexDirection:'row',
+        width:moderateScale(310),
+        paddingBottom:scale(5),
+        // paddingTop:scale(5),
+        backgroundColor:'white',
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 4,
         },
-        shadowOpacity:  0.18,
-        shadowRadius: 4.59,
-        elevation: 5
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
+        borderRadius:scale(10),
+        marginBottom:scale(10),
+        alignItems:'center'
     },
-    boxText:{
-        width:moderateScale(143),
-        textAlign:'center',
-        fontSize:moderateScale(20),
-        fontWeight:'800',
-        color:"white"
+    imageView:{
+        width:moderateScale(30),
+        height:verticalScale(30),
+        alignSelf:'center'
     },
-    boxText2:{
-        width:moderateScale(143),
-        textAlign:'left',
-        fontSize:moderateScale(25),
-        fontWeight:'800',
-        color:"white",
-        marginBottom:scale(100),
-        marginLeft:scale(15)
-    },
-    headTitle:{
-        fontSize:moderateScale(20),
-        fontWeight:'800',
-        marginBottom:scale(15),
-        color:"#3A1078"
-    },
-    boxImage:{
-        height:verticalScale(100),
-        width:moderateScale(100),
+    imageView2:{
         position:'absolute',
-        bottom:scale(10),
-        right:0,
-    },
-    boxImage2:{
-        width:moderateScale(150),
-        height:verticalScale(140),
-        position:'absolute',
-        top:0,
+        width:moderateScale(40),
+        height:verticalScale(40),
         zIndex:-1,
-        borderRadius:moderateScale(15),
+        top:-10,
+        right:-5,
+        tintColor:'#FB2576'
+    },  
+    boxText:{
+        fontFamily:'Lato_400Regular',
+        fontSize:RFPercentage(3),
+        width:moderateScale(250),
+        marginLeft:scale(8)
     }
 });

@@ -6,11 +6,8 @@ header('Access-Control-Max-Age: 1728000');
 header('Content-Length: 0');
 header('Content-Type: text/plain');
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
 error_reporting(0);
-
 include ("class.php");
 
 $input = file_get_contents('php://input');

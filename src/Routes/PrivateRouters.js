@@ -26,6 +26,9 @@ import YogaSubSubCateList from '../Pages/Yoga/YogaSubSubCateList';
 import DietList from '../Pages/Diet/DietList';
 import { LogOut } from '../Redux/reducer';
 import SetCalanderData from '../Pages/Calander/SetCalanderData';
+import { scale, verticalScale } from '../utils/scalling';
+import MusicSubData from '../Pages/Music/MusicSubData';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,7 +46,7 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.MUSIC_LIST} component={MusicCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_PLAYER} component={MusicPlayer} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_YOGA_LIST} component={SubYogaList} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.YOGA_DETAIL} component={YogaDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.YOGA_DETAIL} component={YogaMainDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.ACTIVITY_LIST} component={ActivityCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SUB_ACTIVITY_LIST} component={ActvitySubCategoryList} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MAIN_ACTIVITY_LIST} component={MainActivityList} options={{ headerShown: false }} />
@@ -58,6 +61,7 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.MUSIC_DETAIL} component={MusicDetail} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.CALANDER_VIEW} component={DispCalanderData} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.CALANDER_ADD} component={SetCalanderData} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MUSIC_SUB_DATA} component={MusicSubData} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -88,15 +92,23 @@ const BottomTabStack = () => {
     <Tab.Navigator
       initialRouteName={RoutName.HOME}
       screenOptions={{
-        activeTintColor: 'tomato',
+        activeTintColor: '#FB2576',
         inactiveTintColor: 'gray',
         style: {
           backgroundColor: '#e0e0e0',
         },
-        labelStyle: {
-          textAlign: 'center',
-          fontSize: 16,
+        tabBarIconStyle: {
+          marginTop: scale(5), // Add margin to the top of the icon
         },
+        tabBarLabelStyle: {
+          textAlign: 'center',
+          fontSize: RFPercentage(1.8),
+          paddingBottom:scale(4)
+        },
+        tabBarStyle:{
+          height:verticalScale(48),
+        },
+        tabBarActiveTintColor: '#FB2576',
       }}
       >
       <Tab.Screen

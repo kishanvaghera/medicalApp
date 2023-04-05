@@ -1,0 +1,15 @@
+[25-Jan-2023 18:28:15 UTC] PHP Fatal error:  Constant expression contains invalid operations in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/config.php on line 4
+[25-Jan-2023 18:28:21 UTC] PHP Fatal error:  Constant expression contains invalid operations in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/config.php on line 4
+[25-Jan-2023 18:28:30 UTC] PHP Fatal error:  Constant expression contains invalid operations in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/config.php on line 4
+[25-Jan-2023 18:28:53 UTC] PHP Fatal error:  Constant expression contains invalid operations in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/config.php on line 4
+[25-Jan-2023 18:35:33 UTC] PHP Fatal error:  Constant expression contains invalid operations in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/config.php on line 4
+[27-Jan-2023 19:03:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function pritn_r() in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/connect.php:2
+Stack trace:
+#0 /home/gnyi9ywg5oze/public_html/MedicalApi/auth.php(3): include()
+#1 {main}
+  thrown in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/connect.php on line 2
+[27-Jan-2023 19:03:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function pritn_r() in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/connect.php:2
+Stack trace:
+#0 /home/gnyi9ywg5oze/public_html/MedicalApi/auth.php(3): include()
+#1 {main}
+  thrown in /home/gnyi9ywg5oze/public_html/MedicalApi/includes/connect.php on line 2

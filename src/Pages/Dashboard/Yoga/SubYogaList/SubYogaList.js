@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as APIService from './../../../../Middleware/APIService';
 import apiUrls from './../../../../Middleware/apiUrls';
 import { Loader } from '../../../../Components';
-import { Header } from '../../../../Layouts'
+import { Header, Main } from '../../../../Layouts'
 import RoutName from '../../../../Routes/RoutName';
 import { Colors as theme } from '../../../../utils/useTheme';
 
@@ -71,29 +71,31 @@ const SubYogaList = ({ route, navigation }) => {
         <View style={styles.body}>
             <Header iconName={'left'} title={pageDatail.yogaName} />
             <Loader loading={loading} />
-            <SafeAreaView style={styles.container}>
-                <View style={{ marginTop: 5 }}>
-                    <FlatList
-                        data={subYogaList}
-                        renderItem={({ item }) => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate(RoutName.YOGA_DETAIL, { yogaData: item })}
-                                    style={styles.gridView}>
-                                    <Image
-                                        style={styles.imageThumbnail}
-                                        source={{ uri: item.tYogaFile }}
-                                    />
-                                </TouchableOpacity>
-                            )
-                        }
-                        }
-                        numColumns={2}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
+            <Main>
+                <SafeAreaView style={styles.container}>
+                    <View style={{ marginTop: 5 }}>
+                        <FlatList
+                            data={subYogaList}
+                            renderItem={({ item }) => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate(RoutName.YOGA_DETAIL, { yogaData: item })}
+                                        style={styles.gridView}>
+                                        <Image
+                                            style={styles.imageThumbnail}
+                                            source={{ uri: item.tYogaFile }}
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }
+                            }
+                            numColumns={2}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
 
-                </View>
-            </SafeAreaView>
+                    </View>
+                </SafeAreaView>
+            </Main>
         </View>
     )
 }

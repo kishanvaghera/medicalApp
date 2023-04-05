@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { RFPercentage } from 'react-native-responsive-fontsize';
+import * as APIService from '../../Middleware/APIService';
+import apiUrls from '../../Middleware/apiUrls';
+import images from '../../../assets/index'
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const YogaMainDetail = ({navigation,route}) => {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
+
+    const thumbnailSource = require('../../../assets/videoThumb.png');
 
     const video = React.useRef(null);
     const [status, setStatus] = useState({});
@@ -20,7 +27,44 @@ const YogaMainDetail = ({navigation,route}) => {
         }
     }
     
-    const PageName=data?.iSubSubYogaCatId?data.vSubSubYogaName:data?.iSubYogaCatId?data.vSubYogaName:data?.iYogaCatId?data.vYogaCategoryName:""
+
+    const [PageName,setPageName]=useState("");
+
+    const [dataMain,setDataMain]=useState({
+        tYogaFile:"",
+        tVideoLink:"",
+        tYogaDesc:"",
+    });
+    
+    useEffect(() => {
+        setLoading(true);
+        const postData={action:"YogaData",iYogaCatId:data?.iYogaCatId,iSubYogaCatId:data?.iSubYogaCatId?data?.iSubYogaCatId:0,iSubSubYogaCatId:data?.iSubSubYogaCatId?data?.iSubSubYogaCatId:0};
+        APIService.apiAction(postData, apiUrls.yoga).then(res => {
+            setLoading(false);
+            if(res.status==200){
+                if(res.data[data?.iYogaCatId] && res.data[data?.iYogaCatId].length>0){
+                    setDataMain({...res.data[data?.iYogaCatId][0]});
+                }
+            }else{
+                setDataMain({
+                    tYogaFile:"",
+                    tVideoLink:"",
+                    tYogaDesc:"",
+                });
+            }
+        })
+
+      if(data?.iSubSubYogaCatId && data?.vSubSubYogaName){
+        setPageName(data?.vSubSubYogaName)
+      }else if(data?.iSubYogaCatId && data?.vSubYogaName){
+        setPageName(data?.vSubYogaName)
+      }else if(data?.iYogaCatId && data?.vYogaCategoryName){
+        setPageName(data?.vYogaCategoryName)
+      }else{
+        setPageName("")
+      }
+      return () => {}
+    }, [data])
 
   return (
     <View style={styles.body}>
@@ -28,64 +72,50 @@ const YogaMainDetail = ({navigation,route}) => {
         <SafeAreaView>
             <Header iconName={'menu'} title={PageName} />
         </SafeAreaView>
-        <View style={styles.container}>
-            <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
-                <View style={styles.mainData}>
-                    {
-                        data?.tYogaFile?
-                        <Image source={{ uri: data.tYogaFile }} style={styles.imageView} resizeMode={'contain'}/>
-                        :""
-                    }
+        <Main topMargin={1}>
+            <View style={styles.container}>
+                <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
+                    <View style={styles.mainData}>
+                        {
+                            dataMain?.tYogaFile?
+                            <Image source={{ uri: dataMain.tYogaFile }} style={styles.imageView2} resizeMode='stretch' />
+                            :""
+                        }
 
-                    {
-                        data?.tYogaFile=="" && data?.tVideoLink!=""?
-                            <Video
-                            ref={video}
-                            style={styles.imageView}
-                            source={{
-                                uri: data.tVideoLink,
-                            }}
-                            useNativeControls
-                            rate={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping   
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        />:""
-                    }
-                    <View style={styles.textView}>
-                        <Text style={styles.textDesc}>
-                            {data?.tYogaDesc}
-                        </Text>
+                        {
+                            dataMain?.tYogaFile!="" && dataMain?.tVideoLink!=""?
+                            <View>
+                                <Video
+                                ref={video}
+                                posterSource={thumbnailSource}
+                                style={styles.imageView}
+                                source={{
+                                    uri: dataMain.tVideoLink,
+                                }}
+                                useNativeControls
+                                rate={1.0}
+                                isMuted={false}
+                                resizeMode="cover"
+                                isLooping   
+                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                onFullscreenUpdate={setOrientation}
+                            />
+                            </View>:""
+                        }
+
+                        <View style={styles.textView}>
+                            <Text style={styles.textDesc}>
+                                {dataMain?.tYogaDesc}
+                            </Text>
+                        </View>
                     </View>
-                    
-                    {
-                        data?.tYogaFile!="" && data?.tVideoLink!=""?
-                        <View style={{marginTop:scale(20)}}>
-                            <Video
-                            ref={video}
-                            style={styles.imageView}
-                            source={{
-                                uri: data.tVideoLink,
-                            }}
-                            useNativeControls
-                            rate={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping   
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        />
-                        </View>:""
-                    }
-                </View>
-            </ScrollView>
-        </View>
+                </ScrollView>
+            </View>
+        </Main>
     </View>
   )
 }
@@ -105,7 +135,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
   },
   mainData:{
-
+    marginTop:scale(0)
   },
   imageView:{
       width:moderateScale(355),
@@ -114,9 +144,15 @@ const styles = StyleSheet.create({
   },
   textDesc:{
       marginTop:scale(20),
-      fontSize:moderateScale(18),
+      fontSize:RFPercentage(3),
+      fontFamily:'Lato_400Regular',
       lineHeight:moderateScale(30),
       textAlign:'justify',
+  },
+  imageView2:{
+    marginTop:scale(10),
+    width:moderateScale(355),
+    height:heightPercentageToDP('100%'),
   },
   textView:{
       width:moderateScale(320),

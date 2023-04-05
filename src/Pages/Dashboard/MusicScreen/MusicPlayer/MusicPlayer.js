@@ -13,7 +13,8 @@ import {
 import { Audio } from 'expo-av';
 import Slider from '@react-native-community/slider';
 import { AntDesign, Entypo, EvilIcons, Fontisto, Feather, MaterialIcons, Foundation } from '@expo/vector-icons';
-import { Header } from '../../../../Layouts';
+import { Header, Main } from '../../../../Layouts';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 
 
@@ -87,48 +88,50 @@ const MusicPlayer = () => {
   return (
     <View style={styles.body}>
       <Header iconName={'left'} title={'Music Player'} />
-      <SafeAreaView style={styles.container}>
-        <View style={{ width: wp(90), justifyContent: 'center', alignItems: 'center' }}>
-          <View style={styles.thumblineView} />
-          <Text style={styles.boldText}>Morning</Text>
-        </View>
-        <View>
-          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 10, alignSelf: 'center' }}>
-            <Entypo name="ccw" size={24} color="black" />
-            <EvilIcons name="heart" size={30} color="black" />
-            {/* <Fontisto name="heart" size={24} color="black" /> */}
+      <Main>
+        <SafeAreaView style={styles.container}>
+          <View style={{ width: wp(90), justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.thumblineView} />
+            <Text style={styles.boldText}>Morning</Text>
           </View>
-          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
-            <Text style={styles.normalText}>00:00</Text>
-            <Slider
-              style={{ width: wp(70), height: 40 }}
-              minimumValue={0}
-              maximumValue={1}
-              minimumTrackTintColor="tomato"
-              maximumTrackTintColor="#000000"
-            />
-            <Text style={styles.normalText}>{eTime}</Text>
+          <View>
+            <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 10, alignSelf: 'center' }}>
+              <Entypo name="ccw" size={24} color="black" />
+              <EvilIcons name="heart" size={30} color="black" />
+              {/* <Fontisto name="heart" size={24} color="black" /> */}
+            </View>
+            <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
+              <Text style={styles.normalText}>00:00</Text>
+              <Slider
+                style={{ width: wp(70), height: 40 }}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="tomato"
+                maximumTrackTintColor="#000000"
+              />
+              <Text style={styles.normalText}>{eTime}</Text>
+            </View>
+            <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
+              <MaterialIcons name="queue-music" size={24} color="black" />
+              <Foundation name="previous" size={24} color="black" />
+              <TouchableOpacity
+                onPress={() => isPlay ? pauseSound() : playSound()}
+                style={{
+                  width: 50,
+                  height: 50,
+                }}>
+                <AntDesign name={isPlay ? 'pausecircle' : 'play'} size={50} color="black" />
+                {/* <AntDesign name="pausecircle" size={50} color="black" /> */}
+              </TouchableOpacity>
+              <Foundation name="next" size={24} color="black" />
+              <Feather name="thumbs-up" size={24} color="black" />
+              {/* <Fontisto name="heart" size={24} color="black" /> */}
+            </View>
           </View>
-          <View style={{ width: wp(90), justifyContent: 'space-between', flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
-            <MaterialIcons name="queue-music" size={24} color="black" />
-            <Foundation name="previous" size={24} color="black" />
-            <TouchableOpacity
-              onPress={() => isPlay ? pauseSound() : playSound()}
-              style={{
-                width: 50,
-                height: 50,
-              }}>
-              <AntDesign name={isPlay ? 'pausecircle' : 'play'} size={50} color="black" />
-              {/* <AntDesign name="pausecircle" size={50} color="black" /> */}
-            </TouchableOpacity>
-            <Foundation name="next" size={24} color="black" />
-            <Feather name="thumbs-up" size={24} color="black" />
-            {/* <Fontisto name="heart" size={24} color="black" /> */}
-          </View>
-        </View>
 
 
-      </SafeAreaView>
+        </SafeAreaView>
+      </Main>
     </View>
   )
 }
@@ -154,14 +157,14 @@ const styles = StyleSheet.create({
     borderRadius: wp(50) / 2
   },
   boldText: {
-    fontSize: 30,
+    fontSize: RFPercentage(3),
+    fontFamily:'Lato_400Regular',
     color: 'black',
-    fontWeight: 'bold',
     marginTop: 10
   },
   normalText: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: RFPercentage(3),
+    fontFamily:'Lato_400Regular',
     textAlign: 'center',
   },
 });

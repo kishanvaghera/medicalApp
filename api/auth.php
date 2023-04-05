@@ -8,6 +8,7 @@ if($_POST['action'] == "login"){
 
     $rtnArr = array();
     $checkUserExist=$mfp->mf_query("SELECT * FROM user WHERE vUsername='".$vUsername."' AND eStatus='y' ");
+
     if($mfp->mf_affected_rows()>0){
         $row=$mfp->mf_fetch_array($checkUserExist);
         if($row['vPassword']==$vPassword){
@@ -20,6 +21,8 @@ if($_POST['action'] == "login"){
             $rtnArr['data']=$row;
             if($row['iUserId']==2){
                 $rtnArr['iRole']=1;
+            }else{
+                $rtnArr['iRole']=0;
             }
         }else{
             $rtnArr['status']=412;
@@ -107,7 +110,7 @@ if($_POST['action'] == "login"){
     if($mfp->mf_affected_rows()>0){
         $row=$mfp->mf_fetch_array($sqlGetCode);
         $explodeString=str_split($row['vUsername'],5);
-        $numberInc=(int)$explodeString;
+        $numberInc=(int)$explodeString[1];
         $number=str_pad($numberInc+1, 4, "0", STR_PAD_LEFT );
         $string=$explodeString[0]."".$number;
     }else{
@@ -119,4 +122,42 @@ if($_POST['action'] == "login"){
     $returnArr['data']=$string; 
     echo json_encode($returnArr);
     exit();
+}else if($_POST['action'] == "CalanderDataStore"){
+    $LogedData=$mfp->LoginCheck($_POST['vAuthToken']);
+    
+    $dPregStartDate=$_POST['dPregStartDate'];
+    $dPregEndDate=$_POST['dPregEndDate'];
+    $vPeriodLength=$_POST['vPeriodLength'];
+    $vCycleLength=$_POST['vCycleLength'];
+    
+    $insArr=array();
+    $insArr['dPregStartDate']=$dPregStartDate;
+    $insArr['dPregEndDate']=$dPregEndDate;
+    $insArr['vPeriodLength']=$vPeriodLength;
+    $insArr['vCycleLength']=$vCycleLength;
+    $mfp->mf_dbupdate("user",$insArr," WHERE iUserId=".$LogedData."");
+    
+    $retArr=array();
+    $retArr['status']=200;
+    $retArr['message']="New Calander Data Updated.";
+    echo json_encode($retArr);
+    exit;
+}else if($_POST['action'] == "getPeriodCalData"){
+    $LogedData=$mfp->LoginCheck($_POST['vAuthToken']);
+    
+    $sql=$mfp->mf_query("SELECT vPeriodLength,vCycleLength,dPregStartDate,dPregEndDate FROM user  WHERE iUserId='".$LogedData."' LIMIT 1");
+    if($mfp->mf_affected_rows()>0){
+        $row=$mfp->mf_fetch_array($sql);
+        $returnArr=array();
+        $returnArr['status']=200;
+        $returnArr['data']=$row; 
+        echo json_encode($returnArr);
+        exit();
+    }else{
+        $returnArr=array();
+        $returnArr['status']=412;
+        $returnArr['message']="No Data Found!"; 
+        echo json_encode($returnArr);
+        exit();
+    }
 }

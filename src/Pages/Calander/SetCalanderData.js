@@ -3,7 +3,7 @@ import { Calendar, Text,Layout,Input,Button  } from '@ui-kitten/components';
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { moderateScale, scale, verticalScale } from '../../utils/scalling';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import Icon from '../../utils/Icon';
 import apiUrls from '../../Middleware/apiUrls';
 import * as APIService from '../../Middleware/APIService';
@@ -155,73 +155,75 @@ const SetCalanderData = ({navigation}) => {
       <SafeAreaView>
           <Header iconName={'menu'} title={'Calendar'} backScreenName={RoutName.CALANDER_VIEW} />
       </SafeAreaView>
-      <View style={styles.container}>
-        <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
-          <View style={styles.mainBody}>
-            
-            <Text style={styles.InpHeadTitle}>Period Length</Text>
-            <View style={{flexDirection:'row',marginBottom:scale(15),marginLeft:scale(5)}}>
-                <Input
-                  style={{ width: moderateScale(60),borderColor:'#FB2576' }}
-                  keyboardType='numeric'
-                  value={PeridsLength}
-                  onChangeText={(nextValue)=>setPeridsLength(nextValue)}
-                  onBlur={handleBlurPeriods}
+      <Main>
+        <View style={styles.container}>
+          <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+            <View style={styles.mainBody}>
+              
+              <Text style={styles.InpHeadTitle}>Period Length</Text>
+              <View style={{flexDirection:'row',marginBottom:scale(15),marginLeft:scale(5)}}>
+                  <Input
+                    style={{ width: moderateScale(60),borderColor:'#FB2576' }}
+                    keyboardType='numeric'
+                    value={PeridsLength}
+                    onChangeText={(nextValue)=>setPeridsLength(nextValue)}
+                    onBlur={handleBlurPeriods}
+                  />
+                  <View style={styles.styleTextButton}>
+                    <Text style={{fontSize:scale(18),color:'white'}}>Days</Text>
+                  </View>
+
+                  <TouchableOpacity onPress={()=>changePerLen("plus")} style={{...styles.styleTextButton,marginLeft:scale(72)}}>
+                    <Icon IconName='plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>changePerLen("minus")} style={{...styles.styleTextButton,marginLeft:scale(5)}}>
+                    <Icon IconName='minus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
+                  </TouchableOpacity>
+              </View>
+
+              <Text style={styles.InpHeadTitle}>Cycle Length</Text>
+              <View style={{flexDirection:'row',marginBottom:scale(15),marginLeft:scale(5)}}>
+                  <Input
+                    style={{ width: moderateScale(60),borderColor:'#FB2576' }}
+                    keyboardType='numeric'
+                    value={CycleLength}
+                    onChangeText={(nextValue)=>setCycleLength(nextValue)}
+                    onBlur={handleBlurCycle}
+                  />
+                  <View style={styles.styleTextButton}>
+                    <Text style={{fontSize:scale(18),color:'white'}}>Days</Text>
+                  </View>
+
+                  <TouchableOpacity onPress={()=>changeCycLen("plus")} style={{...styles.styleTextButton,marginLeft:scale(72)}}>
+                    <Icon IconName='plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>changeCycLen("minus")} style={{...styles.styleTextButton,marginLeft:scale(5)}}>
+                    <Icon IconName='minus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
+                  </TouchableOpacity>
+              </View>
+
+
+              <Layout style={{marginLeft:scale(5)}} level='1'>
+                <Calendar 
+                renderDay={renderDay}
+                style={{ width: '100%' }}
+                date={EndDate}
                 />
-                <View style={styles.styleTextButton}>
-                  <Text style={{fontSize:scale(18),color:'white'}}>Days</Text>
-                </View>
+              
+                <Button style={{marginTop:scale(10),width:moderateScale(150),alignSelf:'center'}} onPress={saveData}>
+                  Save Data
+                </Button>
 
-                <TouchableOpacity onPress={()=>changePerLen("plus")} style={{...styles.styleTextButton,marginLeft:scale(72)}}>
-                  <Icon IconName='plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>changePerLen("minus")} style={{...styles.styleTextButton,marginLeft:scale(5)}}>
-                  <Icon IconName='minus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
-                </TouchableOpacity>
+              </Layout>
+
             </View>
-
-            <Text style={styles.InpHeadTitle}>Cycle Length</Text>
-            <View style={{flexDirection:'row',marginBottom:scale(15),marginLeft:scale(5)}}>
-                <Input
-                  style={{ width: moderateScale(60),borderColor:'#FB2576' }}
-                  keyboardType='numeric'
-                  value={CycleLength}
-                  onChangeText={(nextValue)=>setCycleLength(nextValue)}
-                  onBlur={handleBlurCycle}
-                />
-                <View style={styles.styleTextButton}>
-                  <Text style={{fontSize:scale(18),color:'white'}}>Days</Text>
-                </View>
-
-                <TouchableOpacity onPress={()=>changeCycLen("plus")} style={{...styles.styleTextButton,marginLeft:scale(72)}}>
-                  <Icon IconName='plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>changeCycLen("minus")} style={{...styles.styleTextButton,marginLeft:scale(5)}}>
-                  <Icon IconName='minus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
-                </TouchableOpacity>
-            </View>
-
-
-            <Layout style={{marginLeft:scale(5)}} level='1'>
-              <Calendar 
-               renderDay={renderDay}
-               style={{ width: '100%' }}
-               date={EndDate}
-              />
-            
-              <Button style={{marginTop:scale(10),width:moderateScale(150),alignSelf:'center'}} onPress={saveData}>
-                Save Data
-              </Button>
-
-            </Layout>
-
-          </View>
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
+      </Main>
     </View>
   )
 }

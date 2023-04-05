@@ -17,9 +17,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as APIService from './../../../../Middleware/APIService';
 import apiUrls from './../../../../Middleware/apiUrls';
 import { Loader } from '../../../../Components';
-import { Header } from '../../../../Layouts'
+import { Header, Main } from '../../../../Layouts'
 import RoutName from '../../../../Routes/RoutName';
 import { Colors as theme } from '../../../../utils/useTheme';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 
 const MusicList = ({ route, navigation }) => {
@@ -116,14 +117,16 @@ const MusicList = ({ route, navigation }) => {
         <View style={styles.body}>
             <Header iconName={'left'} title={'Music List'} />
             <Loader loading={loading} />
-            <SafeAreaView style={styles.container}>
-                <FlatList
-                    data={musicList}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    style={{ marginTop: 10 }}
-                />
-            </SafeAreaView>
+            <Main>
+                <SafeAreaView style={styles.container}>
+                    <FlatList
+                        data={musicList}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        style={{ marginTop: 10 }}
+                    />
+                </SafeAreaView>
+            </Main>
         </View>
     )
 }
@@ -154,8 +157,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8
     },
     titleText: {
-        fontSize: 17,
-        fontWeight: '500',
+        fontSize: RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         textAlign: 'left',
         paddingLeft: 8
     },

@@ -5,8 +5,15 @@ import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 function CategorySection(props) {
+    const imagesArray = {
+      1:images.theme1,
+      2:images.theme2,
+      3:images.theme3,
+      4:images.theme4,
+    };
     const [TodayCategoryList,setTodayCategoryList]=useState([]);
     useEffect(()=>{
         props.setLoading(true);
@@ -23,16 +30,16 @@ function CategorySection(props) {
     },[])
     
   return (
-    <View style={{marginTop:scale(30)}}>
+    <View style={{marginTop:scale(5)}}>
         <SwiperFlatList
             autoplay
             autoplayDelay={5}
             autoplayLoop
             index={0}
             data={TodayCategoryList?TodayCategoryList:[]} 
-            renderItem={(curEle) => (
+            renderItem={(curEle,ind) => (
             <View style={styles.imageRows}>
-                <Image source={images.theme1}  style={{...styles.boxImage}} resizeMode={'stretch'}/>
+                <Image source={imagesArray[curEle.item.iThemeId]} style={{...styles.boxImage}} resizeMode={'stretch'}/>
                 <Text style={{...styles.categoryImageText}}>{curEle.item?.tText}</Text>
             </View>
             )}
@@ -51,10 +58,10 @@ const styles = StyleSheet.create({
       position:'absolute'
     },
     categoryImageText:{
-      color:"white",
-      fontSize:moderateScale(26, 0.4),
+      color:"black",
+      fontSize:RFPercentage(3),
+      fontFamily:'Lato_400Regular',
       alignSelf:'center',
-      marginTop:scale(40),
       width:moderateScale(200),
       textAlign:'center'
     },
@@ -70,5 +77,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        justifyContent:'center',
+        alignItems:'center'
     }
   });

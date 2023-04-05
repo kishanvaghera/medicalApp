@@ -5,6 +5,9 @@ const images = {
     bg: require('./bg.png'), 
     music: require('./music.jpg'), 
     theme1: require('./theme1.jpg'), 
+    theme2: require('./theme2.jpg'), 
+    theme3: require('./theme3.jpg'), 
+    theme4: require('./theme4.jpg'), 
     gradientBg:require('./gradient-bg.png'),
     baby1:require('./baby1.png'),
     profile:require('./profile.jpg'),
@@ -23,6 +26,10 @@ const images = {
     sdiSetting1:require('./Sidebar/setting1.png'),
     sdiVideo:require('./Sidebar/video.png'),
     sdiVideo1:require('./Sidebar/video1.png'),
+    heroHome:require('./heroHome.jpg'),
+    yumIcon:require('./yum.png'),
+    om:require('./om.png'),
+    videoThumb:require('./videoThumb.png'),
 
 }
 export default images;

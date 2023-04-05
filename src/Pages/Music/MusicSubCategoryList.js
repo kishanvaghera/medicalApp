@@ -5,8 +5,9 @@ import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const MusicSubCategoryListComp = ({navigation,route}) => {
     const [loading, setLoading] = useState(false);
@@ -27,33 +28,43 @@ const MusicSubCategoryListComp = ({navigation,route}) => {
         return ()=>{}
     },[])
 
+    const RedirectPage=(ddNew)=>{
+        if(ddNew.MusicCount>1){
+            navigation.navigate(RoutName.MUSIC_SUB_DATA,{data:ddNew})
+        }else{
+            navigation.navigate(RoutName.MUSIC_DETAIL,{data:ddNew})
+        }
+    }
+
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
         <SafeAreaView>
             <Header iconName={'menu'} title={data.name} />
         </SafeAreaView>
-        <View style={styles.container}>
-            <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
-                <View style={styles.body2}>
-                    <View style={styles.imageRows}>
+        <Main>
+            <View style={styles.container}>
+                <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+                    <View style={styles.boxRow}>
                         {
                             MusicSubCategoryList.map((curEle,index)=>{
-                                return <TouchableOpacity activeOpacity={.9} onPress={()=>{navigation.navigate(RoutName.MUSIC_DETAIL,
-                                    {data:curEle})}} style={styles.column1} key={index}>
+                                return curEle.isExist>0?<TouchableOpacity activeOpacity={.9} onPress={()=>{RedirectPage(curEle)}} style={styles.box} key={index}>   
+                                            <View style={styles.imageBox}>
+                                                <Image source={images.yumIcon} style={styles.imageView} resizeMode={'contain'}/>
+                                                <Image source={images.om} style={styles.imageView2} resizeMode={'contain'}/> 
+                                            </View> 
                                             <Text style={styles.boxText}>{curEle.vSubMusicCatName}</Text>
-                                            <Image source={images.gradientBg}  style={{...styles.boxImage2}} resizeMode={'stretch'}/>
-                                        </TouchableOpacity>
+                                        </TouchableOpacity>:""
                             })
                         }
                     </View>
-                </View>
-            </ScrollView>
-        </View>
+                </ScrollView>
+            </View>
+        </Main>
     </View>
   )
 }
@@ -61,78 +72,49 @@ const MusicSubCategoryListComp = ({navigation,route}) => {
 export default MusicSubCategoryListComp
 
 const styles = StyleSheet.create({
-    body: {
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'flex-start',
-        alignContent: 'flex-start',
-        alignItems: 'center'
-    },
-    container: {
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-    },
-    body2: {
-        marginHorizontal:scale(16),
-        marginVertical:scale(4),
-    },
-    imageRows:{
-        width:moderateScale(320),
+    boxRow:{
+        alignSelf:'center',
+    },  
+    box:{
         flexDirection:'row',
-        justifyContent:'space-between',
-        flexWrap:'wrap'
-    },
-    column1:{
-        width:moderateScale(150),
-        height:verticalScale(140),
-        marginBottom:scale(20),
-        backgroundColor:'#544482',
-        borderRadius:moderateScale(15),
-        justifyContent:'center',
-        shadowColor: "black",
-        shadowOffset: {
-        width: 0,
-        height: 3,
+        width:moderateScale(310),
+        paddingBottom:scale(5),
+        // paddingTop:scale(5),
+        backgroundColor:'white',
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 4,
         },
-        shadowOpacity:  0.18,
-        shadowRadius: 4.59,
-        elevation: 5
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
+        borderRadius:scale(10),
+        marginBottom:scale(10),
+        alignItems:'center'
     },
-    boxText:{
-        padding:scale(10),
-        textAlign:'center',
-        fontSize:moderateScale(20),
-        fontWeight:'800',
-        color:"white"
+    imageBox:{
+        marginLeft:scale(10),
+        marginTop:scale(5)
     },
-    boxText2:{
-        padding:scale(10),
-        textAlign:'left',
-        fontSize:moderateScale(25),
-        fontWeight:'800',
-        color:"white",
-        marginBottom:scale(100),
-        marginLeft:scale(15)
+    imageView:{
+        width:moderateScale(30),
+        height:verticalScale(30),
+        alignSelf:'center'
     },
-    headTitle:{
-        fontSize:moderateScale(20),
-        fontWeight:'800',
-        marginBottom:scale(15),
-        color:"#3A1078"
-    },
-    boxImage:{
-        height:verticalScale(100),
-        width:moderateScale(100),
+    imageView2:{
         position:'absolute',
-        bottom:scale(10),
-        right:0,
-    },
-    boxImage2:{
-        width:moderateScale(150),
-        height:verticalScale(140),
-        position:'absolute',
-        top:0,
+        width:moderateScale(40),
+        height:verticalScale(40),
         zIndex:-1,
-        borderRadius:moderateScale(15),
+        top:-10,
+        right:-5,
+        tintColor:'#FB2576'
+    },  
+    boxText:{
+        fontFamily:'Lato_400Regular',
+        fontSize:RFPercentage(3),
+        width:moderateScale(250),
+        marginLeft:scale(8)
     }
 })

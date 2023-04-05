@@ -15,6 +15,7 @@ import { useNavigation , useRoute } from '@react-navigation/native';
 import { scale, verticalScale, moderateScale} from '../utils/scalling';
 import Icon from '../utils/Icon'
 import RoutName from '../Routes/RoutName';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScreenName}, props) => {
   const navigation = useNavigation();
@@ -22,31 +23,43 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
   return (
     <View style={styles.headerContainer}>
       <StatusBar
+       barStyle='default'
         animated={true}
         backgroundColor="#FB2576"
       />
-      {
+      {/* {
         route.name=="Home"?
         <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.toggleDrawer()}>
-          <Ionicons name={'menu'} size={22} color="black" />
+          <Ionicons name={'menu'} size={22} color="white" />
         </TouchableOpacity>:""
+      } */}
+
+      {
+        route.name=="Home"?
+        <Text style={styles.LogoTitile}>GEETA GARBHASANSKAR</Text>
+        :""
       }
+
       {
         route.name!="Home"?
         <TouchableOpacity style={styles.iconStyle} onPress={() => backScreenName?navigation.navigate(backScreenName):navigation.goBack()}>
-          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'black'}/>
+          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
         </TouchableOpacity>:""
       }
       {/* <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
        {iconName == 'menu' ? <Ionicons name={'menu'} size={22} color="black" /> : 
        <AntDesign name={iconName} size={22} color="black" /> }
       </TouchableOpacity> */}
-      <Text style={{...styles.textStyle,fontSize:title.length>20?15:25}}>{title}</Text>
+      {
+        route.name!="Home"?
+        <Text style={{...styles.textStyle,fontSize:new String(title).length>20?RFPercentage(2.5):RFPercentage(3)}}>{title}</Text>
+        :""
+      }
 
       {
         isCalanderAdd?
         <TouchableOpacity style={styles.RightIcon} onPress={() => navigation.navigate(RoutName.CALANDER_ADD)}>
-          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'#FB2576'}/>
+          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
         </TouchableOpacity>:""
       }
     </View>
@@ -55,26 +68,27 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
 export default Header;
 const styles = StyleSheet.create({
   headerContainer: {
-    width: moderateScale(320),
-    height: verticalScale(50),
+    width: moderateScale(360),
+    height: verticalScale(45),
     flexDirection: 'row',
     alignItems: 'center',
     alignContent:'center',
     justifyContent: 'center',
-    // marginTop:scale(5),
+    backgroundColor:"#FB2576",
   },
   textStyle: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    alignItems: 'center',
+    fontFamily:'Lato_700Bold',
+    color:"white",
+    position:'absolute',
+    left:scale(60),
+    top:scale(12)
   }, 
   iconStyle: {
     width: 35,
     height: 35,
     justifyContent: 'center',
     alignItems: 'center',
-    left: 0,
+    left: 15,
     position:'absolute',
   },
   RightIcon:{
@@ -83,6 +97,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     right: 0,
+    position:'absolute',
+  },
+  LogoTitile:{
+    fontFamily:'Lato_700Bold',
+    fontSize:RFPercentage(2),
+    color:'white',
+    left: scale(20),
     position:'absolute',
   }
 });

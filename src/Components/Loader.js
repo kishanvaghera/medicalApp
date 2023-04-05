@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
+import { scale } from '../utils/scalling';
 
 const Loader = (props) => {
     const { loading, ...attributes } = props;
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         backgroundColor: '#00000040',
+        marginTop:scale(45)
     },
     activityIndicatorWrapper: {
         backgroundColor: '#f6f7fb',

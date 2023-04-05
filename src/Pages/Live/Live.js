@@ -10,7 +10,7 @@ import {
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import React, { useEffect, useState } from 'react'
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 
 
 const Live = () => {
@@ -28,40 +28,42 @@ const Live = () => {
   return (
     <View style={styles.body}>
       <Header iconName={'menu'} title={'Live'} />
-      <SafeAreaView style={styles.container}>
-        <FlatList
-          data={sessionList}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                width: wp(42),
-                height: hp(12),
-                borderRadius: 10,
-                marginBottom: 15,
-                marginHorizontal: wp(1.5),
-                backgroundColor: 'gray',
-                alignItems: 'flex-start',
-                padding: wp(1.5),
-                flexDirection: 'row',
-                justifyContent: 'center'
-              }}>
-              <View style={{ width: wp(15), height: hp(10), backgroundColor: '#fff', borderRadius: 10, }} />
-              <View>
-                <Text style={styles.titleText}>{item.name}</Text>
-                <Text style={{
-                  fontSize: 14,
-                  fontWeight: '600',
-                  marginLeft: wp(1),
-                }}>{item.date}</Text>
+      <Main>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={sessionList}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  width: wp(42),
+                  height: hp(12),
+                  borderRadius: 10,
+                  marginBottom: 15,
+                  marginHorizontal: wp(1.5),
+                  backgroundColor: 'gray',
+                  alignItems: 'flex-start',
+                  padding: wp(1.5),
+                  flexDirection: 'row',
+                  justifyContent: 'center'
+                }}>
+                <View style={{ width: wp(15), height: hp(10), backgroundColor: '#fff', borderRadius: 10, }} />
+                <View>
+                  <Text style={styles.titleText}>{item.name}</Text>
+                  <Text style={{
+                    fontSize: 14,
+                    fontWeight: '600',
+                    marginLeft: wp(1),
+                  }}>{item.date}</Text>
+                </View>
               </View>
-            </View>
-          )}
-          //Setting the number of column
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ marginTop: 15, width: wp(90) }}
-        />
-      </SafeAreaView>
+            )}
+            //Setting the number of column
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+            style={{ marginTop: 15, width: wp(90) }}
+          />
+        </SafeAreaView>
+      </Main>
     </View>
   )
 }

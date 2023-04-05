@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as APIService from './../../../../Middleware/APIService';
 import apiUrls from './../../../../Middleware/apiUrls';
 import { Loader } from '../../../../Components';
-import { Header } from '../../../../Layouts'
+import { Header, Main } from '../../../../Layouts'
 import RoutName from '../../../../Routes/RoutName';
 import { Colors as theme } from '../../../../utils/useTheme';
 
@@ -72,44 +72,46 @@ const SubCategoryList = ({ route, navigation }) => {
         <View style={styles.body}>
             <Header iconName={'left'} title={pageDatail.categoryName} />
             <Loader loading={loading} />
-            <SafeAreaView style={styles.container}>
-                <View style={{ marginTop: 5 }}>
-                    <FlatList
-                        data={subCategorytList}
-                        renderItem={({ item }) => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate(RoutName.USER_CATEGORY_DETAIL, { catData: item })}
-                                    style={styles.gridView}>
-                                    <Image
-                                        style={styles.imageThumbnail}
-                                        source={{ uri: item.tImage }}
-                                    />
-                                </TouchableOpacity>
-                            )
-                        }
-
-
-                        }
-                        //Setting the number of column
-                        numColumns={2}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                    {/* {
-                        subCategorytList && subCategorytList.length ?
-                            subCategorytList.map((curEle, index) => {
+            <Main>
+                <SafeAreaView style={styles.container}>
+                    <View style={{ marginTop: 5 }}>
+                        <FlatList
+                            data={subCategorytList}
+                            renderItem={({ item }) => {
                                 return (
-                                    <View style={styles.gridView}>
-                                        <TouchableOpacity style={styles.cardView}>
-                                            <Image source={{ uri: curEle.tImage }} />
-                                        </TouchableOpacity>
-                                    </View>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate(RoutName.USER_CATEGORY_DETAIL, { catData: item })}
+                                        style={styles.gridView}>
+                                        <Image
+                                            style={styles.imageThumbnail}
+                                            source={{ uri: item.tImage }}
+                                        />
+                                    </TouchableOpacity>
                                 )
-                            })
-                            : <></>
-                    } */}
-                </View>
-            </SafeAreaView>
+                            }
+
+
+                            }
+                            //Setting the number of column
+                            numColumns={2}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
+                        {/* {
+                            subCategorytList && subCategorytList.length ?
+                                subCategorytList.map((curEle, index) => {
+                                    return (
+                                        <View style={styles.gridView}>
+                                            <TouchableOpacity style={styles.cardView}>
+                                                <Image source={{ uri: curEle.tImage }} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                })
+                                : <></>
+                        } */}
+                    </View>
+                </SafeAreaView>
+            </Main>
         </View>
     )
 }

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions,TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions,TouchableOpacity,} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
-import { Video , Audio} from 'expo-av';
+import { Header, Main } from '../../Layouts';
+import { Video , Audio } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Icon from '../../utils/Icon';
+import { RFPercentage } from 'react-native-responsive-fontsize';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+import images from '../../../assets/'
 
 const MusicDetail = ({navigation,route}) => {
 
@@ -23,6 +26,8 @@ const MusicDetail = ({navigation,route}) => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
         }
     }
+
+    console.log("status",video)
     
     const PageName=data?.iSubMusicCatId?data?.vSubMusicCatName:data?.iMusicCategoryId?data?.vMusicCategoryName:""
 
@@ -32,11 +37,13 @@ const MusicDetail = ({navigation,route}) => {
         tMusicDesc:"",
     });
 
+    console.log("MusicDetailData",MusicDetailData)
     useEffect(() => {
-        setLoading(true);
+        // setLoading(true);
         const postData={action:"MusicData",iMusicCategoryId:data?.iMusicCategoryId,iSubMusicCatId:data?.iSubMusicCatId?data.iSubMusicCatId:0};
         APIService.apiAction(postData, apiUrls.music).then(res => {
-            setLoading(false);
+            console.log("res",res)
+            // setLoading(false);
             if(res.status==200){
                 if(res.data[data?.iMusicCategoryId] && res.data[data?.iMusicCategoryId].length>0){
                     setMusicDetailData(res.data[data.iMusicCategoryId][0]);
@@ -66,6 +73,11 @@ const MusicDetail = ({navigation,route}) => {
     const [position, setPosition] = useState(0);
     const [buffer, setBuffer] = useState(0);
     const [isStart,setIsStart]=useState(false);
+    const [isLoop,setisLoop]=useState(false);
+
+    const handleIsLoop=()=>{
+        setisLoop(!isLoop);
+    }
 
     const getMusicDuration=async()=>{
         const { sound } = await Audio.Sound.createAsync(
@@ -76,6 +88,7 @@ const MusicDetail = ({navigation,route}) => {
             setDuration(status.durationMillis);
         });
     }
+
     useEffect(()=>{
         if(MusicDetailData?.tMusicFile!=""){
             getMusicDuration();
@@ -118,6 +131,20 @@ const MusicDetail = ({navigation,route}) => {
             });
         }
     }
+
+    useEffect(()=>{
+        // if(duration==0){
+        //     setLoading(true);
+        // }else{
+        //     setLoading(false);
+        // }
+    },[duration])
+
+    useEffect(()=>{
+        if(position==duration && isLoop && isPlaying){
+            playSound();
+        }
+    },[position])
   
     async function pauseSound() {
       await sound.pauseAsync();
@@ -148,86 +175,131 @@ const MusicDetail = ({navigation,route}) => {
         playSound(position+5000);
     }
 
+    const [imageHeight, setImageHeight] = useState(0);
+
+    const onImageLoad = event => {
+        const screenWidth = Dimensions.get('window').width;
+        const { width, height } = event.nativeEvent.source;
+        const aspectRatio = width / height;
+        const imageHeight = screenWidth / aspectRatio;
+        setImageHeight(imageHeight);
+    };
+
+    const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
+    const handlePlayPress = async () => {
+        // Call the playAsync method to start playing the video
+        await video.current.playAsync();
+        setisPlayButtonClicked(true);
+    };
+
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
         <SafeAreaView>
             <Header iconName={'menu'} title={PageName} />
         </SafeAreaView>
-        <View style={styles.container}>
-            <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
-                <View style={styles.mainData}>
-                    <View style={styles.musicProfileShadow}>
-                        {
-                            MusicDetailData?.tMusicImage?
-                            <Image source={{ uri: MusicDetailData.tMusicImage }} style={styles.imageView} resizeMode={'contain'}/>
-                            :""
-                        }
+        {
+            MusicDetailData?.tMusicFile && MusicDetailData.tMusicFile!=""?
+            <View style={styles.bottom}>
+                <View style={styles.MusicScreen}>
+                    <View>
+                        <Text style={styles.durationText}>{formatTime(position)}</Text>
                     </View>
-                    
-                    <Text style={styles.songName}>Baby Song</Text>
-                    <View style={styles.MusicScreen}>
-                        <View>
-                            <Text style={styles.durationText}>{formatTime(position)}</Text>
-                        </View>
-                        <View>
-                            <Text  style={styles.durationText}>{formatTime(duration)}</Text>
-                        </View>
+                    <View>
+                        <Text  style={styles.durationText}>{formatTime(duration)}</Text>
                     </View>
-                    <View style={{width:moderateScale(310)}}>
-                        <View style={styles.progressContainer}>
-                            <View style={[styles.progressBar, { width: (position / duration) * 100 + '%' }]}></View>
-                            <View style={[styles.progressBar, { width: (buffer / duration) * 100 + '%', backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}></View>
-                        </View>
-                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                            <View style={{alignSelf:'center'}}>
-                                <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
-                                    <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={32} IconColor='#FB2576' />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{alignSelf:'center'}}>
-                                <TouchableOpacity style={{...styles.button,...isPlayying}} onPress={() => isPlaying ? pauseSound() : playSound()}>
-                                    <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={32} IconColor='white' />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{alignSelf:'center'}}>
-                                <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
-                                    <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={32} IconColor='#FB2576' />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-
-
-                    {
-                        MusicDetailData?.tMusicImage=="" && MusicDetailData?.tVideoLink!=""?
-                            <Video
-                            ref={video}
-                            style={styles.imageView}
-                            source={{
-                                uri: MusicDetailData.tVideoLink,
-                            }}
-                            useNativeControls
-                            rate={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping   
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        />:""
-                    }
-                    {/* <View style={styles.textView}>
-                        <Text style={styles.textDesc}>
-                            {MusicDetailData?.tMusicDesc}
-                        </Text>
-                    </View> */}
                 </View>
-            </ScrollView>
-        </View>
+                <View style={{width:moderateScale(310)}}>
+                    <View style={styles.progressContainer}>
+                        <View style={[styles.progressBar, { width: (position / duration) * 100 + '%' }]}></View>
+                        <View style={[styles.progressBar, { width: (buffer / duration) * 100 + '%', backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}></View>
+                    </View>
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                        <View style={{alignSelf:'center'}}>
+                            <TouchableOpacity>
+                                <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#FB2576'  />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{alignSelf:'center'}}>
+                            <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
+                                <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#FB2576' />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{alignSelf:'center'}}>
+                            <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={() => isPlaying ? pauseSound() : playSound()}>
+                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#FB2576' />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{alignSelf:'center'}}>
+                            <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
+                                <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#FB2576' />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{alignSelf:'center'}}>
+                            <TouchableOpacity onPress={handleIsLoop} style={{marginTop:scale(0)}}>
+                                <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#FB2576'} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </View>:""
+        }
+        <Main>
+            <View style={styles.container}>
+                <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
+                    <View style={styles.mainData}>
+                        <View>
+                            {
+                                MusicDetailData?.tVideoLink!=""?
+                                <Video
+                                    ref={video}
+                                    style={styles.VideoView}
+                                    source={{
+                                        uri: MusicDetailData.tVideoLink,
+                                        preload: true,
+                                    }}
+                                    useNativeControls={isPlayButtonClicked}
+                                    rate={1.0}
+                                    isMuted={false}
+                                    resizeMode='stretch'
+                                    isLooping   
+                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                    onFullscreenUpdate={setOrientation}
+                                />:""
+                            }
+                        </View>
+                        {
+                            isPlayButtonClicked?"":
+                            <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',                       top:0}} >
+                                <Image source={images.videoThumb} style={styles.thumbnail}/>
+                            </TouchableOpacity>
+                        }
+                        
+                        {
+                            MusicDetailData?.tVideoLink!=""?
+                            MusicDetailData?.tMusicImage?
+                            <View style={{...styles.musicProfileShadow,marginTop:scale(20),padding:scale(10)}}>
+                                <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(310), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad} />
+                            </View>:"":
+                            MusicDetailData?.tMusicImage?
+                            <View style={styles.musicProfileShadow}>
+                               <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(280), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad}/>
+                            </View>:""
+                        }
+                        
+                        {/* <View style={styles.textView}>
+                            <Text style={styles.textDesc}>
+                                {MusicDetailData?.tMusicDesc}
+                            </Text>
+                        </View> */}
+                    </View>
+                </ScrollView>
+            </View>
+        </Main>
     </View>
   )
 }
@@ -246,21 +318,31 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
+    imageView2:{
+        marginTop:scale(10),
+        width:moderateScale(355),
+        height:heightPercentageToDP('100%'),
+    },
     mainData:{
-        width:moderateScale(320),
+        width:moderateScale(350),
         justifyContent:'center',
         alignItems:'center',
         alignContent:'center'
     },
     imageView:{
-        width:moderateScale(200),
-        height:verticalScale(200),
+        width:moderateScale(280),
+        height:'auto',
         // borderRadius:scale(110)
         // backgroundColor:'red'
     },
+    VideoView:{
+        width:moderateScale(350),
+        height:verticalScale(200),
+    },
     textDesc:{
         marginTop:scale(20),
-        fontSize:moderateScale(18),
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         lineHeight:moderateScale(30),
         textAlign:'justify',
     },
@@ -275,22 +357,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     title: {
-        fontSize: 24,
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         color: 'white',
         marginBottom: 24,
     },
     button: {
-        width:moderateScale(70),
-        height:verticalScale(70),
+        width:moderateScale(40),
+        height:verticalScale(40),
         backgroundColor: '#FB2576',
         borderRadius: scale(70),
-        marginTop:scale(20),
+        marginTop:scale(0),
         justifyContent:'center',
         alignContent:'center',
         alignItems:'center',
     },
     time: {
-        fontSize: 16,
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         color: 'white',
         marginBottom: 8,
     },
@@ -299,7 +383,7 @@ const styles = StyleSheet.create({
         height: 8,
         width: moderateScale(310),
         backgroundColor: 'rgba(251, 37, 118, 0.2)',
-        marginTop:scale(15),
+        marginTop:scale(5),
         borderRadius:scale(10)
     },
     progressBar: {
@@ -308,21 +392,23 @@ const styles = StyleSheet.create({
         borderRadius:scale(10)
     },
     songName:{
-        fontSize:scale(25),
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         marginTop:scale(10),
         width:moderateScale(310),
         textAlign:'center'
     },
     MusicScreen:{
         width:moderateScale(310),
-        marginTop:scale(40),
-        paddingBottom:scale(5),
-        paddingTop:scale(5),
+        marginTop:scale(1),
+        paddingBottom:scale(0),
+        // paddingTop:scale(5),
         flexDirection:'row',
         justifyContent:'space-between'
     },
     durationText:{
-        fontSize:scale(18),
+        fontSize:RFPercentage(2.5),
+        fontFamily:'Lato_400Regular',
         color:'#FB2576',
         fontWeight:'600'
     },
@@ -339,5 +425,30 @@ const styles = StyleSheet.create({
         padding:scale(15),
         borderRadius:scale(10),
         marginTop:verticalScale(5)
-    }
+    },
+    bottom: {
+        width:widthPercentageToDP('100%'),
+        position: 'absolute',
+        bottom: 2,
+        left: 0,
+        right: 0,
+        backgroundColor: 'white',
+        // padding: 10,
+        paddingLeft:'5%',
+        paddingBottom:scale(5),
+        zIndex:9999,
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: -4,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+    },
+    thumbnail: {
+        width:moderateScale(350),
+        height:verticalScale(200),
+        resizeMode: 'stretch',
+      },
   })

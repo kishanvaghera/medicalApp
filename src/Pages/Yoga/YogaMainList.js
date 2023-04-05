@@ -5,12 +5,14 @@ import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
 import { Loader } from '../../Components';
-import { Header } from '../../Layouts';
+import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const YogaMainList = ({navigation,route}) => {
   const [loading, setLoading] = useState(false);
   const {data}=route.params;
+  console.log("data111",data)
 
   const [YogaPostList,setYogaPostList]=useState([]);
     useEffect(()=>{
@@ -36,30 +38,32 @@ const YogaMainList = ({navigation,route}) => {
         <SafeAreaView>
             <Header iconName={'menu'} title={PageName} />
         </SafeAreaView>
-        <View style={styles.container}>
-            <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
-            
-            <View style={styles.body2}>
-                {
-                    YogaPostList.map((curEle,index)=>{
-                        return <TouchableOpacity activeOpacity={.9} onPress={()=>{navigation.navigate(RoutName.YOGA_MAIN_DETAIL,{data:curEle})}} style={styles.row} key={index}>
-                                    <View style={styles.column}>
-                                        <View style={{flexDirection:'row'}}>
-                                            <Image source={{uri:curEle.tYogaFile}}  style={{...styles.boxImage}} resizeMode={'contain'}/>
-                                            <Text style={styles.textBox}>{curEle.vYogaCategoryName} {curEle.vSubYogaName && curEle.vSubYogaName!=""?"-"+curEle.vSubYogaName:""} {curEle.vSubSubYogaName && curEle.vSubSubYogaName!=""?"-"+curEle.vSubSubYogaName:""}</Text>
+        <Main>
+            <View style={styles.container}>
+                <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+                
+                <View style={styles.body2}>
+                    {
+                        YogaPostList.map((curEle,index)=>{
+                            return <TouchableOpacity activeOpacity={.9} onPress={()=>{navigation.navigate(RoutName.YOGA_MAIN_DETAIL,{data:curEle})}} style={styles.row} key={index}>
+                                        <View style={styles.column}>
+                                            <View style={{flexDirection:'row'}}>
+                                                <Image source={{uri:curEle.tYogaFile}}  style={{...styles.boxImage}} resizeMode={'contain'}/>
+                                                <Text style={styles.textBox}>{curEle.vYogaCategoryName} {curEle.vSubYogaName && curEle.vSubYogaName!=""?"-"+curEle.vSubYogaName:""} {curEle.vSubSubYogaName && curEle.vSubSubYogaName!=""?"-"+curEle.vSubSubYogaName:""}</Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                </TouchableOpacity>
-                    })
-                }
-            </View>
+                                    </TouchableOpacity>
+                        })
+                    }
+                </View>
 
-            </ScrollView>
-        </View>
+                </ScrollView>
+            </View>
+        </Main>
     </View>
   )
 }
@@ -106,15 +110,15 @@ const styles = StyleSheet.create({
       elevation: 5
   },
   boxImage:{
-      width:moderateScale(50),
-      height:verticalScale(50),
+      width:moderateScale(30),
+      height:verticalScale(30),
       // marginTop:scale(5),
       marginLeft:scale(10),
       borderRadius:moderateScale(100)
   },
   textBox:{
-      fontSize:moderateScale(20),
-      fontWeight:'800',
+      fontSize:RFPercentage(3),
+      fontFamily:'Lato_400Regular',
       width:moderateScale(210),
       marginLeft:scale(15),
       // marginTop:scale(13)

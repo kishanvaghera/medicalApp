@@ -6,6 +6,7 @@ import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
 import { useNavigation } from '@react-navigation/native';
 import RoutName from '../../Routes/RoutName';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const ActivityCards = (props) => {
     const navigation = useNavigation();
@@ -76,22 +77,22 @@ const styles = StyleSheet.create({
     boxText:{
         width:moderateScale(143),
         textAlign:'center',
-        fontSize:moderateScale(20),
-        fontWeight:'800',
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         color:"white"
     },
     boxText2:{
         width:moderateScale(143),
         textAlign:'left',
-        fontSize:moderateScale(25),
-        fontWeight:'800',
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         color:"white",
         marginBottom:scale(100),
         marginLeft:scale(15)
     },
     headTitle:{
-        fontSize:moderateScale(20),
-        fontWeight:'800',
+        fontSize:RFPercentage(3),
+        fontFamily:'Lato_400Regular',
         marginBottom:scale(15),
         color:"#3A1078"
     },

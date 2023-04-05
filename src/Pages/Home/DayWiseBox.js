@@ -1,20 +1,21 @@
 import {View,Text,StyleSheet,ScrollView,SafeAreaView,Image} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import Icon from '../../utils/Icon'
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 function DayWiseBox() {
   return (
     <View style={styles.body}>
         <View style={styles.rows}>
             <View style={styles.column1}>
-                <Text style={{fontSize:moderateScale(60),color:"white",width:moderateScale(150),textAlign:'center'}}>14th <Text style={{fontSize:moderateScale(25)}}>Week</Text></Text>
+                <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_400Regular',color:"white",width:moderateScale(150),textAlign:'center'}}>14th <Text style={{fontSize:RFPercentage(3)}}>Week</Text></Text>
             </View>
             <View style={{flexDirection:'column'}}>
                 <View style={styles.column2}>
-                    <Text style={{fontSize:moderateScale(20),color:"white",width:moderateScale(150),textAlign:'center'}}><Icon IconName='weight' LibraryName='FontAwesome5' IconSize={moderateScale(30)} IconColor={'white'}/> <Text>0.8g</Text></Text>
+                    <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_400Regular',color:"white",width:moderateScale(150),textAlign:'center'}}><Icon IconName='weight' LibraryName='FontAwesome5' IconSize={moderateScale(30)} IconColor={'white'}/> <Text>0.8g</Text></Text>
                 </View>
                 <View style={styles.column2}>
-                    <Text style={{fontSize:moderateScale(20),color:"white",width:moderateScale(150),textAlign:'center'}}><Icon IconName='human-male-height' LibraryName='MaterialCommunityIcons' IconSize={moderateScale(30)} IconColor={'white'}/> <Text style={{marginLeft:scale(20)}}>13.0cm</Text></Text>
+                    <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_400Regular',color:"white",width:moderateScale(150),textAlign:'center'}}><Icon IconName='human-male-height' LibraryName='MaterialCommunityIcons' IconSize={moderateScale(30)} IconColor={'white'}/> <Text style={{marginLeft:scale(20)}}>13.0cm</Text></Text>
                 </View>
             </View>
         </View>
