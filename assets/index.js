@@ -30,6 +30,6 @@ const images = {
     yumIcon:require('./yum.png'),
     om:require('./om.png'),
     videoThumb:require('./videoThumb.png'),
-
+    pregnancyMom:require('./pregnancyMom.jpg'),
 }
 export default images;

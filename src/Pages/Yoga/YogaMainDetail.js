@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions} from 'react-native'
+import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions, TouchableOpacity} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
@@ -66,6 +66,13 @@ const YogaMainDetail = ({navigation,route}) => {
       return () => {}
     }, [data])
 
+    const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
+    const handlePlayPress = async () => {
+        // Call the playAsync method to start playing the video
+        await video.current.playAsync();
+        setisPlayButtonClicked(true);
+    };
+
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
@@ -88,7 +95,8 @@ const YogaMainDetail = ({navigation,route}) => {
 
                         {
                             dataMain?.tYogaFile!="" && dataMain?.tVideoLink!=""?
-                            <View>
+                            <>
+                            <View style={{marginTop:scale(15)}}>
                                 <Video
                                 ref={video}
                                 posterSource={thumbnailSource}
@@ -104,7 +112,15 @@ const YogaMainDetail = ({navigation,route}) => {
                                 onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
                                 onFullscreenUpdate={setOrientation}
                             />
-                            </View>:""
+                                {
+                                    isPlayButtonClicked?"":
+                                    <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+                                        <Image source={images.videoThumb} style={styles.thumbnail}/>
+                                    </TouchableOpacity>
+                                }
+                            </View>
+                            </>
+                            :""
                         }
 
                         <View style={styles.textView}>
@@ -157,5 +173,10 @@ const styles = StyleSheet.create({
   textView:{
       width:moderateScale(320),
       marginLeft:scale(20)
-  }
+  },
+  thumbnail: {
+    width:moderateScale(355),
+    height:verticalScale(200),
+    resizeMode: 'stretch',
+  },
 })

@@ -32,6 +32,7 @@ export default {
     CALANDER_VIEW:'CalanderView',
     CALANDER_ADD:'CalanderAdd',
     MUSIC_SUB_DATA:'MusicSubData',
+    MomScreen:'MomScreen',
 
     ADMIN_DASHBOARD:'Admin Dashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',

@@ -252,9 +252,10 @@ const MusicDetail = ({navigation,route}) => {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
                     <View style={styles.mainData}>
-                        <View>
-                            {
-                                MusicDetailData?.tVideoLink!=""?
+                        {
+                            MusicDetailData?.tVideoLink!=""?
+                            <>
+                            <View>
                                 <Video
                                     ref={video}
                                     style={styles.VideoView}
@@ -269,15 +270,18 @@ const MusicDetail = ({navigation,route}) => {
                                     isLooping   
                                     onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
                                     onFullscreenUpdate={setOrientation}
-                                />:""
-                            }
-                        </View>
-                        {
-                            isPlayButtonClicked?"":
-                            <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',                       top:0}} >
-                                <Image source={images.videoThumb} style={styles.thumbnail}/>
-                            </TouchableOpacity>
+                                />
+                                {
+                                    isPlayButtonClicked?"":
+                                    <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+                                        <Image source={images.videoThumb} style={styles.thumbnail}/>
+                                    </TouchableOpacity>
+                                }
+                            </View> 
+                            </>
+                            :""
                         }
+                            
                         
                         {
                             MusicDetailData?.tVideoLink!=""?

@@ -82,7 +82,7 @@ const Home = ({ navigation }) => {
 
             <CategorySection setLoading={setLoading}/>
             <HeroSectionTime handleChangeBabyData={handleChangeBabyData} PregStartDate={PregStartDate} UserData={UserData}/>
-            <MoniterScreen BabyMontiterData={BabyMontiterData} />
+            <MoniterScreen BabyMontiterData={BabyMontiterData} navigation={navigation}/>
             {/* 
             <DayWiseBox/>
             <ActivityCards setLoading={setLoading}/> */}

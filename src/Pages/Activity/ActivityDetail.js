@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions} from 'react-native'
+import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView,Dimensions, TouchableOpacity} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import images from '../../../assets/index'
 
 const ActivityDetail = ({navigation, route}) => {
     const [loading, setLoading] = useState(false);
@@ -20,6 +21,13 @@ const ActivityDetail = ({navigation, route}) => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
         }
     }
+
+    const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
+    const handlePlayPress = async () => {
+        // Call the playAsync method to start playing the video
+        await video.current.playAsync();
+        setisPlayButtonClicked(true);
+    };
 
   return (
     <View style={styles.body}>
@@ -43,20 +51,29 @@ const ActivityDetail = ({navigation, route}) => {
 
                         {
                             data?.tActivityFile=="" && data?.tVideoLink!=""?
+                                <>
                                 <Video
-                                ref={video}
-                                style={styles.imageView}
-                                source={{
-                                    uri: data.tVideoLink,
-                                }}
-                                useNativeControls
-                                rate={1.0}
-                                isMuted={false}
-                                resizeMode="cover"
-                                isLooping   
-                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                onFullscreenUpdate={setOrientation}
-                            />:""
+                                    ref={video}
+                                    style={styles.imageView}
+                                    source={{
+                                        uri: data.tVideoLink,
+                                    }}
+                                    useNativeControls
+                                    rate={1.0}
+                                    isMuted={false}
+                                    resizeMode="cover"
+                                    isLooping   
+                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                    onFullscreenUpdate={setOrientation}
+                                />
+                                {
+                                    isPlayButtonClicked?"":
+                                    <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+                                        <Image source={images.videoThumb} style={styles.thumbnail}/>
+                                    </TouchableOpacity>
+                                }
+                                </>
+                                :""
                         }
                         <View style={styles.textView}>
                             <Text style={styles.textDesc}>
@@ -68,19 +85,19 @@ const ActivityDetail = ({navigation, route}) => {
                             data?.tActivityFile!="" && data?.tVideoLink!=""?
                             <View style={{marginTop:scale(20)}}>
                                 <Video
-                                ref={video}
-                                style={styles.imageView}
-                                source={{
-                                    uri: data.tVideoLink,
-                                }}
-                                useNativeControls
-                                rate={1.0}
-                                isMuted={false}
-                                resizeMode="cover"
-                                isLooping   
-                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                onFullscreenUpdate={setOrientation}
-                            />
+                                    ref={video}
+                                    style={styles.imageView}
+                                    source={{
+                                        uri: data.tVideoLink,
+                                    }}
+                                    useNativeControls
+                                    rate={1.0}
+                                    isMuted={false}
+                                    resizeMode="cover"
+                                    isLooping   
+                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                    onFullscreenUpdate={setOrientation}
+                                />
                             </View>:""
                         }
                     </View>
@@ -123,5 +140,10 @@ const styles = StyleSheet.create({
     textView:{
         width:moderateScale(320),
         marginLeft:scale(20)
-    }
+    },
+    thumbnail: {
+      width:moderateScale(355),
+      height:verticalScale(200),
+      resizeMode: 'stretch',
+    },
 })

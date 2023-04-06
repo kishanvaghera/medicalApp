@@ -6,6 +6,8 @@ import { vertical } from 'react-native-swiper-flatlist/src/themes';
 import { Image } from 'react-native';
 import images from '../../../assets';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
+import RoutName from '../../Routes/RoutName';
 
 const MoniterScreen = (props) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -18,11 +20,19 @@ const MoniterScreen = (props) => {
         />
     );
 
+    const changeMod=(index)=>{
+        if(index==1){
+            props.navigation.navigate(RoutName.MomScreen)
+        }else{
+            setSelectedIndex(index)
+        }
+    }
+
   return (
     <View style={{marginTop:scale(30)}}>
         <TabBar
             selectedIndex={selectedIndex}
-            onSelect={index => setSelectedIndex(index)}
+            onSelect={index => changeMod(index)}
             style={styles.tabBar}
             indicatorStyle={styles.tabIndicator}
             tabStyle={styles.tabContainer}
@@ -69,8 +79,8 @@ const MoniterScreen = (props) => {
             <View style={styles.babyCardView}>
                 <Text style={styles.lightText} category='p2'>Current Month : 1</Text>
                 <View>
-                    <Text style={styles.lightText3} category='p2'>What's going on?</Text>
-                    <Text style={styles.dateFirstText3} category='h6'>
+                    <Text style={styles.lightText3}>What's going on?</Text>
+                    <Text style={styles.dateFirstText3}>
                         The baby is playing with the umbilical cord,
                         grabbing and releasing it. The taste buds
                         and bones are developing, and in girls the
@@ -182,17 +192,19 @@ const styles = StyleSheet.create({
         marginTop:scale(5)
     },
     lightText3:{
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.5),
         fontFamily:'Lato_400Regular',
         color:"#6B728E",
         marginTop:scale(20),
-        marginLeft:scale(20)
+        marginLeft:scale(20),
+        width:widthPercentageToDP('80%')
     },
     dateFirstText3:{
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.5),
         fontFamily:'Lato_400Regular',
         color:"#474E68",
         marginTop:scale(5),
-        marginLeft:scale(20)
+        marginLeft:scale(20),
+        width:widthPercentageToDP('80%')
     },
 });

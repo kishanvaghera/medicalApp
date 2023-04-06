@@ -29,6 +29,7 @@ import SetCalanderData from '../Pages/Calander/SetCalanderData';
 import { scale, verticalScale } from '../utils/scalling';
 import MusicSubData from '../Pages/Music/MusicSubData';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import MomScreen from '../Pages/Home/MomScreen';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,6 +63,7 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.CALANDER_VIEW} component={DispCalanderData} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.CALANDER_ADD} component={SetCalanderData} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MUSIC_SUB_DATA} component={MusicSubData} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.MomScreen} component={MomScreen} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
