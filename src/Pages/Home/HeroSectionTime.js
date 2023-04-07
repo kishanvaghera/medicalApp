@@ -100,10 +100,10 @@ const HeroSectionTime = (props) => {
     <Card style={styles.bg}>
         <View>
             <View style={{marginLeft:scale(-10)}}>
-                <Text style={styles.msg}>{CurrentDayTime()} {props?.UserData?.vFirstName}!</Text>
+                {/* <Text style={styles.msg}>{CurrentDayTime()} {props?.UserData?.vFirstName}!</Text> */}
                 <View style={styles.DatePicker}>
-                    <Button onPress={toggleDatePicker} appearance='ghost'>
-                        <Icon IconName='calendar' LibraryName='FontAwesome' IconSize={22} IconColor={'#6B728E'}/>
+                    <Button onPress={toggleDatePicker} appearance='ghost' style={{marginTop:scale(-12)}}>
+                        <Icon IconName='calendar' LibraryName='FontAwesome' IconSize={18} IconColor={'#6B728E'}/>
                     </Button>
                     <Text style={styles.pregStartDate}>{moment(date).format('DD MMMM YYYY')}</Text>
                 </View>
@@ -118,7 +118,7 @@ const HeroSectionTime = (props) => {
                         />
                 </Modal>
             </View>
-            <View style={{marginLeft:scale(-10)}}>
+            <View>
                 <Text style={styles.term}>My pregnancy term:</Text>
                 <Text style={styles.leftCalc}>
                     {
@@ -131,15 +131,15 @@ const HeroSectionTime = (props) => {
             {
              TrimsterData.CurrentMonth==0 && TrimsterData.CurrentWeek==0?"":
                 <View style={{marginLeft:scale(-10)}}>
-                    <Progress.Bar style={styles.progressbar} color={'#FB2576'} unfilledColor={'#fcacca'} borderWidth={2} borderRadius={scale(15)} height={verticalScale(15)} progress={TrimsterData.Percentage} width={moderateScale(170)} />
+                    <Progress.Bar style={styles.progressbar} color={'#9f5fea'} unfilledColor={'#fcacca'} borderWidth={2} borderRadius={scale(15)} height={verticalScale(15)} progress={TrimsterData.Percentage} width={moderateScale(250)} />
                     <Text style={styles.daysLeft}>{TrimsterData.DaysLeft} days left (EDD {TrimsterData.EDDDate})</Text>
                 </View>
             }
 
-            <Image
+            {/* <Image
             style={{...styles.image,height:TrimsterData.CurrentMonth==0 && TrimsterData.CurrentWeek==0?verticalScale(190):verticalScale(250)}}
             source={images.heroHome}
-            resizeMode={'stretch'} />
+            resizeMode={'stretch'} /> */}
         </View>
     </Card>
   )
@@ -149,7 +149,7 @@ export default HeroSectionTime
 
 const styles = StyleSheet.create({
     bg:{
-        marginTop:scale(15),
+        marginTop:scale(10),
         width:moderateScale(320),
         alignSelf:'center',
         shadowColor: "#000",
@@ -164,17 +164,17 @@ const styles = StyleSheet.create({
     },
     msg:{
         fontFamily:'Lato_400Regular',
-        fontSize:RFPercentage(2.5)
+        fontSize:RFPercentage(2.5),
+        textAlign:'center'
     },
     DatePicker:{
         flexDirection:'row',
-        marginLeft:scale(-10)
+        justifyContent:'center'
     },
     pregStartDate:{
         fontFamily:'Lato_700Bold',
-        fontSize:RFPercentage(3),
-        color:"#FB2576",
-        marginTop:scale(12)
+        fontSize:RFPercentage(2.5),
+        color:"#9f5fea",
     },
     backdrop: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -182,20 +182,24 @@ const styles = StyleSheet.create({
     term:{
         fontFamily:'Lato_700Bold',
         fontSize:RFPercentage(2.5),
+        textAlign:'center'
     },
     leftCalc:{
         fontFamily:'Lato_700Bold',
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2),
         marginTop:scale(10),
-        color:"#FB2576",
+        color:"#9f5fea",
+        textAlign:'center'
     },
     progressbar:{
-        marginTop:scale(10)
+        marginTop:scale(10),
+        alignSelf:'center'
     },
     daysLeft:{
         fontFamily:'Lato_400Regular',
         fontSize:RFPercentage(2),
-        marginTop:scale(10)
+        marginTop:scale(10),
+        textAlign:'center'
     },
     image:{
         width:moderateScale(130),

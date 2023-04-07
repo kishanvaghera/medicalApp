@@ -25,7 +25,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       <StatusBar
        barStyle='default'
         animated={true}
-        backgroundColor="#FB2576"
+        backgroundColor="#9f5fea"
       />
       {/* {
         route.name=="Home"?
@@ -43,7 +43,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       {
         route.name!="Home"?
         <TouchableOpacity style={styles.iconStyle} onPress={() => backScreenName?navigation.navigate(backScreenName):navigation.goBack()}>
-          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
+          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'#9f5fea'}/>
         </TouchableOpacity>:""
       }
       {/* <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
@@ -59,7 +59,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       {
         isCalanderAdd?
         <TouchableOpacity style={styles.RightIcon} onPress={() => navigation.navigate(RoutName.CALANDER_ADD)}>
-          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'white'}/>
+          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'#9f5fea'}/>
         </TouchableOpacity>:""
       }
     </View>
@@ -74,11 +74,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent:'center',
     justifyContent: 'center',
-    backgroundColor:"#FB2576",
+    backgroundColor:"white",
+    shadowColor: "#000",
+    shadowOffset:{
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   textStyle: {
     fontFamily:'Lato_700Bold',
-    color:"white",
+    color:"#9f5fea",
     position:'absolute',
     left:scale(60),
     top:scale(12)
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
   LogoTitile:{
     fontFamily:'Lato_700Bold',
     fontSize:RFPercentage(2),
-    color:'white',
+    color:'#9f5fea',
     left: scale(20),
     position:'absolute',
   }

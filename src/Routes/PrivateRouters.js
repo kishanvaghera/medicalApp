@@ -94,8 +94,8 @@ const BottomTabStack = () => {
     <Tab.Navigator
       initialRouteName={RoutName.HOME}
       screenOptions={{
-        activeTintColor: '#FB2576',
-        inactiveTintColor: 'gray',
+        activeTintColor: '#f0e4e4',
+        inactiveTintColor: 'red',
         style: {
           backgroundColor: '#e0e0e0',
         },
@@ -108,9 +108,13 @@ const BottomTabStack = () => {
           paddingBottom:scale(4)
         },
         tabBarStyle:{
-          height:verticalScale(48),
+          height:verticalScale(45),
+          backgroundColor: '#9f5fea',
         },
-        tabBarActiveTintColor: '#FB2576',
+        tabBarActiveTintColor: 'white',
+      }}
+      tabBarOptions={{
+        inactiveTintColor: 'black', // Set inactive icon color to yellow
       }}
       >
       <Tab.Screen
@@ -123,7 +127,7 @@ const BottomTabStack = () => {
             <AntDesign
               name="home"
               color={color}
-              size={size} />
+              size={23} />
           ),
         }}
       />
@@ -137,7 +141,7 @@ const BottomTabStack = () => {
             <MaterialCommunityIcons
               name="meditation"
               color={color}
-              size={size} />
+              size={23}/>
           ),
         }}
       />
@@ -151,7 +155,7 @@ const BottomTabStack = () => {
             <MaterialCommunityIcons
               name="music-circle"
               color={color}
-              size={size} />
+              size={23} />
           ),
         }}
       />
@@ -165,7 +169,7 @@ const BottomTabStack = () => {
             <MaterialIcons
               name="emoji-food-beverage"
               color={color}
-              size={size} />
+              size={23} />
           ),
         }}
       />
@@ -179,7 +183,7 @@ const BottomTabStack = () => {
             <MaterialCommunityIcons
               name="timetable"
               color={color}
-              size={size} />
+              size={23} />
           ),
         }}
       />

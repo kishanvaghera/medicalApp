@@ -78,10 +78,10 @@ const DietList = () => {
                 contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
 
                     <View style={styles.rows}>
-                        <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#FB2576':'#ebc3d2'}}>
+                        <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#9f5fea':'#ebc3d2'}}>
                             <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>handleChange('Monthly')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Monthly'?'#FB2576':'#ebc3d2'}}>
+                        <TouchableOpacity onPress={()=>handleChange('Monthly')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Monthly'?'#9f5fea':'#ebc3d2'}}>
                             <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Monthly</Text>
                         </TouchableOpacity>
                     </View>

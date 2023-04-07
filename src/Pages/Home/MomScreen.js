@@ -15,6 +15,24 @@ import images from '../../../assets/'
 const MomScreen = ({navigation,route}) => {
     const [loading, setLoading] = useState(false);
 
+    const thumbnailSource = require('../../../assets/videoThumb.png');
+    const video = React.useRef(null);
+    const [status, setStatus] = useState({});
+    function setOrientation() {
+        if (Dimensions.get('window').height > Dimensions.get('window').width) {
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        }else{
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        }
+    }
+
+    const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
+    const handlePlayPress = async () => {
+        // Call the playAsync method to start playing the video
+        await video.current.playAsync();
+        setisPlayButtonClicked(true);
+    };
+
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
@@ -29,7 +47,36 @@ const MomScreen = ({navigation,route}) => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
             
-            <Image style={{width:widthPercentageToDP('90%'),height:verticalScale(200),marginTop:scale(10),borderRadius:scale(10)}} source={images.pregnancyMom} />
+
+            <View style={{marginTop:scale(20),marginBottom:scale(10)}}>
+              <Video
+                    ref={video}
+                    style={styles.imageView}
+                    source={{
+                        uri: "http://schoolopathy.com/MedicalApi/uploads/music/Shree Geeta 1 Month Final-1.m4v",
+                    }}
+                    useNativeControls={isPlayButtonClicked}
+                    rate={1.0}
+                    isMuted={false}
+                    resizeMode="contain"
+                    isLooping   
+                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                    onFullscreenUpdate={setOrientation}
+              />
+
+              {
+                  isPlayButtonClicked?"":
+                  <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+                      <Image source={images.videoThumb} style={styles.thumbnail}/>
+                  </TouchableOpacity>
+              }
+              <View style={styles.VideoFooter}>
+                <Text style={styles.VideoFooterText}>What you should know this week? | Dr. Abc</Text>
+              </View>
+            </View>
+
+
+            <Image style={styles.Image2} source={images.pregnancyMom} />
 
             <Text style={styles.heading}>
               First Month advices from doctor.
@@ -85,5 +132,46 @@ const styles = StyleSheet.create({
       marginTop:scale(10),
       width:widthPercentageToDP('90%'),
       lineHeight:scale(25)
+    },
+    imageView:{
+        width:widthPercentageToDP('90%'),
+        height:verticalScale(170),
+        borderTopLeftRadius:scale(20),
+        borderTopRightRadius:scale(20),
+    },
+    thumbnail: {
+      width:widthPercentageToDP('90%'),
+      height:verticalScale(170),
+      resizeMode: 'stretch',
+      borderTopLeftRadius:scale(20),
+      borderTopRightRadius:scale(20),
+      opacity:0.9
+    },
+    VideoFooter:{
+      backgroundColor:"white",
+      alignSelf:'center',
+      width:widthPercentageToDP('89%'),
+      borderBottomLeftRadius:scale(20),
+      borderBottomRightRadius:scale(20),
+      shadowColor: "#000",
+      shadowOffset:{
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.22,
+      shadowRadius: 2.22,
+      elevation: 3,
+      paddingHorizontal:scale(10),
+      paddingVertical:scale(12)
+    },
+    VideoFooterText:{
+      fontSize:RFPercentage(2.5),
+      fontFamily:'Lato_400Regular',
+    },
+    Image2:{
+      width:widthPercentageToDP('90%'),
+      height:verticalScale(200),
+      marginTop:scale(10),
+      borderRadius:scale(10),
     }
   })

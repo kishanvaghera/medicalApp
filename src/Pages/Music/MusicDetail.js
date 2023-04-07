@@ -217,27 +217,27 @@ const MusicDetail = ({navigation,route}) => {
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity>
-                                <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#FB2576'  />
+                                <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#9f5fea'  />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
-                                <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#FB2576' />
+                                <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#9f5fea' />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={() => isPlaying ? pauseSound() : playSound()}>
-                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#FB2576' />
+                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#9f5fea' />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
-                                <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#FB2576' />
+                                <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#9f5fea' />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity onPress={handleIsLoop} style={{marginTop:scale(0)}}>
-                                <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#FB2576'} />
+                                <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#9f5fea'} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     button: {
         width:moderateScale(40),
         height:verticalScale(40),
-        backgroundColor: '#FB2576',
+        backgroundColor: '#9f5fea',
         borderRadius: scale(70),
         marginTop:scale(0),
         justifyContent:'center',
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     },
     progressBar: {
         height: 8,
-        backgroundColor: '#FB2576',
+        backgroundColor: '#9f5fea',
         borderRadius:scale(10)
     },
     songName:{
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     durationText:{
         fontSize:RFPercentage(2.5),
         fontFamily:'Lato_400Regular',
-        color:'#FB2576',
+        color:'#9f5fea',
         fontWeight:'600'
     },
     musicProfileShadow:{

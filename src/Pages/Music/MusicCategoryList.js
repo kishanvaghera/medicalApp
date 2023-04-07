@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         zIndex:-1,
         top:-10,
         right:-5,
-        tintColor:'#FB2576'
+        tintColor:'#9f5fea'
     },  
     boxText:{
         fontFamily:'Lato_400Regular',

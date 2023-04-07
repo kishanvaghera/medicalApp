@@ -104,7 +104,7 @@ const YogaMainDetail = ({navigation,route}) => {
                                 source={{
                                     uri: dataMain.tVideoLink,
                                 }}
-                                useNativeControls
+                                useNativeControls={isPlayButtonClicked}
                                 rate={1.0}
                                 isMuted={false}
                                 resizeMode="cover"

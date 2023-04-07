@@ -30,7 +30,7 @@ const CalanderComp = (props) => {
 
       const isHighlighted =date > range.startDate && date < range.endDate;
       let dayStyleText = isHighlighted? { ...style,color:'white'}:style;
-      let dayStyleBG = isHighlighted? {backgroundColor:'#FB2576'}:style;
+      let dayStyleBG = isHighlighted? {backgroundColor:'#9f5fea'}:style;
 
       const ovulationDateNew=moment(ovulationDate).format("YYYY-MM-DD");
       if(ovulationDateNew==curentDate){
@@ -61,7 +61,7 @@ const CalanderComp = (props) => {
       <View style={{flexDirection:'row',marginTop:scale(10),marginBottom:scale(50),marginLeft:scale(15)}}>
         <View style={{height:verticalScale(50),width:moderateScale(140)}}>
           <Text>Period Length: 5</Text>
-          <View style={{height:verticalScale(50),width:moderateScale(50),backgroundColor:"#FB2576",marginTop:scale(10)}}></View>
+          <View style={{height:verticalScale(50),width:moderateScale(50),backgroundColor:"#9f5fea",marginTop:scale(10)}}></View>
         </View>
         <View style={{height:verticalScale(50),width:moderateScale(140),marginLeft:scale(50)}}>
           <Text>Cycle Length: 28</Text>

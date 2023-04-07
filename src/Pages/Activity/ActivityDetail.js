@@ -58,7 +58,7 @@ const ActivityDetail = ({navigation, route}) => {
                                     source={{
                                         uri: data.tVideoLink,
                                     }}
-                                    useNativeControls
+                                    useNativeControls={isPlayButtonClicked}
                                     rate={1.0}
                                     isMuted={false}
                                     resizeMode="cover"
@@ -80,26 +80,6 @@ const ActivityDetail = ({navigation, route}) => {
                                 {data?.tActivityDesc}
                             </Text>
                         </View>
-
-                        {
-                            data?.tActivityFile!="" && data?.tVideoLink!=""?
-                            <View style={{marginTop:scale(20)}}>
-                                <Video
-                                    ref={video}
-                                    style={styles.imageView}
-                                    source={{
-                                        uri: data.tVideoLink,
-                                    }}
-                                    useNativeControls
-                                    rate={1.0}
-                                    isMuted={false}
-                                    resizeMode="cover"
-                                    isLooping   
-                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                    onFullscreenUpdate={setOrientation}
-                                />
-                            </View>:""
-                        }
                     </View>
                 </ScrollView>
             </View>

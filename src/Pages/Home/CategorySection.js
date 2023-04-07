@@ -30,7 +30,7 @@ function CategorySection(props) {
     },[])
     
   return (
-    <View style={{marginTop:scale(5)}}>
+    <View>
         <SwiperFlatList
             autoplay
             autoplayDelay={5}

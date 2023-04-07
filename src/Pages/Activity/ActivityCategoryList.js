@@ -70,10 +70,10 @@ const ActivityCategoryList = ({navigation}) => {
 
                     <View style={styles.mainRows}>
                         <View style={styles.rows}>
-                            <TouchableOpacity onPress={()=>handleChange('Daily')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Daily'?'#FB2576':'#ebc3d2'}}>
+                            <TouchableOpacity onPress={()=>handleChange('Daily')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Daily'?'#9f5fea':'#ebc3d2'}}>
                                 <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Daily</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#FB2576':'#ebc3d2'}}>
+                            <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#9f5fea':'#ebc3d2'}}>
                                 <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
                             </TouchableOpacity>
                         </View>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         zIndex:-1,
         top:-10,
         right:-5,
-        tintColor:'#FB2576'
+        tintColor:'#9f5fea'
     },  
     boxText:{
         fontFamily:'Lato_400Regular',

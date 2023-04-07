@@ -17,10 +17,10 @@ export default Main
 const styles = StyleSheet.create({
   mainTop:{
     marginTop:scale(10),
-    paddingBottom:scale(50)
+    // paddingBottom:scale(50)
   },
   mainTop2:{
     marginTop:scale(0),
-    paddingBottom:scale(50)
+    // paddingBottom:scale(50)
   },
 })
