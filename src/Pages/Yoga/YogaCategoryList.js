@@ -113,11 +113,11 @@ const styles = StyleSheet.create({
         zIndex:-1,
         top:-10,
         right:-5,
-        tintColor:'#9f5fea'
+        tintColor:'#0B4E98'
     },  
     boxText:{
         fontFamily:'Lato_400Regular',
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         width:moderateScale(250),
         marginLeft:scale(8)
     }

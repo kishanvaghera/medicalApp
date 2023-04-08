@@ -217,27 +217,27 @@ const MusicDetail = ({navigation,route}) => {
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity>
-                                <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#9f5fea'  />
+                                <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#0B4E98'  />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
-                                <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#9f5fea' />
+                                <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#0B4E98' />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={() => isPlaying ? pauseSound() : playSound()}>
-                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#9f5fea' />
+                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#0B4E98' />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
-                                <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#9f5fea' />
+                                <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#0B4E98' />
                             </TouchableOpacity>
                         </View>
                         <View style={{alignSelf:'center'}}>
                             <TouchableOpacity onPress={handleIsLoop} style={{marginTop:scale(0)}}>
-                                <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#9f5fea'} />
+                                <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#0B4E98'} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     },
     textDesc:{
         marginTop:scale(20),
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         lineHeight:moderateScale(30),
         textAlign:'justify',
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
     title: {
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color: 'white',
         marginBottom: 24,
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     button: {
         width:moderateScale(40),
         height:verticalScale(40),
-        backgroundColor: '#9f5fea',
+        backgroundColor: '#0B4E98',
         borderRadius: scale(70),
         marginTop:scale(0),
         justifyContent:'center',
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     time: {
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color: 'white',
         marginBottom: 8,
@@ -392,11 +392,11 @@ const styles = StyleSheet.create({
     },
     progressBar: {
         height: 8,
-        backgroundColor: '#9f5fea',
+        backgroundColor: '#0B4E98',
         borderRadius:scale(10)
     },
     songName:{
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         marginTop:scale(10),
         width:moderateScale(310),
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     durationText:{
         fontSize:RFPercentage(2.5),
         fontFamily:'Lato_400Regular',
-        color:'#9f5fea',
+        color:'#0B4E98',
         fontWeight:'600'
     },
     musicProfileShadow:{

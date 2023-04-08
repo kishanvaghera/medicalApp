@@ -4,11 +4,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Image
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
+  widthPercentageToDP,
+  heightPercentageToDP,
 } from 'react-native-responsive-screen';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { useNavigation , useRoute } from '@react-navigation/native';
@@ -16,6 +19,7 @@ import { scale, verticalScale, moderateScale} from '../utils/scalling';
 import Icon from '../utils/Icon'
 import RoutName from '../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import images from '../../assets/'
 
 const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScreenName}, props) => {
   const navigation = useNavigation();
@@ -25,25 +29,29 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       <StatusBar
        barStyle='default'
         animated={true}
-        backgroundColor="#9f5fea"
+        backgroundColor="#0B4E98"
       />
       {/* {
         route.name=="Home"?
         <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.toggleDrawer()}>
           <Ionicons name={'menu'} size={22} color="white" />
-        </TouchableOpacity>:""
-      } */}
-
+          </TouchableOpacity>:""
+        } */}
       {
         route.name=="Home"?
-        <Text style={styles.LogoTitile}>GEETA GARBHASANSKAR</Text>
+        <View style={{position:'absolute',flexDirection:'row',left:scale(20)}}>
+        <Image source={images.logo} style={{width:widthPercentageToDP('6%'),height:heightPercentageToDP('6%')}} resizeMode='contain' />
+          <Text style={styles.LogoTitile}>
+            GEETA GARBHASANSKAR
+          </Text>
+          </View>
         :""
       }
 
       {
         route.name!="Home"?
         <TouchableOpacity style={styles.iconStyle} onPress={() => backScreenName?navigation.navigate(backScreenName):navigation.goBack()}>
-          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'#9f5fea'}/>
+          <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'#0B4E98'}/>
         </TouchableOpacity>:""
       }
       {/* <TouchableOpacity style={styles.iconStyle} onPress={() => navigation.goBack()}>
@@ -52,14 +60,14 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       </TouchableOpacity> */}
       {
         route.name!="Home"?
-        <Text style={{...styles.textStyle,fontSize:new String(title).length>20?RFPercentage(2.5):RFPercentage(3)}}>{title}</Text>
+        <Text style={{...styles.textStyle,fontSize:RFPercentage(2.3)}}>{title}</Text>
         :""
       }
 
       {
         isCalanderAdd?
         <TouchableOpacity style={styles.RightIcon} onPress={() => navigation.navigate(RoutName.CALANDER_ADD)}>
-          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'#9f5fea'}/>
+          <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'#0B4E98'}/>
         </TouchableOpacity>:""
       }
     </View>
@@ -86,10 +94,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontFamily:'Lato_700Bold',
-    color:"#9f5fea",
+    color:"#0B4E98",
     position:'absolute',
     left:scale(60),
-    top:scale(12)
+    paddingVertical:scale(3)
   }, 
   iconStyle: {
     width: 35,
@@ -110,8 +118,8 @@ const styles = StyleSheet.create({
   LogoTitile:{
     fontFamily:'Lato_700Bold',
     fontSize:RFPercentage(2),
-    color:'#9f5fea',
-    left: scale(20),
-    position:'absolute',
+    color:'black',
+    left: scale(10),
+    top:scale(13)
   }
 });

@@ -40,7 +40,7 @@ const SetCalanderData = ({navigation}) => {
     }
 
     let dayStyleText = isHighlighted? { ...style,color:'white'}:style;
-    let dayStyleBG = isHighlighted? {backgroundColor:'#9f5fea'}:style;
+    let dayStyleBG = isHighlighted? {backgroundColor:'#0B4E98'}:style;
 
     return (
       <TouchableOpacity onPress={()=>handleSelectDate(date)}>
@@ -167,7 +167,7 @@ const SetCalanderData = ({navigation}) => {
               <Text style={styles.InpHeadTitle}>Period Length</Text>
               <View style={{flexDirection:'row',marginBottom:scale(15),marginLeft:scale(5)}}>
                   <Input
-                    style={{ width: moderateScale(60),borderColor:'#9f5fea' }}
+                    style={{ width: moderateScale(60),borderColor:'#0B4E98' }}
                     keyboardType='numeric'
                     value={PeridsLength}
                     onChangeText={(nextValue)=>setPeridsLength(nextValue)}
@@ -188,7 +188,7 @@ const SetCalanderData = ({navigation}) => {
               <Text style={styles.InpHeadTitle}>Cycle Length</Text>
               <View style={{flexDirection:'row',marginBottom:scale(15),marginLeft:scale(5)}}>
                   <Input
-                    style={{ width: moderateScale(60),borderColor:'#9f5fea' }}
+                    style={{ width: moderateScale(60),borderColor:'#0B4E98' }}
                     keyboardType='numeric'
                     value={CycleLength}
                     onChangeText={(nextValue)=>setCycleLength(nextValue)}
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
   },
   styleTextButton:{
-    backgroundColor: '#9f5fea',
+    backgroundColor: '#0B4E98',
     borderRadius: scale(5),
     paddingLeft: scale(15), 
     paddingRight: scale(15), 

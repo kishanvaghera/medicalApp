@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
     borderRadius: wp(50) / 2
   },
   boldText: {
-    fontSize: RFPercentage(3),
+    fontSize: RFPercentage(2.3),
     fontFamily:'Lato_400Regular',
     color: 'black',
     marginTop: 10
   },
   normalText: {
-    fontSize: RFPercentage(3),
+    fontSize: RFPercentage(2.3),
     fontFamily:'Lato_400Regular',
     textAlign: 'center',
   },

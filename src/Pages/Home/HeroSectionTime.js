@@ -131,7 +131,7 @@ const HeroSectionTime = (props) => {
             {
              TrimsterData.CurrentMonth==0 && TrimsterData.CurrentWeek==0?"":
                 <View style={{marginLeft:scale(-10)}}>
-                    <Progress.Bar style={styles.progressbar} color={'#9f5fea'} unfilledColor={'#fcacca'} borderWidth={2} borderRadius={scale(15)} height={verticalScale(15)} progress={TrimsterData.Percentage} width={moderateScale(250)} />
+                    <Progress.Bar style={styles.progressbar} color={'#0B4E98'} unfilledColor={'#82a6cf'} borderWidth={2} borderRadius={scale(15)} height={verticalScale(15)} progress={TrimsterData.Percentage} width={moderateScale(250)} />
                     <Text style={styles.daysLeft}>{TrimsterData.DaysLeft} days left (EDD {TrimsterData.EDDDate})</Text>
                 </View>
             }
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     },
     msg:{
         fontFamily:'Lato_400Regular',
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2.3),
         textAlign:'center'
     },
     DatePicker:{
@@ -173,22 +173,23 @@ const styles = StyleSheet.create({
     },
     pregStartDate:{
         fontFamily:'Lato_700Bold',
-        fontSize:RFPercentage(2.5),
-        color:"#9f5fea",
+        fontSize:RFPercentage(2.3),
+        color:"#0B4E98",
     },
     backdrop: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     term:{
         fontFamily:'Lato_700Bold',
-        fontSize:RFPercentage(2.5),
-        textAlign:'center'
+        fontSize:RFPercentage(2.3),
+        textAlign:'center',
+        height:scale(20)
     },
     leftCalc:{
         fontFamily:'Lato_700Bold',
         fontSize:RFPercentage(2),
         marginTop:scale(10),
-        color:"#9f5fea",
+        color:"#0B4E98",
         textAlign:'center'
     },
     progressbar:{

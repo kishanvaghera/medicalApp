@@ -30,6 +30,7 @@ const Home = ({ navigation }) => {
       tHeadDesc:"",
       tTextDesc:"",
       tImage:"",
+      vHead:"",
   });
 
   const handleChangeBabyData=(dd)=>{
@@ -39,6 +40,7 @@ const Home = ({ navigation }) => {
         tHeadDesc:dd.BabyHeadTiitle,
         tTextDesc:dd.BabyTitileDesc,
         tImage:dd.BabyMonitFile,
+        vHead:dd.vHead,
     });
   }
 
@@ -59,6 +61,7 @@ const Home = ({ navigation }) => {
           tHeadDesc:dd.BabyHeadTiitle,
           tTextDesc:dd.BabyTitileDesc,
           tImage:dd.BabyMonitFile,
+          vHead:dd.vHead,
       });
       }
     })

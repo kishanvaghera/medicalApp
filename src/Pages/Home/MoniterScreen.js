@@ -46,9 +46,12 @@ const MoniterScreen = (props) => {
         {
             selectedIndex===0?
             <View style={{...styles.babyCardView}}>
-                <Image style={{width:moderateScale(240),height:verticalScale(170),alignSelf:'center',marginTop:scale(-0)}} source={{uri:props.BabyMontiterData.tImage}} resizeMode='cover' />
+                <Image style={{width:moderateScale(240),height:verticalScale(170),alignSelf:'center',marginTop:scale(15)}} source={{uri:props.BabyMontiterData.tImage}} resizeMode='cover' />
                 {/* <Image style={{width:moderateScale(240),height:verticalScale(150),alignSelf:'center',marginTop:scale(-0)}} source={{uri:props.BabyMontiterData.tImage}} resizeMode='cover' /> */}
-                <Text style={{...styles.lightText,position:'absolute'}}>Baby's approximate size:</Text>
+                <Text style={{...styles.lightText,position:'absolute'}}>
+                    Baby's approximate size:
+                </Text>
+                <Text style={{...styles.headText,position:'absolute',marginTop:scale(30)}}>{props.BabyMontiterData.vHead}</Text>
                 {/* resizeMode={'center'} */}
                 {/* <Text style={styles.lightText} category='p2'>Baby's approximate size:</Text>
                 <Text style={styles.dateFirstText} category='h6'>AVOCADO</Text> */}
@@ -78,7 +81,7 @@ const MoniterScreen = (props) => {
             </View>
             :
             <View style={styles.babyCardView}>
-                <Text style={styles.lightText} category='p2'>Current Month : 1</Text>
+                <Text style={styles.lightText}>Current Month : 1</Text>
                 <View>
                     <Text style={styles.lightText3}>What's going on?</Text>
                     <Text style={styles.dateFirstText3}>
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
         height:verticalScale(40),
         borderTopLeftRadius:scale(20),
         borderTopRightRadius:scale(20),
-        shadowColor: "#9f5fea",
+        shadowColor: "#0B4E98",
         shadowOffset:{
             width: 0,
             height: 3,
@@ -166,34 +169,42 @@ const styles = StyleSheet.create({
         elevation: 20,
     },
     lightText:{
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         marginLeft:scale(10),
         color:"#6B728E",
         alignSelf:'center',
         marginTop:scale(10)
     },
+    headText:{
+        fontSize:RFPercentage(2.5),
+        fontFamily:'Lato_700Bold',
+        marginLeft:scale(10),
+        color:"#474E68",
+        alignSelf:'center',
+        marginTop:scale(10)
+    },
     dateFirstText:{
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color:"#474E68",
         alignSelf:'center',
         marginTop:scale(5)
     },
     lightText2:{
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         color:"#6B728E",
         marginTop:scale(50)
     },
     dateFirstText2:{
-        fontSize:RFPercentage(2.5),
-        fontFamily:'Lato_400Regular',
+        fontSize:RFPercentage(2.3),
+        fontFamily:'Lato_700Bold',
         color:"#474E68",
         marginTop:scale(5)
     },
     lightText3:{
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color:"#6B728E",
         marginTop:scale(20),
@@ -201,7 +212,7 @@ const styles = StyleSheet.create({
         width:widthPercentageToDP('80%')
     },
     dateFirstText3:{
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color:"#474E68",
         marginTop:scale(5),

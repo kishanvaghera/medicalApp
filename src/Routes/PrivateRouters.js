@@ -94,7 +94,7 @@ const BottomTabStack = () => {
     <Tab.Navigator
       initialRouteName={RoutName.HOME}
       screenOptions={{
-        activeTintColor: '#f0e4e4',
+        activeTintColor: 'grey',
         inactiveTintColor: 'red',
         style: {
           backgroundColor: '#e0e0e0',
@@ -104,17 +104,16 @@ const BottomTabStack = () => {
         },
         tabBarLabelStyle: {
           textAlign: 'center',
-          fontSize: RFPercentage(1.8),
+          fontSize: RFPercentage(1.55),
           paddingBottom:scale(4)
         },
         tabBarStyle:{
-          height:verticalScale(45),
-          backgroundColor: '#9f5fea',
+          height:verticalScale(42),
         },
-        tabBarActiveTintColor: 'white',
+        tabBarActiveTintColor: '#0B4E98',
       }}
       tabBarOptions={{
-        inactiveTintColor: 'black', // Set inactive icon color to yellow
+        inactiveTintColor: '#a3a0a0', // Set inactive icon color to yellow
       }}
       >
       <Tab.Screen
@@ -127,7 +126,7 @@ const BottomTabStack = () => {
             <AntDesign
               name="home"
               color={color}
-              size={23} />
+              size={21} />
           ),
         }}
       />
@@ -141,7 +140,7 @@ const BottomTabStack = () => {
             <MaterialCommunityIcons
               name="meditation"
               color={color}
-              size={23}/>
+              size={21}/>
           ),
         }}
       />
@@ -155,7 +154,7 @@ const BottomTabStack = () => {
             <MaterialCommunityIcons
               name="music-circle"
               color={color}
-              size={23} />
+              size={21} />
           ),
         }}
       />
@@ -169,7 +168,7 @@ const BottomTabStack = () => {
             <MaterialIcons
               name="emoji-food-beverage"
               color={color}
-              size={23} />
+              size={21} />
           ),
         }}
       />
@@ -183,7 +182,7 @@ const BottomTabStack = () => {
             <MaterialCommunityIcons
               name="timetable"
               color={color}
-              size={23} />
+              size={21} />
           ),
         }}
       />

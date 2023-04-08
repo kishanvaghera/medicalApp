@@ -121,13 +121,13 @@ const styles = StyleSheet.create({
 
     },
     heading:{
-      fontSize:RFPercentage(3),
+      fontSize:RFPercentage(2.3),
       fontFamily:'Lato_400Regular',
       marginTop:scale(10),
       width:widthPercentageToDP('90%')
     },
     paragraph:{
-      fontSize:RFPercentage(2.5),
+      fontSize:RFPercentage(2.3),
       fontFamily:'Lato_400Regular',
       marginTop:scale(10),
       width:widthPercentageToDP('90%'),
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
       paddingVertical:scale(12)
     },
     VideoFooterText:{
-      fontSize:RFPercentage(2.5),
+      fontSize:RFPercentage(2.3),
       fontFamily:'Lato_400Regular',
     },
     Image2:{

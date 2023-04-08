@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   textDesc:{
       marginTop:scale(20),
-      fontSize:RFPercentage(3),
+      fontSize:RFPercentage(2.3),
       fontFamily:'Lato_400Regular',
       lineHeight:moderateScale(30),
       textAlign:'justify',

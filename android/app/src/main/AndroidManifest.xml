@@ -39,7 +39,7 @@
             android:value="0" />
         <meta-data
             android:name="expo.modules.updates.EXPO_UPDATE_URL"
-            android:value="https://exp.host/@anonymous/AwesomeProject" />
+            android:value="https://exp.host/@anonymous/Geeta Garbhasanskar" />
 
         <activity
             android:name=".MainActivity"

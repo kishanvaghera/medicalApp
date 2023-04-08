@@ -31,5 +31,6 @@ const images = {
     om:require('./om.png'),
     videoThumb:require('./videoThumb.png'),
     pregnancyMom:require('./pregnancyMom.jpg'),
+    logo:require('./logo.png'),
 }
 export default images;

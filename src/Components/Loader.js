@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         backgroundColor: '#00000040',
-        marginTop:scale(45)
+        // marginTop:scale(45)
     },
     activityIndicatorWrapper: {
         backgroundColor: '#f6f7fb',

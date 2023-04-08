@@ -78,11 +78,11 @@ const DietList = () => {
                 contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
 
                     <View style={styles.rows}>
-                        <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#9f5fea':'#ebc3d2'}}>
-                            <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
+                        <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#0B4E98':'#82a6cf'}}>
+                            <Text style={{fontSize:RFPercentage(2.3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>handleChange('Monthly')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Monthly'?'#9f5fea':'#ebc3d2'}}>
-                            <Text style={{fontSize:RFPercentage(3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Monthly</Text>
+                        <TouchableOpacity onPress={()=>handleChange('Monthly')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Monthly'?'#0B4E98':'#82a6cf'}}>
+                            <Text style={{fontSize:RFPercentage(2.3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Monthly</Text>
                         </TouchableOpacity>
                     </View>
 

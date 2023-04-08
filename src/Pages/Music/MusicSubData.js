@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     imageBoxHeading:{
         width:moderateScale(250),
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         marginBottom:scale(5),
         marginLeft:scale(10)

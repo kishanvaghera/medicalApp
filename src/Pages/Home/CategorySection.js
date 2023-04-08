@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
       fontFamily:'Lato_400Regular',
       alignSelf:'center',
       width:moderateScale(200),
-      textAlign:'center'
+      textAlign:'center',
     },
     imageRows:{
         width:moderateScale(320),

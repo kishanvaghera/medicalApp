@@ -77,21 +77,21 @@ const styles = StyleSheet.create({
     boxText:{
         width:moderateScale(143),
         textAlign:'center',
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color:"white"
     },
     boxText2:{
         width:moderateScale(143),
         textAlign:'left',
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         color:"white",
         marginBottom:scale(100),
         marginLeft:scale(15)
     },
     headTitle:{
-        fontSize:RFPercentage(3),
+        fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         marginBottom:scale(15),
         color:"#3A1078"
