@@ -8,13 +8,15 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const YogaSubSubCateList = ({navigation,route}) => {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
     const [YogaSubCategoryList,setYogaSubCategoryList]=useState([]);
-    useEffect(()=>{
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"SubSubYogaCategoryList",iSubYogaCatId:data.iSubYogaCatId};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
@@ -25,6 +27,9 @@ const YogaSubSubCateList = ({navigation,route}) => {
                 setYogaSubCategoryList([]);
             }
         })
+    }
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
 

@@ -16,8 +16,6 @@ const HeroSectionTime = (props) => {
     const [date, setDate] = useState(new Date(""));
     const [visible, setVisible] = useState(false);
 
-    console.log("date",date)
-
     const [TrimsterData,setTrimsterData]=useState({
         CurrentMonth:"",
         CurrentWeek:"",
@@ -31,6 +29,10 @@ const HeroSectionTime = (props) => {
         if(props.PregStartDate && props.PregStartDate!="" && props.PregStartDate!=null){
             setDate(new Date(""+props.PregStartDate));
             const dd=props.UserData;
+
+            if(props.setCurrentMonth){
+                props.setCurrentMonth(dd.vCurrPregMonth);
+            }
 
             setTrimsterData(prevState=>{
                 return{
@@ -64,6 +66,9 @@ const HeroSectionTime = (props) => {
                 if(res.status==200){
                     const dd=res.data;
                     props.handleChangeBabyData(dd);
+                    if(props.setCurrentMonth){
+                        props.setCurrentMonth(dd.MonthCurr);
+                    }
                     setTrimsterData(prevState=>{
                         return{
                             ...prevState,

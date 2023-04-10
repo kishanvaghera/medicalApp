@@ -8,13 +8,16 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const YogaSubCategoryList = ({navigation,route}) => {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
     const [YogaSubCategoryList,setYogaSubCategoryList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"SubYogaCategoryList",iYogaCatId:data.iYogaCatId};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
@@ -25,6 +28,10 @@ const YogaSubCategoryList = ({navigation,route}) => {
                 setYogaSubCategoryList([]);
             }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
 
@@ -35,7 +42,7 @@ const YogaSubCategoryList = ({navigation,route}) => {
             if(curEle.YogaCount>1){
                 navigation.navigate(RoutName.YOGA_MAIN_CATEGORY_LIST,{data:{iYogaCatId:curEle.iYogaCatId,iSubYogaCatId:curEle.iSubYogaCatId,vSubYogaName:curEle.vSubYogaName}});
             }else{
-                navigation.navigate(RoutName.YOGA_DETAIL,{data:{iYogaCatId:curEle.iYogaCatId,iSubYogaCatId:curEle.iSubYogaCatId,vSubYogaName:curEle.vSubYogaName}});
+                navigation.navigate(RoutName.YOGA_DETAIL,{data:{iYogaCatId:curEle.iYogaCatId,iSubYogaCatId:curEle.iSubYogaCatId,vSubYogaName:curEle.vSubYogaName,iYogaId:curEle?.iYogaId}});
             }
         }
     }

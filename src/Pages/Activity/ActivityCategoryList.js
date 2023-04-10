@@ -10,6 +10,8 @@ import RoutName from '../../Routes/RoutName';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const ActivityCategoryList = ({navigation}) => {
     const [loading, setLoading] = useState(false);
@@ -23,7 +25,8 @@ const ActivityCategoryList = ({navigation}) => {
     const [DataImagesArr,setDataImagesArr]=useState([]);
 
     const [ActivityList,setActivityList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         setLoading(true);
         if(IsActiveTab=="Daily"){
             const postData={action:"getActivityCategory"};
@@ -51,8 +54,20 @@ const ActivityCategoryList = ({navigation}) => {
                 }
             })
         }
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[IsActiveTab])
+
+    useFocusEffect(
+        useCallback(()=>{
+            ApiCall();
+        },[navigation])
+    )
+
+
 
   return (
     <View>

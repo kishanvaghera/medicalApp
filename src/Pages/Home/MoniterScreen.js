@@ -22,7 +22,7 @@ const MoniterScreen = (props) => {
 
     const changeMod=(index)=>{
         if(index==1){
-            props.navigation.navigate(RoutName.MomScreen)
+            props.navigation.navigate(RoutName.MomScreen,{currentMonth:props.currentMonth})
         }else{
             setSelectedIndex(index)
         }
@@ -59,11 +59,11 @@ const MoniterScreen = (props) => {
                 <View style={{marginTop:scale(30),position:'absolute'}}>
                     <View style={{paddingHorizontal:scale(20),flexDirection:'row',justifyContent:'space-between',width:moderateScale(320)}}>
                         <View>
-                            <Text style={styles.lightText2}>Weight</Text>
+                            <Text style={styles.lightText2}>Weight:</Text>
                             <Text style={styles.dateFirstText2}>{props.BabyMontiterData.vWeight!=""?props.BabyMontiterData.vWeight:"-"}</Text>
                         </View>
                         <View>
-                            <Text style={styles.lightText2} >Length</Text>
+                            <Text style={styles.lightText2} >Length:</Text>
                             <Text style={styles.dateFirstText2}>{props.BabyMontiterData.vHeight!=""?props.BabyMontiterData.vHeight:"-"}</Text>
                         </View>
                     </View>

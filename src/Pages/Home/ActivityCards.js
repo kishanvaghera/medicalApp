@@ -4,14 +4,16 @@ import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useCallback } from 'react';
 
 const ActivityCards = (props) => {
     const navigation = useNavigation();
     const [ActivityList,setActivityList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         props.setLoading(true);
         const postData={action:"getActivityCategory"};
         APIService.apiAction(postData, apiUrls.activity).then(res => {
@@ -22,9 +24,13 @@ const ActivityCards = (props) => {
                 setActivityList([]);
             }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
-
+    
   return (
     <View style={styles.body}>
         <View style={styles.imageRows}>

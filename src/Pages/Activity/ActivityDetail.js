@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
         fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         lineHeight:moderateScale(30),
-        textAlign:'justify',
     },
     textView:{
         width:moderateScale(320),

@@ -8,13 +8,16 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const MusicSubCategoryListComp = ({navigation,route}) => {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
     
     const [MusicSubCategoryList,setMusicSubCategoryList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"SubMusicCategoryList",iMusicCategoryId:data.iMusicCategoryId};
         APIService.apiAction(postData, apiUrls.music).then(res => {
@@ -25,9 +28,13 @@ const MusicSubCategoryListComp = ({navigation,route}) => {
                 setMusicSubCategoryList([]);
             }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
-
+    
     const RedirectPage=(ddNew)=>{
         if(ddNew.MusicCount>1){
             navigation.navigate(RoutName.MUSIC_SUB_DATA,{data:ddNew})

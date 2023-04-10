@@ -8,13 +8,16 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const YogaCategoryList = ({navigation}) => {
 
     const [loading, setLoading] = useState(false);
 
     const [YogaList,setYogaList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"getYogaCategory"};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
@@ -25,8 +28,18 @@ const YogaCategoryList = ({navigation}) => {
                 setYogaList([]);
             }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
+
+    useFocusEffect(
+        useCallback(()=>{
+            ApiCall();
+        },[navigation])
+    )
 
     const RedirectPage=(curEle)=>{
         if(curEle.aSubCategoryList.length>0){

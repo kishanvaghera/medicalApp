@@ -8,18 +8,19 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const YogaMainList = ({navigation,route}) => {
   const [loading, setLoading] = useState(false);
   const {data}=route.params;
-  console.log("data111",data)
 
-  const [YogaPostList,setYogaPostList]=useState([]);
-    useEffect(()=>{
+    const [YogaPostList,setYogaPostList]=useState([]);
+
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"YogaData",iYogaCatId:data.iYogaCatId,iSubYogaCatId:data?.iSubYogaCatId?data.iSubYogaCatId:0,iSubSubYogaCatId:data?.iSubSubYogaCatId?data.iSubSubYogaCatId:0};
         APIService.apiAction(postData, apiUrls.yoga).then(res => {
-          console.log("res",res)
             setLoading(false);
             if(res.status==200){
                 setYogaPostList([...res.data[data.iYogaCatId]]);
@@ -27,6 +28,9 @@ const YogaMainList = ({navigation,route}) => {
                 setYogaPostList([]);
             }
         })
+    }
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])  
 

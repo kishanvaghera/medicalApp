@@ -8,6 +8,8 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const MainActivityList = ({navigation, route}) => {
     const [loading, setLoading] = useState(false);
@@ -15,7 +17,8 @@ const MainActivityList = ({navigation, route}) => {
     const {data}=route.params;
 
     const [ActivityPostList,setActivityPostList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"ActivityData",iActivityCatId:data.iActivityCatId,iSubActivityId:data?.iSubActivityId?data.iSubActivityId:0};
         APIService.apiAction(postData, apiUrls.activity).then(res => {
@@ -26,6 +29,10 @@ const MainActivityList = ({navigation, route}) => {
                 setActivityPostList([]);
             }
         })
+    }
+    
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])   
 

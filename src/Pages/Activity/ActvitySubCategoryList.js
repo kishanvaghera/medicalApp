@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
@@ -8,13 +8,15 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ActvitySubCategoryList = ({navigation, route}) => {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
     const [ActivityList,setActivityList]=useState([]);
-    useEffect(()=>{
+
+    const ApiCall=()=>{
         setLoading(true);
         const postData={action:"SubActivityCategory",iActivityCatId:data.id};
         APIService.apiAction(postData, apiUrls.activity).then(res => {
@@ -25,6 +27,10 @@ const ActvitySubCategoryList = ({navigation, route}) => {
                 setActivityList([]);
             }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
 

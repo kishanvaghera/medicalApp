@@ -32,5 +32,11 @@ const images = {
     videoThumb:require('./videoThumb.png'),
     pregnancyMom:require('./pregnancyMom.jpg'),
     logo:require('./logo.png'),
+    shareApp:require('./shareApp.jpg'),
+    facebook:require('./icons/facebook.png'),
+    instagram:require('./icons/instagram.png'),
+    website:require('./icons/website.png'),
+    whatsapp:require('./icons/whatsapp.png'),
+    youtube:require('./icons/youtube.png'),
 }
 export default images;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
@@ -8,11 +8,12 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useRef } from 'react';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
 
-const DietList = () => {
+const DietList = ({navigation}) => {
     const [loading,setLoading]=useState(false);
     const [IsActiveTab,setIsActiveTab]=useState("Fixed");
     const swiperRef = useRef(null);
@@ -62,6 +63,12 @@ const DietList = () => {
             swiperRef.current.scrollToIndex({ index: 0 });
         }
     },[DataImagesArr])
+
+    useFocusEffect(
+        useCallback(()=>{
+            ApiData();
+        },[navigation])
+    )
     
   return (
     <View style={styles.body}>
@@ -86,13 +93,13 @@ const DietList = () => {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{width:moderateScale(310)}}>
+                    <View style={{width:widthPercentageToDP('100%')}}>
                         <SwiperFlatList
                             ref={swiperRef}
                             data={DataImagesArr?DataImagesArr:[]} 
                             renderItem={(curEle) => (
                             <View style={styles.imageRows}>
-                                <Image source={{uri:curEle.item.tImage}}  style={{...styles.boxImage,width:320,height:hp(100)}} resizeMode="contain"/>
+                                <Image source={{uri:curEle.item.tImage}}  style={{...styles.boxImage,width:widthPercentageToDP('100%'),height:hp(100)}} resizeMode="contain"/>
                             </View>
                             )}
                         />
@@ -125,7 +132,10 @@ const styles = StyleSheet.create({
     rows:{
         width:moderateScale(310),
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
     },
     rowsTab:{
         width:moderateScale(150),

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {View,Text,StyleSheet,Image} from 'react-native'
 import {scale,verticalScale,moderateScale} from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
@@ -6,8 +6,10 @@ import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 function CategorySection(props) {
+    const navigation = useNavigation();
     const imagesArray = {
       1:images.theme1,
       2:images.theme2,
@@ -15,8 +17,9 @@ function CategorySection(props) {
       4:images.theme4,
     };
     const [TodayCategoryList,setTodayCategoryList]=useState([]);
-    useEffect(()=>{
-        props.setLoading(true);
+
+    const ApiCall=()=>{
+      props.setLoading(true);
         const postData={action:"getHomePageData",day:1};
         APIService.apiAction(postData, apiUrls.home).then(res => {
           props.setLoading(false);
@@ -26,6 +29,10 @@ function CategorySection(props) {
               setTodayCategoryList([]);
           }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
     

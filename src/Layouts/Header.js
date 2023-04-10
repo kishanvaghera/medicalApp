@@ -42,7 +42,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
         <View style={{position:'absolute',flexDirection:'row',left:scale(20)}}>
         <Image source={images.logo} style={{width:widthPercentageToDP('6%'),height:heightPercentageToDP('6%')}} resizeMode='contain' />
           <Text style={styles.LogoTitile}>
-            GEETA GARBHASANSKAR
+            <Text style={{color:'#0B4E98'}}>Geeta</Text><Text style={{color:'#f10078'}}> Garbhasanskar</Text>
           </Text>
           </View>
         :""
@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
     position:'absolute',
   },
   LogoTitile:{
-    fontFamily:'Lato_700Bold',
-    fontSize:RFPercentage(2),
+    fontFamily:'Lato_900Black',
+    fontSize:RFPercentage(2.3),
     color:'black',
     left: scale(10),
-    top:scale(13)
+    paddingVertical:scale(10)
   }
 });

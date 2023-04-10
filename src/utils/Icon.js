@@ -4,6 +4,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 
 const Icon = (props) => {
   return (
@@ -28,9 +29,14 @@ const Icon = (props) => {
             <SimpleLineIcons name={props.IconName} size={props.IconSize} color={props.IconColor} solid={props?.solid}/>
             :""
         }
-         {
+        {
             props.LibraryName=='Feather'?
             <FeatherIcon name={props.IconName} size={props.IconSize} color={props.IconColor} solid={props?.solid}/>
+            :""
+        }
+        {
+            props.LibraryName=='Ionicons'?
+            <IoniconsIcon name={props.IconName} size={props.IconSize} color={props.IconColor} solid={props?.solid}/>
             :""
         }
     </Text>

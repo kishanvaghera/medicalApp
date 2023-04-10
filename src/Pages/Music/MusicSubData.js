@@ -3,19 +3,20 @@ import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} 
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
-import images from '../../../assets';
 import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 function MusicSubData({navigation,route}) {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
     const [MusicList,setMusicList]=useState([]);
-    useEffect(()=>{
-        console.log("data",data)
+
+    const ApiCall=()=>{
         const postData={action:"GetMainMusicDataCatWise",iMusicCategoryId:data.iMusicCategoryId,iSubMusicCatId:data.iSubMusicCatId};
         APIService.apiAction(postData, apiUrls.music).then(res => {
             setLoading(false);
@@ -25,9 +26,13 @@ function MusicSubData({navigation,route}) {
                 setMusicList([]);
             }
         })
+    }
+
+    useEffect(()=>{
+        ApiCall();
         return ()=>{}
     },[])
-
+    
     const RedirectPage=(ddNew)=>{
         navigation.navigate(RoutName.MUSIC_DETAIL,{data:ddNew})
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
@@ -8,26 +8,36 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useFocusEffect } from '@react-navigation/native';
 
 const MusicCategoryList = ({navigation}) => {
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-  const [MusicList,setMusicList]=useState([]);
-  useEffect(()=>{
-      setLoading(true);
-      const postData={action:"getMusicCategory"};
-      APIService.apiAction(postData, apiUrls.music).then(res => {
+    const [MusicList,setMusicList]=useState([]);
+    const ApiCall=()=>{
+        setLoading(true);
+        const postData={action:"getMusicCategory"};
+        APIService.apiAction(postData, apiUrls.music).then(res => {
             console.log("res",res)
-          setLoading(false);
-          if(res.status==200){
-             setMusicList([...res.data]);
-          }else{
-              setMusicList([]);
-          }
-      })
-      
-      return ()=>{}
-  },[])
+            setLoading(false);
+            if(res.status==200){
+            setMusicList([...res.data]);
+            }else{
+                setMusicList([]);
+            }
+        })
+    }
+
+    useEffect(()=>{
+        ApiCall();
+        return ()=>{}
+    },[])
+
+    useFocusEffect(
+        useCallback(()=>{
+            ApiCall();
+        },[navigation])
+    )
 
   const RedirectPage=(ddNew)=>{
     if(ddNew.eIsSubCat=="y"){

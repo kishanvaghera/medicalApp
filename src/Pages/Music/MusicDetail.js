@@ -11,6 +11,8 @@ import Icon from '../../utils/Icon';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import images from '../../../assets/'
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const MusicDetail = ({navigation,route}) => {
 
@@ -26,8 +28,6 @@ const MusicDetail = ({navigation,route}) => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
         }
     }
-
-    console.log("status",video)
     
     const PageName=data?.iSubMusicCatId?data?.vSubMusicCatName:data?.iMusicCategoryId?data?.vMusicCategoryName:""
 
@@ -37,10 +37,8 @@ const MusicDetail = ({navigation,route}) => {
         tMusicDesc:"",
     });
 
-    console.log("MusicDetailData",MusicDetailData)
-    useEffect(() => {
-        // setLoading(true);
-        const postData={action:"MusicData",iMusicCategoryId:data?.iMusicCategoryId,iSubMusicCatId:data?.iSubMusicCatId?data.iSubMusicCatId:0};
+    const ApiCall=()=>{
+        const postData={action:"MusicData",iMusicCategoryId:data?.iMusicCategoryId,iSubMusicCatId:data?.iSubMusicCatId?data.iSubMusicCatId:0,iMusicId:data?.iMusicId};
         APIService.apiAction(postData, apiUrls.music).then(res => {
             console.log("res",res)
             // setLoading(false);
@@ -62,9 +60,12 @@ const MusicDetail = ({navigation,route}) => {
                 });
             }
         })
+    }
+
+    useEffect(() => {
+        ApiCall();
       return () => {}
     }, [])
-
 
     //Music Code Start Here
     const [sound, setSound] = useState(null);
@@ -133,14 +134,6 @@ const MusicDetail = ({navigation,route}) => {
     }
 
     useEffect(()=>{
-        // if(duration==0){
-        //     setLoading(true);
-        // }else{
-        //     setLoading(false);
-        // }
-    },[duration])
-
-    useEffect(()=>{
         if(position==duration && isLoop && isPlaying){
             playSound();
         }
@@ -187,10 +180,11 @@ const MusicDetail = ({navigation,route}) => {
 
     const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
     const handlePlayPress = async () => {
-        // Call the playAsync method to start playing the video
         await video.current.playAsync();
         setisPlayButtonClicked(true);
     };
+
+    const musicDescArr = new String(MusicDetailData?.tMusicDesc).split("=>");
 
   return (
     <View style={styles.body}>
@@ -284,22 +278,33 @@ const MusicDetail = ({navigation,route}) => {
                             
                         
                         {
-                            MusicDetailData?.tVideoLink!=""?
-                            MusicDetailData?.tMusicImage?
-                            <View style={{...styles.musicProfileShadow,marginTop:scale(20),padding:scale(10)}}>
-                                <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(310), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad} />
-                            </View>:"":
-                            MusicDetailData?.tMusicImage?
+                            MusicDetailData?.tMusicImage && MusicDetailData?.tVideoLink==""?
                             <View style={styles.musicProfileShadow}>
                                <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(280), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad}/>
                             </View>:""
                         }
                         
-                        {/* <View style={styles.textView}>
-                            <Text style={styles.textDesc}>
-                                {MusicDetailData?.tMusicDesc}
-                            </Text>
-                        </View> */}
+                        {
+                            MusicDetailData?.tMusicDesc!=""?
+                            <View style={styles.textView}>
+                                {
+                                    musicDescArr.map((curEle,index)=>{
+                                        return  curEle!=""?<View style={styles.paragraphBox}>
+                                                    <View>
+                                                        <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" />
+                                                    </View>
+                                                    <Text style={styles.textDesc} key={index}>
+                                                        {curEle}
+                                                    </Text>
+                                                </View>:""
+                                    })
+                                }
+                                <View style={{marginTop:scale(20),alignSelf:'center'}}>
+                                    <Icon LibraryName="Feather" IconName="smile" IconSize={45} IconColor="#f10078" />
+                                </View>
+                            </View>
+                            :""
+                        }
                     </View>
                 </ScrollView>
             </View>
@@ -344,15 +349,28 @@ const styles = StyleSheet.create({
         height:verticalScale(200),
     },
     textDesc:{
-        marginTop:scale(20),
         fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
-        lineHeight:moderateScale(30),
-        textAlign:'justify',
+        width:widthPercentageToDP('75%')
     },
     textView:{
-        width:moderateScale(320),
-        marginLeft:scale(20)
+        width:widthPercentageToDP('90%'),
+        backgroundColor:'white',
+        marginTop:scale(25),
+        paddingHorizontal:scale(10),
+        borderRadius:scale(15),
+        paddingVertical:scale(20),
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    paragraphBox:{
+        flexDirection:'row',
     },
     SubContainer: {
         flex: 1,
