@@ -20,15 +20,19 @@ function CustomSidebarMenu(props) {
       dispatch(CustSidebarActive({page}));
       if(page=='MyPlanner'){
         navigation.navigate(RoutName.CALANDER_VIEW);
+      }else if(page=='MyProfile'){
+        navigation.navigate(RoutName.PROFILE);
       }
     }
   }
+
+  console.log("loggedData",loggedData)
 
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ alignItems: 'center', marginVertical: 20 }}>
         <Image
-          source={images.profile}
+          source={loggedData?.isUserData?.tProfilePic==""?images.profile:{uri:loggedData?.isUserData?.tProfilePic}}
           style={{ width: 100, height: 100, borderRadius: 50 }}
         />
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
@@ -37,27 +41,27 @@ function CustomSidebarMenu(props) {
       </View>
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity onPress={()=>handleActivePage('MyProfile')} style={styles.pageView}>
-          <Image source={loggedData?.isCurrentSidebarPage=='MyProfile'?images.sdiProfile1:images.sdiProfile} style={styles.iconStyle} />
+          <Image source={loggedData?.isCurrentSidebarPage=='MyProfile'?images.sdiProfile:images.sdiProfile1} style={styles.iconStyle} />
           <Text style={loggedData?.isCurrentSidebarPage=='MyProfile'?styles.customItemActive:styles.customItem} category='h6'>My Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>handleActivePage('MyVideo')} style={styles.pageView}>
-          <Image source={loggedData?.isCurrentSidebarPage=='MyVideo'?images.sdiVideo1:images.sdiVideo} style={styles.iconStyle} />
+          <Image source={loggedData?.isCurrentSidebarPage=='MyVideo'?images.sdiVideo:images.sdiVideo1} style={styles.iconStyle} />
           <Text style={loggedData?.isCurrentSidebarPage=='MyVideo'?styles.customItemActive:styles.customItem} category='h6'>My Video</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>handleActivePage('MyMusic')} style={styles.pageView}>
-          <Image source={loggedData?.isCurrentSidebarPage=='MyMusic'?images.sdiMusic1:images.sdiMusic} style={styles.iconStyle} />
+          <Image source={loggedData?.isCurrentSidebarPage=='MyMusic'?images.sdiMusic:images.sdiMusic1} style={styles.iconStyle} />
           <Text style={loggedData?.isCurrentSidebarPage=='MyMusic'?styles.customItemActive:styles.customItem} category='h6'>My Music</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>handleActivePage('MyActivity')} style={styles.pageView}>
-          <Image source={loggedData?.isCurrentSidebarPage=='MyActivity'?images.sdiActivity1:images.sdiActivity} style={styles.iconStyle} />
+          <Image source={loggedData?.isCurrentSidebarPage=='MyActivity'?images.sdiActivity:images.sdiActivity1} style={styles.iconStyle} />
           <Text style={loggedData?.isCurrentSidebarPage=='MyActivity'?styles.customItemActive:styles.customItem} category='h6'>My Activity</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>handleActivePage('MyPlanner')} style={styles.pageView}>
-          <Image source={loggedData?.isCurrentSidebarPage=='MyPlanner'?images.sdiCalander1:images.sdiCalander} style={styles.iconStyle} />
+          <Image source={loggedData?.isCurrentSidebarPage=='MyPlanner'?images.sdiCalander:images.sdiCalander1} style={styles.iconStyle} />
           <Text style={loggedData?.isCurrentSidebarPage=='MyPlanner'?styles.customItemActive:styles.customItem} category='h6'>My Planner</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>handleActivePage('Logout')} style={styles.pageView}>
-          <Image source={loggedData?.isCurrentSidebarPage=='Logout'?images.sdiLogout1:images.sdiLogout} style={styles.iconStyle} />
+          <Image source={loggedData?.isCurrentSidebarPage=='Logout'?images.sdiLogout:images.sdiLogout1} style={styles.iconStyle} />
           <Text style={loggedData?.isCurrentSidebarPage=='Logout'?styles.customItemActive:styles.customItem} category='h6'>Logout</Text>
         </TouchableOpacity>
       </View>
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    color:'#a276e9'
+    color:'#e30078'
   },
   pageView:{
     flexDirection:'row',

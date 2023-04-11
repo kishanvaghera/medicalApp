@@ -135,7 +135,7 @@ const OtherDetails = ({ route, navigation }) => {
                     )}
                     
                     <Input
-                        placeholder={'Hight'}
+                        placeholder={'Height'}
                         onChangeText={(text) => handleChange(text, 'hight')}
                         value={mainForm.hight}
                         keyboardType={'numeric'}
@@ -143,7 +143,7 @@ const OtherDetails = ({ route, navigation }) => {
                         maxLength={3}
                         returnKeyType={'next'}
                     />
-                    {mainForm.hight=="" && isSubmitErrShow?<Text style={styles.err}>Hight is required!</Text>:""}
+                    {mainForm.hight=="" && isSubmitErrShow?<Text style={styles.err}>Height is required!</Text>:""}
 
                     <Input
                         placeholder={'Weight'}

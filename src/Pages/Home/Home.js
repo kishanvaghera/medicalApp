@@ -21,27 +21,25 @@ const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const dispatch=useDispatch();
 
-  const message = `Welcome to India's Most Trusted Online Garbhsanskar Community!!
+  const message = `Greetings to India's Premier Online Garbhsanskar Community!
 
-  Dream Child Garbhsanskar App is the World's First Mobile App that provides daily activity-based online Garbhsanskar Guidance to attain a Divine and Dynamic Child. Pregnant Lady can Enjoy Daily 25+ Activities, Vedic and Scientific Workshops and Unique Weekly Classes for 9 Months.
+Introducing the Revolutionary Geeta Garbhsanskar App - Your Ultimate Companion for Achieving a Divine and Dynamic Child. Our Mobile App offers a comprehensive daily activity-based online Garbhsanskar Guidance for Pregnant Ladies, with access to 25 enjoyable activities, Vedic and Scientific Workshops, and Unique Weekly Classes spanning 9 Months. Join us on this transformative journey towards nurturing a healthy and blessed child.
+
+I'm on Instagram as @shreegeetagarbhsanskar. Install the app to follow my photos and videos. https://www.instagram.com/invites/contact/?i=f0sn250yd1ef&utm_content=q6entgf
   
-  Loved by 1,25,000+ Mothers From 33+ Countries !!!
+Youtube (FREE Video) : https://www.youtube.com/@shreegeetagarbhsanskar
+
+Helpline : https://wa.me/7043381554
   
-  Download Dreamchild GarbhSanskar App:
-  (Basic Version is 100% FREE)
-  Android: https://bit.ly/dreamchildapp
-  iOS: https://bit.ly/dreamchildapp_ios
-  
-  Youtube (100+ FREE Video) : https://bit.ly/2yCNeTg
-  Helpline : https://wa.me/916356563262
-  
-  www.dreamchild.in`;
+Fonders:
+Dr. Jay Kapadiya
+Dr. Krupali Kapadiya`;
 
   const youtubeUrl = 'https://www.youtube.com/';
   const instagramUrl = 'https://www.instagram.com/';
   const facebookUrl = 'https://www.facebook.com/';
   const googleUrl = 'https://www.google.com/';
-  const whatsappUrl=`whatsapp://send?text=${message}`;
+  const whatsappUrl=`whatsapp://send?text=Hi, I have downloaded your app, I would like to learn more about your App&phone=7043381554`;
   const openLink = (platForm) => {
     if(platForm=='y'){
       Linking.openURL(youtubeUrl);

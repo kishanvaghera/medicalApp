@@ -3,10 +3,8 @@ import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} 
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
-import images from '../../../assets';
 import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
-import RoutName from '../../Routes/RoutName';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { heightPercentageToDP as hp, widthPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useRef } from 'react';
