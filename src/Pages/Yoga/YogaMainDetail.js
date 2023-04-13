@@ -94,71 +94,77 @@ const YogaMainDetail = ({ navigation, route }) => {
             </SafeAreaView>
             <Main topMargin={1}>
                 <View style={styles.container}>
-                    <ScrollView
-                        keyboardShouldPersistTaps="handled"
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ justifyContent: 'flex-start', alignContent: 'flex-start', paddingBottom: scale(100) }} >
-                        <View style={styles.mainData}>
-                            {
-                                dataMain?.tYogaFile && dataMain?.tVideoLink==""?
-                                    <Image source={{ uri: dataMain.tYogaFile }} style={{...styles.imageView2,height: imageHeight }} onLoad={onImageLoad} resizeMode='stretch' />
-                                    : ""
-                            }
 
-                            {
-                                dataMain?.tYogaFile != "" && dataMain?.tVideoLink != "" ?
-                                    <>
-                                        <View style={{ marginTop: scale(15) }}>
-                                            <Video
-                                                ref={video}
-                                                posterSource={thumbnailSource}
-                                                style={styles.imageView}
-                                                source={{
-                                                    uri: dataMain.tVideoLink,
-                                                }}
-                                                useNativeControls={isPlayButtonClicked}
-                                                rate={1.0}
-                                                isMuted={false}
-                                                resizeMode="cover"
-                                                isLooping
-                                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                                onFullscreenUpdate={setOrientation}
-                                            />
-                                            {
-                                                isPlayButtonClicked ? "" :
-                                                    <TouchableOpacity onPress={handlePlayPress} style={{ position: 'absolute', top: 0 }} >
-                                                        <Image source={images.videoThumb} style={styles.thumbnail} />
-                                                    </TouchableOpacity>
-                                            }
-                                        </View>
-                                    </>
-                                    : ""
-                            }
+                    <View style={styles.mainData}>
+                        {
+                            dataMain?.tYogaFile && dataMain?.tVideoLink==""?
+                                <Image source={{ uri: dataMain.tYogaFile }} style={{...styles.imageView2,height: imageHeight }} onLoad={onImageLoad} resizeMode='stretch' />
+                                : ""
+                        }
 
-                            {
-                                dataMain?.tYogaDesc != "" ?
-                                    <View style={styles.textView}>
+                        {
+                            dataMain?.tYogaFile != "" && dataMain?.tVideoLink != "" ?
+                                <>
+                                    <View style={{ marginTop: scale(15) }}>
+                                        <Video
+                                            ref={video}
+                                            posterSource={thumbnailSource}
+                                            style={styles.imageView}
+                                            source={{
+                                                uri: dataMain.tVideoLink,
+                                            }}
+                                            useNativeControls={isPlayButtonClicked}
+                                            rate={1.0}
+                                            isMuted={false}
+                                            resizeMode="cover"
+                                            isLooping
+                                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                            onFullscreenUpdate={setOrientation}
+                                        />
                                         {
-                                            yogaDescArr.map((curEle, index) => {
-                                                return curEle != "" ? <View style={styles.paragraphBox}>
-                                                    <View>
-                                                        {/* <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" /> */}
-                                                    </View>
-                                                    <Text style={styles.textDesc} key={index}>
-                                                        {curEle}
-                                                    </Text>
-                                                </View> : ""
-                                            })
+                                            isPlayButtonClicked ? "" :
+                                                <TouchableOpacity onPress={handlePlayPress} style={{ position: 'absolute', top: 0 }} >
+                                                    <Image source={images.videoThumb} style={styles.thumbnail} />
+                                                </TouchableOpacity>
                                         }
-                                        {/* <View style={{ marginTop: scale(20), alignSelf: 'center' }}>
-                                            <Icon LibraryName="Feather" IconName="smile" IconSize={45} IconColor="#f10078" />
-                                        </View> */}
                                     </View>
-                                    : ""
-                            }
-                        </View>
-                    </ScrollView>
+                                </>
+                                : ""
+                        }
+                        
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{paddingBottom: scale(100),paddingTop:scale(10)}} >
+                                {
+                                    dataMain?.tYogaDesc != "" ?
+                                        <View style={styles.textView}>
+                                            {
+                                                yogaDescArr.map((curEle, index) => {
+                                                    const isStringHeader=new String(curEle).includes("*");
+                                                    let newString=curEle;
+                                                    if(isStringHeader){
+                                                        newString=curEle.replace('*','');
+                                                    }
+                                                    return curEle != "" ? <View style={{...styles.paragraphBox,...isStringHeader?{alignSelf:'center'}:{}}}>
+                                                        <View>
+                                                            {/* <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" /> */}
+                                                        </View>
+                                                        <Text style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2.5),fontFamily:'Lato_700Bold'}:{}}} key={index}>
+                                                            {newString}
+                                                        </Text>
+                                                    </View> : ""
+                                                })
+                                            }
+                                            {/* <View style={{ marginTop: scale(20), alignSelf: 'center' }}>
+                                                <Icon LibraryName="Feather" IconName="smile" IconSize={45} IconColor="#f10078" />
+                                            </View> */}
+                                        </View>
+                                        : ""
+                                }
+                        </ScrollView>
+                    </View>
                 </View>
             </Main>
         </View>
@@ -180,7 +186,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     mainData: {
-        marginTop: scale(0)
+        marginTop: scale(0),
     },
     imageView: {
         width: moderateScale(355),
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
     textView: {
         alignSelf:'center',
         width: widthPercentageToDP('90%'),
-        backgroundColor: 'white',
+        backgroundColor:'#eaf4fe',
         marginTop: scale(25),
         paddingHorizontal: scale(10),
         borderRadius: scale(15),

@@ -49,7 +49,7 @@ function MusicSubData({navigation,route}) {
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+                contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
                     <View style={styles.body2}>
                         {
                             MusicList.map((curEle,index)=>{

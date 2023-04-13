@@ -35,8 +35,8 @@ Fonders:
 Dr. Jay Kapadiya
 Dr. Krupali Kapadiya`;
 
-  const youtubeUrl = 'https://www.youtube.com/';
-  const instagramUrl = 'https://www.instagram.com/';
+  const youtubeUrl = 'https://www.youtube.com/@shreegeetagarbhsanskar';
+  const instagramUrl = 'https://www.instagram.com/invites/contact/?i=f0sn250yd1ef&utm_content=q6entgf';
   const facebookUrl = 'https://www.facebook.com/';
   const googleUrl = 'https://www.google.com/';
   const whatsappUrl=`whatsapp://send?text=Hi, I have downloaded your app, I would like to learn more about your App&phone=7043381554`;
@@ -83,6 +83,7 @@ Dr. Krupali Kapadiya`;
   });
 
   const [CurrentMonth,setCurrentMonth]=useState(0);
+  const [CurrentWeek,setCurrentWeek]=useState(0);
 
   const handleChangeBabyData=(dd)=>{
     setBabyMontiterData({
@@ -104,6 +105,7 @@ Dr. Krupali Kapadiya`;
       if(res.status==200){
         const dd=res.data;
         setCurrentMonth(res.vCurrPregMonth);
+        setCurrentWeek(res.vCurrPregWeek);
         setUserData(dd);
         setPregStartDate(dd.dFinalPregStartDate);
         setBabyMontiterData({
@@ -142,11 +144,11 @@ Dr. Krupali Kapadiya`;
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+            contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
 
             <CategorySection setLoading={setLoading}/>
             <HeroSectionTime handleChangeBabyData={handleChangeBabyData} PregStartDate={PregStartDate} UserData={UserData} setCurrentMonth={setCurrentMonth}/>
-            <MoniterScreen BabyMontiterData={BabyMontiterData} navigation={navigation} currentMonth={CurrentMonth}/>
+            <MoniterScreen BabyMontiterData={BabyMontiterData} navigation={navigation} currentMonth={CurrentMonth} CurrentWeek={CurrentWeek}/>
             {/* 
             <DayWiseBox/>
             <ActivityCards setLoading={setLoading}/> */}
@@ -184,14 +186,10 @@ export default Home;
 
 const styles = StyleSheet.create({
   body: {
-    flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    alignContent: 'flex-start',
-    alignItems: 'center',
   },
   container: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    backgroundColor:'#f1f8ff',
+    paddingBottom:scale(30)
   },
 });

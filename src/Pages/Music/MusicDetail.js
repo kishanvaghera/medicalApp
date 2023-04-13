@@ -240,61 +240,69 @@ const MusicDetail = ({navigation,route}) => {
         }
         <Main>
             <View style={styles.container}>
+                <View style={styles.mainData}>
+                {
+                    MusicDetailData?.tVideoLink!=""?
+                    <>
+                    <View>
+                        <Video
+                            ref={video}
+                            style={styles.VideoView}
+                            source={{
+                                uri: MusicDetailData.tVideoLink,
+                                preload: true,
+                            }}
+                            useNativeControls={isPlayButtonClicked}
+                            rate={1.0}
+                            isMuted={false}
+                            resizeMode='stretch'
+                            isLooping   
+                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                            onFullscreenUpdate={setOrientation}
+                        />
+                        {
+                            isPlayButtonClicked?"":
+                            <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+                                <Image source={images.videoThumb} style={styles.thumbnail}/>
+                            </TouchableOpacity>
+                        }
+                    </View> 
+                    </>
+                    :""
+                }
+                    
+                
+                {
+                    MusicDetailData?.tMusicImage && MusicDetailData?.tVideoLink==""?
+                    <View style={styles.musicProfileShadow}>
+                        <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(280), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad}/>
+                    </View>:""
+                }
+
                 <ScrollView
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
-                    <View style={styles.mainData}>
-                        {
-                            MusicDetailData?.tVideoLink!=""?
-                            <>
-                            <View>
-                                <Video
-                                    ref={video}
-                                    style={styles.VideoView}
-                                    source={{
-                                        uri: MusicDetailData.tVideoLink,
-                                        preload: true,
-                                    }}
-                                    useNativeControls={isPlayButtonClicked}
-                                    rate={1.0}
-                                    isMuted={false}
-                                    resizeMode='stretch'
-                                    isLooping   
-                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                    onFullscreenUpdate={setOrientation}
-                                />
-                                {
-                                    isPlayButtonClicked?"":
-                                    <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
-                                        <Image source={images.videoThumb} style={styles.thumbnail}/>
-                                    </TouchableOpacity>
-                                }
-                            </View> 
-                            </>
-                            :""
-                        }
-                            
-                        
-                        {
-                            MusicDetailData?.tMusicImage && MusicDetailData?.tVideoLink==""?
-                            <View style={styles.musicProfileShadow}>
-                               <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(280), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad}/>
-                            </View>:""
-                        }
-                        
+                contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
                         {
                             MusicDetailData?.tMusicDesc!=""?
                             <View style={styles.textView}>
                                 {
                                     musicDescArr.map((curEle,index)=>{
-                                        return  curEle!=""?<View style={styles.paragraphBox}>
-                                                    <View>
-                                                        <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" />
-                                                    </View>
-                                                    <Text style={styles.textDesc} key={index}>
-                                                        {curEle}
+                                        const isStringHeader=new String(curEle).includes("*");
+                                        let newString=curEle;
+                                        if(isStringHeader){
+                                            newString=curEle.replace('*','');
+                                        }
+                                        return  curEle!=""?<View style={{...styles.paragraphBox,...isStringHeader?{alignSelf:'center'}:{}}}>
+                                                    {
+                                                        isStringHeader?"":
+                                                        <View>
+                                                            <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" />
+                                                        </View>
+                                                    }
+                                                    <Text style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2.5),fontFamily:'Lato_700Bold'}:{}}} key={index}>
+                                                        {newString}
                                                     </Text>
                                                 </View>:""
                                     })
@@ -305,8 +313,8 @@ const MusicDetail = ({navigation,route}) => {
                             </View>
                             :""
                         }
-                    </View>
                 </ScrollView>
+                </View>
             </View>
         </Main>
     </View>
@@ -318,7 +326,7 @@ export default MusicDetail
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f8ff',
         justifyContent: 'flex-start',
         alignContent: 'flex-start',
         alignItems: 'center'
@@ -329,14 +337,15 @@ const styles = StyleSheet.create({
     },
     imageView2:{
         marginTop:scale(10),
-        width:moderateScale(355),
+        width:widthPercentageToDP('100%'),
         height:heightPercentageToDP('100%'),
     },
     mainData:{
-        width:moderateScale(350),
+        width:widthPercentageToDP('100%'),
         justifyContent:'center',
         alignItems:'center',
-        alignContent:'center'
+        alignContent:'center',
+        paddingBottom:scale(400)
     },
     imageView:{
         width:moderateScale(280),
@@ -355,7 +364,7 @@ const styles = StyleSheet.create({
     },
     textView:{
         width:widthPercentageToDP('90%'),
-        backgroundColor:'white',
+        backgroundColor:'#eaf4fe',
         marginTop:scale(25),
         paddingHorizontal:scale(10),
         borderRadius:scale(15),

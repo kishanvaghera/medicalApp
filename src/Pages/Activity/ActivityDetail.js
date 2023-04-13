@@ -7,6 +7,7 @@ import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import images from '../../../assets/index'
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const ActivityDetail = ({navigation, route}) => {
     const [loading, setLoading] = useState(false);
@@ -37,51 +38,51 @@ const ActivityDetail = ({navigation, route}) => {
         </SafeAreaView>
         <Main>
             <View style={styles.container}>
-                <ScrollView
-                keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
-                    <View style={styles.mainData}>
-                        {
-                            data?.tActivityFile?
-                            <Image source={{ uri: data.tActivityFile }} style={styles.imageView} resizeMode={'contain'}/>
-                            :""
-                        }
+                <View style={styles.mainData}>
+                    {
+                        data?.tActivityFile?
+                        <Image source={{ uri: data.tActivityFile }} style={styles.imageView} resizeMode={'contain'}/>
+                        :""
+                    }
 
-                        {
-                            data?.tActivityFile=="" && data?.tVideoLink!=""?
-                                <>
-                                <Video
-                                    ref={video}
-                                    style={styles.imageView}
-                                    source={{
-                                        uri: data.tVideoLink,
-                                    }}
-                                    useNativeControls={isPlayButtonClicked}
-                                    rate={1.0}
-                                    isMuted={false}
-                                    resizeMode="cover"
-                                    isLooping   
-                                    onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                    onFullscreenUpdate={setOrientation}
-                                />
-                                {
-                                    isPlayButtonClicked?"":
-                                    <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
-                                        <Image source={images.videoThumb} style={styles.thumbnail}/>
-                                    </TouchableOpacity>
-                                }
-                                </>
-                                :""
-                        }
-                        <View style={styles.textView}>
-                            <Text style={styles.textDesc}>
-                                {data?.tActivityDesc}
-                            </Text>
-                        </View>
-                    </View>
-                </ScrollView>
+                    {
+                        data?.tActivityFile=="" && data?.tVideoLink!=""?
+                            <>
+                            <Video
+                                ref={video}
+                                style={styles.imageView}
+                                source={{
+                                    uri: data.tVideoLink,
+                                }}
+                                useNativeControls={isPlayButtonClicked}
+                                rate={1.0}
+                                isMuted={false}
+                                resizeMode="cover"
+                                isLooping   
+                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                onFullscreenUpdate={setOrientation}
+                            />
+                            {
+                                isPlayButtonClicked?"":
+                                <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+                                    <Image source={images.videoThumb} style={styles.thumbnail}/>
+                                </TouchableOpacity>
+                            }
+                            </>
+                            :""
+                    }
+                    <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
+                            <View style={styles.textView}>
+                                <Text style={styles.textDesc}>
+                                    {data?.tActivityDesc}
+                                </Text>
+                            </View>
+                    </ScrollView>
+                </View>
             </View>
         </Main>
     </View>
@@ -115,6 +116,20 @@ const styles = StyleSheet.create({
         fontSize:RFPercentage(2.3),
         fontFamily:'Lato_400Regular',
         lineHeight:moderateScale(30),
+        backgroundColor:'#eaf4fe',
+        alignSelf:'center',
+        width: widthPercentageToDP('90%'),
+        borderRadius: scale(15),
+        paddingVertical: scale(20),
+        paddingHorizontal:scale(10),
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
     },
     textView:{
         width:moderateScale(320),

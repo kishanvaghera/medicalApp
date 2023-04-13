@@ -58,9 +58,7 @@ const MomScreen = ({navigation,route}) => {
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
-            
-
+            contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
             <View style={{marginTop:scale(20),marginBottom:scale(10)}}>
               <Video
                     ref={video}
@@ -168,7 +166,7 @@ export default MomScreen
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f1f8ff',
         justifyContent: 'flex-start',
         alignContent: 'flex-start',
         alignItems: 'center'
@@ -237,7 +235,7 @@ const styles = StyleSheet.create({
     MainDesc:{
       marginTop:scale(10),
       borderRadius:scale(10),
-      backgroundColor:'white',
+      backgroundColor:'#eaf4fe',
       shadowColor: "#000",
       shadowOffset:{
         width: 0,

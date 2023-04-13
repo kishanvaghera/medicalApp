@@ -33,6 +33,7 @@ export default {
     CALANDER_ADD:'CalanderAdd',
     MUSIC_SUB_DATA:'MusicSubData',
     MomScreen:'MomScreen',
+    BabyScreen:'BabyScreen',
 
     ADMIN_DASHBOARD:'Admin Dashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',

@@ -24,7 +24,7 @@ const MoniterScreen = (props) => {
         if(index==1){
             props.navigation.navigate(RoutName.MomScreen,{currentMonth:props.currentMonth})
         }else{
-            setSelectedIndex(index)
+            props.navigation.navigate(RoutName.BabyScreen,{CurrentWeek:props.CurrentWeek})
         }
     }
 
@@ -36,8 +36,6 @@ const MoniterScreen = (props) => {
             style={styles.tabBar}
             indicatorStyle={styles.tabIndicator}
             tabStyle={styles.tabContainer}
-            tabTitleSelected={{ color: 'red' }}
-            tabTitleUnselected={{ color: 'black' }}
         >
             {renderTab('BABY',0)}
             {renderTab('MOM',1)}
@@ -103,7 +101,8 @@ const styles = StyleSheet.create({
     tabBar: {
         width:moderateScale(250),
         marginLeft:scale(20),
-        flex:1
+        flex:1,
+        backgroundColor:'transparent'
     },
     tabContainer: {
       padding: 5,
@@ -117,25 +116,25 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset:{
             width: 0,
-            height: 1,
+            height: 2,
         },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 2,
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     tabSelected: {
         backgroundColor:'#ffffff',
         height:verticalScale(40),
         borderTopLeftRadius:scale(20),
         borderTopRightRadius:scale(20),
-        shadowColor: "#0B4E98",
+        shadowColor: "#000",
         shadowOffset:{
             width: 0,
-            height: 3,
+            height: 2,
         },
-        shadowOpacity: 0.30,
-        shadowRadius: 4.65,
-        elevation: 20,
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
         zIndex:1,
     },
     tabTitle: {
@@ -162,11 +161,11 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset:{
             width: 0,
-            height: 3,
+            height: 1,
         },
-        shadowOpacity: 0.29,
-        shadowRadius: 4.65,
-        elevation: 20,
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
     },
     lightText:{
         fontSize:RFPercentage(2),

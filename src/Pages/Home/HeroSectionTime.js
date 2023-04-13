@@ -160,11 +160,11 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset:{
             width: 0,
-            height: 1,
+            height: 2,
         },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 2,
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
         borderRadius:scale(20),
     },
     msg:{

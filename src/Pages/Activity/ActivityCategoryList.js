@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,Image, SafeAreaView, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
 import { scale, verticalScale, moderateScale } from '../../utils/scalling';
 import * as APIService from '../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
@@ -8,7 +8,7 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP } from 'react-native-responsive-screen';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
@@ -67,6 +67,15 @@ const ActivityCategoryList = ({navigation}) => {
         },[navigation])
     )
 
+    const [imageHeight, setImageHeight] = useState(100);
+
+    const onImageLoad = event => {
+        const screenWidth = Dimensions.get('window').width;
+        const { width, height } = event.nativeEvent.source;
+        const aspectRatio = width / height;
+        const imageHeight = screenWidth / aspectRatio;
+        setImageHeight(imageHeight);
+    };
 
 
   return (
@@ -81,7 +90,7 @@ const ActivityCategoryList = ({navigation}) => {
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(80)}} >
+                contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
 
                     <View style={styles.mainRows}>
                         <View style={styles.rows}>
@@ -112,13 +121,13 @@ const ActivityCategoryList = ({navigation}) => {
                             }
                         </View>
                         :
-                        <View style={{width:moderateScale(310),alignSelf:'center'}}>
+                        <View style={{width:widthPercentageToDP('90%'),alignSelf:'center'}}>
                             <SwiperFlatList
                                 ref={swiperRef}
                                 data={DataImagesArr?DataImagesArr:[]} 
                                 renderItem={(curEle) => (
                                 <View style={styles.imageRows2}>
-                                    <Image source={{uri:curEle.item.tActivityFile}}  style={{...styles.boxImage3,width:315,height:hp(100)}} resizeMode="contain"/>
+                                    <Image source={{uri:curEle.item.tActivityFile}}  style={{...styles.boxImage3,width:widthPercentageToDP('100%'),height:imageHeight}} onLoad={onImageLoad} resizeMode="stretch"/>
                                 </View>
                                 )}
                             />
@@ -141,7 +150,7 @@ const styles = StyleSheet.create({
         marginBottom:scale(10)
     },
     rows:{
-        width:moderateScale(310),
+        width:widthPercentageToDP('90%'),
         flexDirection:'row',
         justifyContent:'space-between',
     },
@@ -150,14 +159,12 @@ const styles = StyleSheet.create({
         marginTop:scale(5)
     },
     rowsTab:{
-        width:moderateScale(150),
+        width:widthPercentageToDP('42%'),
         borderBottomWidth:scale(5),
         alignItems:'center',
         paddingBottom:scale(5)
     },
     imageRows2:{
-        marginTop:scale(0),
-        paddingTop:scale(0)
     },
     boxImage3:{
         marginTop:scale(0),
@@ -167,7 +174,7 @@ const styles = StyleSheet.create({
     },  
     box:{
         flexDirection:'row',
-        width:moderateScale(310),
+        width:widthPercentageToDP('90%'),
         paddingBottom:scale(5),
         // paddingTop:scale(5),
         backgroundColor:'white',
@@ -200,7 +207,7 @@ const styles = StyleSheet.create({
     boxText:{
         fontFamily:'Lato_400Regular',
         fontSize:RFPercentage(2.3),
-        width:moderateScale(250),
+        width:widthPercentageToDP('80%'),
         marginLeft:scale(8)
     }
 });
