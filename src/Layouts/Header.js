@@ -24,6 +24,7 @@ import images from '../../assets/'
 const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScreenName}, props) => {
   const navigation = useNavigation();
   const route = useRoute();
+
   return (
     <View style={styles.headerContainer}>
       <StatusBar
@@ -38,7 +39,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
           </TouchableOpacity>:""
         } */}
       {
-        route.name=="Home"?
+        (route.name=="Home" || route.name=="TrialScreen")?
         <View style={{position:'absolute',flexDirection:'row',left:scale(20)}}>
         <Image source={images.logo} style={{width:widthPercentageToDP('6%'),height:heightPercentageToDP('6%')}} resizeMode='contain' />
           <Text style={styles.LogoTitile}>
@@ -49,7 +50,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       }
 
       {
-        route.name!="Home"?
+        (route.name!="Home" && route.name!="TrialScreen")?
         <TouchableOpacity style={styles.iconStyle} onPress={() => backScreenName?navigation.navigate(backScreenName):navigation.goBack()}>
           <Icon IconName='arrow-left' LibraryName='FontAwesome5' IconSize={22} IconColor={'#0B4E98'}/>
         </TouchableOpacity>:""
@@ -59,7 +60,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
        <AntDesign name={iconName} size={22} color="black" /> }
       </TouchableOpacity> */}
       {
-        route.name!="Home"?
+        (route.name!="Home" && route.name!="TrialScreen")?
         <Text style={{...styles.textStyle,fontSize:RFPercentage(2.3)}}>{title}</Text>
         :""
       }

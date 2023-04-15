@@ -43,7 +43,6 @@ const Login = ({ navigation }) => {
 
     APIService.apiAction(postData, apiUrls.auth).then(res => {
       setLoading(false);
-      console.log("res.data",res)
       if (res) {
         if (res.status == 200) {
           setIsInvalidErr(false);

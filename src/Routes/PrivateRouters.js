@@ -2,11 +2,10 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
-import { Home, Meditation, MusicCategoryList, Live, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicList, MusicPlayer, SubYogaList, YogaDetail,MusicSubCategoryList,MusicDetail} from '../Pages/Dashboard';
+import { Home, MusicCategoryList, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicPlayer, SubYogaList, MusicSubCategoryList,MusicDetail} from '../Pages/Dashboard';
 import MainActivityList from '../Pages/Activity/MainActivityList';
 import ActvitySubCategoryList from '../Pages/Activity/ActvitySubCategoryList';
 import ActivityCategoryList from '../Pages/Activity/ActivityCategoryList';
@@ -21,16 +20,18 @@ import {AdminDashboard,AdminYogaAdd,AdminMusicAdd,AdminActivityAdd,AdminCategory
 
 import RoutName from './RoutName';
 import CustomSidebarMenu from './CustomSidebarMenu';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import YogaSubSubCateList from '../Pages/Yoga/YogaSubSubCateList';
 import DietList from '../Pages/Diet/DietList';
-import { LogOut } from '../Redux/reducer';
 import SetCalanderData from '../Pages/Calander/SetCalanderData';
 import { scale, verticalScale } from '../utils/scalling';
 import MusicSubData from '../Pages/Music/MusicSubData';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import MomScreen from '../Pages/Home/MomScreen';
 import BabyScreen from '../Pages/Home/BabyScreen';
+import TrialHome from '../Pages/TrialPages/TrialHome';
+import SubscribeSelect from '../Pages/TrialPages/SubscribeSelect';
+import PlanDetail from '../Pages/TrialPages/PlanDetail';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,6 +67,9 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.MUSIC_SUB_DATA} component={MusicSubData} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.MomScreen} component={MomScreen} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.BabyScreen} component={BabyScreen} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.TrialScreen} component={TrialHome} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.SubscribeSelc} component={SubscribeSelect} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.PlanDetail} component={PlanDetail} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -102,7 +106,7 @@ const BottomTabStack = () => {
           backgroundColor: '#e0e0e0',
         },
         tabBarIconStyle: {
-          marginTop: scale(5), // Add margin to the top of the icon
+          marginTop: scale(5),
         },
         tabBarLabelStyle: {
           textAlign: 'center',
@@ -115,7 +119,7 @@ const BottomTabStack = () => {
         tabBarActiveTintColor: '#0B4E98',
       }}
       tabBarOptions={{
-        inactiveTintColor: '#a3a0a0', // Set inactive icon color to yellow
+        inactiveTintColor: '#a3a0a0', 
       }}
       >
       <Tab.Screen

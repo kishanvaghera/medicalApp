@@ -34,6 +34,9 @@ export default {
     MUSIC_SUB_DATA:'MusicSubData',
     MomScreen:'MomScreen',
     BabyScreen:'BabyScreen',
+    TrialScreen:'TrialScreen',
+    SubscribeSelc:'SubscribeSelc',
+    PlanDetail:'PlanDetail',
 
     ADMIN_DASHBOARD:'Admin Dashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',

@@ -38,5 +38,9 @@ const images = {
     website:require('./icons/website.png'),
     whatsapp:require('./icons/whatsapp.png'),
     youtube:require('./icons/youtube.png'),
+    BasicVector:require('./BasicVector2.jpg'),
+    welcomeBg:require('./welcomeBg.png'),
+    PregnantPlan:require('./PregnantPlan.png'),
+    PrePlan:require('./PrePlan.png'),
 }
 export default images;

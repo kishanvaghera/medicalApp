@@ -14,7 +14,7 @@ const MoniterScreen = (props) => {
 
     const renderTab = (title,ind) => (
         <Tab
-            title={title}
+            title={() => <Text style={styles.tabTitle}>{title}</Text>}
             style={selectedIndex===ind?styles.tabSelected:styles.tab}
             titleStyle={{ color: 'red', fontWeight: 'bold' }}
         />
@@ -138,7 +138,9 @@ const styles = StyleSheet.create({
         zIndex:1,
     },
     tabTitle: {
-        color: 'white',
+        color: '#004c98',
+        fontSize:RFPercentage(2),
+        fontFamily:'Lato_700Bold',
     },
     unselectedTabTitle: {
         color: 'black',
