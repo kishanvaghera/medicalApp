@@ -145,7 +145,7 @@ Dr. Krupali Kapadiya`;
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
 
-            <CategorySection setLoading={setLoading}/>
+            <CategorySection setLoading={setLoading} BabyMontiterData={BabyMontiterData}/>
             <HeroSectionTime handleChangeBabyData={handleChangeBabyData} PregStartDate={PregStartDate} UserData={UserData} setCurrentMonth={setCurrentMonth}/>
             <MoniterScreen BabyMontiterData={BabyMontiterData} navigation={navigation} currentMonth={CurrentMonth} CurrentWeek={CurrentWeek}/>
             {/* 
@@ -153,11 +153,11 @@ Dr. Krupali Kapadiya`;
             <ActivityCards setLoading={setLoading}/> */}
             {/* <CalanderComp setLoading={setLoading}/> */}
             
-            <TouchableOpacity onPress={onShareApp}>
-              <Image source={images.shareApp} style={{width:wp('90%'),height:hp('20%'),alignSelf:'center',marginTop:scale(20),borderRadius:scale(10)}} resizeMode={'stretch'}/>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={onShareApp}>
+                <Image source={images.shareApp} style={{width:wp('90%'),height:hp('20%'),alignSelf:'center',marginTop:scale(20),borderRadius:scale(10)}} resizeMode={'stretch'}/>
+              </TouchableOpacity>
 
-            <View style={{width:wp('90%'),flexDirection:'row',justifyContent:'space-around',alignSelf:'center',marginTop:scale(20)}}>
+              <View style={{width:wp('90%'),flexDirection:'row',justifyContent:'space-around',alignSelf:'center',marginTop:scale(20)}}>
                 <TouchableOpacity onPress={()=>openLink('we')} style={{borderColor:'#c0d6ef',borderWidth:1,padding:scale(10),borderRadius:scale(100)}}>
                     <Image source={images.website} style={{width:25,height:25}}/>
                 </TouchableOpacity>
@@ -173,7 +173,7 @@ Dr. Krupali Kapadiya`;
                 <TouchableOpacity onPress={()=>openLink('wa')} style={{borderColor:'#c0d6ef',borderWidth:1,padding:scale(10),borderRadius:scale(100)}}>
                   <Image source={images.whatsapp} style={{width:25,height:25}}/>
                 </TouchableOpacity>
-            </View>
+              </View>
           </ScrollView>
         </View>
       </Main>

@@ -5,7 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather } from '@expo/vector-icons';
 
-import { Home, MusicCategoryList, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicPlayer, SubYogaList, MusicSubCategoryList,MusicDetail} from '../Pages/Dashboard';
+import { Home, MusicCategoryList, Profile, CategoryList, CategoryDetail, SubCategoryList, MusicPlayer, SubYogaList, MusicSubCategoryList,MusicDetail, Live} from '../Pages/Dashboard';
 import MainActivityList from '../Pages/Activity/MainActivityList';
 import ActvitySubCategoryList from '../Pages/Activity/ActvitySubCategoryList';
 import ActivityCategoryList from '../Pages/Activity/ActivityCategoryList';
@@ -31,7 +31,10 @@ import MomScreen from '../Pages/Home/MomScreen';
 import BabyScreen from '../Pages/Home/BabyScreen';
 import TrialHome from '../Pages/TrialPages/TrialHome';
 import SubscribeSelect from '../Pages/TrialPages/SubscribeSelect';
-import PlanDetail from '../Pages/TrialPages/PlanDetail';
+import FreeData from '../Pages/TrialPages/FreeData';
+import FreeDataDetail from '../Pages/TrialPages/FreeDataDetail';
+import LiveSubData from '../Pages/Live/LiveSubData';
+import LiveMainData from '../Pages/Live/LiveMainData';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,7 +72,11 @@ const HomeScreenStack = ({ navigation, props }) => {
       <Stack.Screen name={RoutName.BabyScreen} component={BabyScreen} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.TrialScreen} component={TrialHome} options={{ headerShown: false }} />
       <Stack.Screen name={RoutName.SubscribeSelc} component={SubscribeSelect} options={{ headerShown: false }} />
-      <Stack.Screen name={RoutName.PlanDetail} component={PlanDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.FreeData} component={FreeData} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.FreeDataDetail} component={FreeDataDetail} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.LIVE} component={Live} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.LiveSubData} component={LiveSubData} options={{ headerShown: false }} />
+      <Stack.Screen name={RoutName.LiveMainData} component={LiveMainData} options={{ headerShown: false }} />
 
 
       <Stack.Screen name={RoutName.ADMIN_DASHBOARD} component={AdminDashboard} options={{ headerShown: false }} />
@@ -106,12 +113,12 @@ const BottomTabStack = () => {
           backgroundColor: '#e0e0e0',
         },
         tabBarIconStyle: {
-          marginTop: scale(5),
+          marginTop: scale(3),
         },
         tabBarLabelStyle: {
           textAlign: 'center',
           fontSize: RFPercentage(1.55),
-          paddingBottom:scale(4)
+          paddingBottom:scale(3)
         },
         tabBarStyle:{
           height:verticalScale(42),

@@ -9,6 +9,8 @@ export default {
     MEDITATION : 'Meditation',
     MUSIC: 'Music',
     LIVE: 'Live',
+    LiveSubData: 'LiveSubData',
+    LiveMainData: 'LiveMainData',
     PROFILE: 'Profile',
     USER_CATEGORY_LIST: 'UserCategoryList',
     SUB_CATAGORY_LIST: 'SubCategoryList',
@@ -36,7 +38,8 @@ export default {
     BabyScreen:'BabyScreen',
     TrialScreen:'TrialScreen',
     SubscribeSelc:'SubscribeSelc',
-    PlanDetail:'PlanDetail',
+    FreeData:'FreeData',
+    FreeDataDetail:'FreeDataDetail',
 
     ADMIN_DASHBOARD:'Admin Dashboard',
     ADMIN_ACTIVITY_LIST:'AdminActivityList',

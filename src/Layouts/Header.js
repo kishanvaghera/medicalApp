@@ -61,7 +61,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
       </TouchableOpacity> */}
       {
         (route.name!="Home" && route.name!="TrialScreen")?
-        <Text style={{...styles.textStyle,fontSize:RFPercentage(2.3)}}>{title}</Text>
+        <Text style={{...styles.textStyle,fontSize:RFPercentage(2),lineHeight:scale(15)}}>{title}</Text>
         :""
       }
 
@@ -70,6 +70,14 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
         <TouchableOpacity style={styles.RightIcon} onPress={() => navigation.navigate(RoutName.CALANDER_ADD)}>
           <Icon IconName='calendar-plus' LibraryName='FontAwesome5' IconSize={22} IconColor={'#0B4E98'}/>
         </TouchableOpacity>:""
+      }
+
+      {
+        (route.name=="Home" || route.name=="TrialScreen")?
+        <TouchableOpacity style={styles.RightIcon} onPress={() => navigation.navigate(RoutName.LIVE)}>
+          <Icon IconName='youtube-tv' LibraryName='MaterialCommunityIcons' IconSize={22} IconColor={'#DF2E38'}/>
+        </TouchableOpacity>
+        :""
       }
     </View>
   )
@@ -98,7 +106,8 @@ const styles = StyleSheet.create({
     color:"#0B4E98",
     position:'absolute',
     left:scale(60),
-    paddingVertical:scale(3)
+    paddingVertical:scale(3),
+    width:wp('80%')
   }, 
   iconStyle: {
     width: 35,
@@ -113,7 +122,7 @@ const styles = StyleSheet.create({
     height: 35,
     justifyContent: 'center',
     alignItems: 'center',
-    right: 0,
+    right: 20,
     position:'absolute',
   },
   LogoTitile:{

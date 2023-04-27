@@ -19,6 +19,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Header, Main } from '../../../../Layouts';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import YoutubePlayerCust from '../../../../Components/YoutubePlayerCust'
 
 const YogaDetail = ({ route, navigation }) => {
 
@@ -32,8 +33,8 @@ const YogaDetail = ({ route, navigation }) => {
     })
 
     const [pageTitle, setPageTitle] = useState('');
-    const video = React.useRef(null);
-    const [status, setStatus] = React.useState({});
+    // const video = React.useRef(null);
+    // const [status, setStatus] = React.useState({});
 
 
     useEffect(() => {
@@ -41,20 +42,20 @@ const YogaDetail = ({ route, navigation }) => {
         return () => { }
     }, [pageTitle])
 
-    function setOrientation() {
-        if (Dimensions.get('window').height > Dimensions.get('window').width) {
+    // function setOrientation() {
+    //     if (Dimensions.get('window').height > Dimensions.get('window').width) {
 
-            //Device is in portrait mode, rotate to landscape mode.
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    //         //Device is in portrait mode, rotate to landscape mode.
+    //         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
 
-        }
-        else {
+    //     }
+    //     else {
 
-            //Device is in landscape mode, rotate to portrait mode.
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    //         //Device is in landscape mode, rotate to portrait mode.
+    //         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
-        }
-    }
+    //     }
+    // }
 
     return (
         <View style={styles.body}>
@@ -75,19 +76,21 @@ const YogaDetail = ({ route, navigation }) => {
                                         source={{ uri: pageDatail.imagePath }}
                                         style={styles.videoView} 
                                         resizeMode={'contain'}/>
-                                    : <Video
-                                        ref={video}
-                                        style={styles.videoView}
-                                        source={{
-                                            uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-                                        }}
-                                        useNativeControls
-                                        resizeMode="contain"
-                                        isLooping
-                                        onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                                        onFullscreenUpdate={setOrientation}
-                                    />
+                                    :<YoutubePlayerCust height={hp(35)} width={wp('100%')} url={pageDatail?.tYoutubeLink}/>
                             }
+
+                            {/* <Video
+                                ref={video}
+                                style={styles.videoView}
+                                source={{
+                                    uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                                }}
+                                useNativeControls
+                                resizeMode="contain"
+                                isLooping
+                                onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+                                onFullscreenUpdate={setOrientation}
+                            /> */}
 
                             <Text style={styles.titleText}>Description</Text>
                             <View style={{ marginTop: 8 }}>

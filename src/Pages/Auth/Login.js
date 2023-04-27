@@ -4,13 +4,11 @@ import images from '../../../assets';
 import { Input, Button } from '../../Layouts';
 import RoutName from '../../Routes/RoutName';
 import { useSelector, useDispatch } from 'react-redux'
-import { LoginSuccess, UserDataStor,AdminLogin } from '../../Redux/reducer';
+import { LoginSuccess, UserDataStor, AdminLogin } from '../../Redux/reducer';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
 import * as APIService from './../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import { Loader } from '../../Components';
-
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -18,9 +16,11 @@ const Login = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
-     //userName: "admin",
+    //userName: "admin",
     userName: "GTGSA0001",
-    password: "123456"
+    vMobileNumber: "",
+    password: "123456",
+    vOtp: "",
   });
 
   const handleChange = (e, name) => {
@@ -66,8 +66,6 @@ const Login = ({ navigation }) => {
     }
     return () => { }
   }, [loggedData])
-
-
 
   return (
     <View style={styles.body}>

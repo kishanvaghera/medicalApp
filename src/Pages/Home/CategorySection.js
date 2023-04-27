@@ -7,6 +7,7 @@ import images from '../../../assets';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 function CategorySection(props) {
     const navigation = useNavigation();
@@ -20,7 +21,7 @@ function CategorySection(props) {
 
     const ApiCall=()=>{
       props.setLoading(true);
-        const postData={action:"getHomePageData",day:1};
+        const postData={action:"getHomePageData",day:2};
         APIService.apiAction(postData, apiUrls.home).then(res => {
           props.setLoading(false);
           if(res.status==200){
@@ -37,7 +38,7 @@ function CategorySection(props) {
     },[])
     
   return (
-    <View>
+    <View style={{width:widthPercentageToDP('90%'),alignSelf:'center'}}>
         <SwiperFlatList
             autoplay
             autoplayDelay={5}
@@ -66,16 +67,15 @@ const styles = StyleSheet.create({
     },
     categoryImageText:{
       color:"black",
-      fontSize:RFPercentage(3),
-      fontFamily:'Lato_400Regular',
+      fontSize:RFPercentage(2.3),
+      fontFamily:'Lato_700Bold',
       alignSelf:'center',
       width:moderateScale(200),
       textAlign:'center',
     },
     imageRows:{
-        width:moderateScale(320),
+        width:widthPercentageToDP('90%'),
         height: verticalScale(170),
-        marginHorizontal:scale(16),
         shadowColor: "#1A0000",
         shadowOffset: {
             width: 0,

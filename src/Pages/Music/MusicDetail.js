@@ -13,6 +13,7 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import images from '../../../assets/'
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
+import YoutubePlayerCust from '../../Components/YoutubePlayerCust';
 
 const MusicDetail = ({navigation,route}) => {
 
@@ -242,10 +243,10 @@ const MusicDetail = ({navigation,route}) => {
             <View style={styles.container}>
                 <View style={styles.mainData}>
                 {
-                    MusicDetailData?.tVideoLink!=""?
+                    MusicDetailData?.tYoutubeLink!=""?
                     <>
                     <View>
-                        <Video
+                        {/* <Video
                             ref={video}
                             style={styles.VideoView}
                             source={{
@@ -259,7 +260,10 @@ const MusicDetail = ({navigation,route}) => {
                             isLooping   
                             onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
                             onFullscreenUpdate={setOrientation}
-                        />
+                        /> */}
+
+                        <YoutubePlayerCust height={verticalScale(200)} width={widthPercentageToDP('100%')} url={MusicDetailData?.tYoutubeLink}/>
+
                         {
                             isPlayButtonClicked?"":
                             <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
@@ -364,7 +368,7 @@ const styles = StyleSheet.create({
     },
     textView:{
         width:widthPercentageToDP('90%'),
-        backgroundColor:'#eaf4fe',
+        backgroundColor:'white',
         marginTop:scale(25),
         paddingHorizontal:scale(10),
         borderRadius:scale(15),

@@ -1,13 +1,46 @@
-import { View,StyleSheet, Image } from 'react-native';
+import { View,StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { moderateScale, scale, verticalScale } from '../../utils/scalling';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import images from '../../../assets';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import * as APIService from '../../Middleware/APIService';
+import apiUrls from '../../Middleware/apiUrls';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
-const SliderScreen = () => {
-    const [TodayCategoryList,setTodayCategoryList]=useState([1,2]);
+const SliderScreen = ({navigation}) => {
+    const [TodayCategoryList,setTodayCategoryList]=useState([]);
+
+    const ApiCall=()=>{
+        const postData={action:"getHomeTrialSlider"}
+        APIService.apiAction(postData, apiUrls.home).then(res => {
+            if (res.status == 200) {
+                setTodayCategoryList([...res.data]);
+            } else {
+                setTodayCategoryList([]);
+            }
+        })
+    }
+
+    useEffect(() => {
+        ApiCall();
+      return () => {}
+    }, [])
+
+    useFocusEffect(
+        useCallback(()=>{
+          ApiCall();
+        },[navigation])
+    )
+
+    const clickToRedirect=(tLink)=>{
+        if(tLink!=""){
+            Linking.openURL(tLink);
+        }
+    }
+    
     return (
         <View style={{marginTop:scale(10)}}>
             <SwiperFlatList
@@ -17,8 +50,16 @@ const SliderScreen = () => {
                 index={0}
                 data={TodayCategoryList ? TodayCategoryList : []}
                 renderItem={(curEle, ind) => (
-                    <View style={styles.imageRows}>
-                        <Image source={images.pregnancyMom} style={{ ...styles.boxImage}} resizeMode={'cover'} />
+                    <View key={ind}>
+                        {
+                            curEle.item.tLink==""?
+                            <View style={styles.imageRows}>
+                                <Image source={{uri:curEle.item.tImags}} style={{ ...styles.boxImage}} resizeMode={'cover'} />
+                            </View>:
+                            <TouchableOpacity style={styles.imageRows} onPress={()=>clickToRedirect(curEle.item.tLink)}>
+                                <Image source={{uri:curEle.item.tImags}} style={{ ...styles.boxImage}} resizeMode={'cover'} />
+                            </TouchableOpacity>
+                        }
                     </View>
                 )}
             />

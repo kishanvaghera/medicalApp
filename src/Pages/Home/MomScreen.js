@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     MainDesc:{
       marginTop:scale(10),
       borderRadius:scale(10),
-      backgroundColor:'#eaf4fe',
+      backgroundColor:'white',
       shadowColor: "#000",
       shadowOffset:{
         width: 0,

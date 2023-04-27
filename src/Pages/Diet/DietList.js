@@ -77,6 +77,8 @@ const DietList = ({navigation}) => {
         const imageHeight = screenWidth / aspectRatio;
         setImageHeight(imageHeight);
     };
+
+    
     
   return (
     <View style={styles.body}>
@@ -106,9 +108,9 @@ const DietList = ({navigation}) => {
                             ref={swiperRef}
                             data={DataImagesArr?DataImagesArr:[]} 
                             renderItem={(curEle) => (
-                            <View style={styles.imageRows}>
-                                <Image source={{uri:curEle.item.tImage}}  style={{width:widthPercentageToDP('100%'),height:imageHeight}} onLoad={onImageLoad} resizeMode='stretch'/>
-                            </View>
+                                <View style={styles.imageRows}>
+                                    <Image source={{uri:curEle.item.tImage}}  style={{width:widthPercentageToDP('100%'),height:imageHeight}} onLoad={onImageLoad} resizeMode='stretch'/>
+                                </View>
                             )}
                         />
                     </View>

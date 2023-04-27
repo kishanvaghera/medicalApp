@@ -11,22 +11,23 @@ import apiUrls from '../../Middleware/apiUrls';
 import images from '../../../assets/index'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import Icon from '../../utils/Icon';
+import YoutubePlayerCust from '../../Components/YoutubePlayerCust';
 
 const YogaMainDetail = ({ navigation, route }) => {
     const [loading, setLoading] = useState(false);
     const { data } = route.params;
 
-    const thumbnailSource = require('../../../assets/videoThumb.png');
+    // const thumbnailSource = require('../../../assets/videoThumb.png');
 
-    const video = React.useRef(null);
-    const [status, setStatus] = useState({});
-    function setOrientation() {
-        if (Dimensions.get('window').height > Dimensions.get('window').width) {
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-        } else {
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        }
-    }
+    // const video = React.useRef(null);
+    // const [status, setStatus] = useState({});
+    // function setOrientation() {
+    //     if (Dimensions.get('window').height > Dimensions.get('window').width) {
+    //         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    //     } else {
+    //         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    //     }
+    // }
 
 
     const [PageName, setPageName] = useState("");
@@ -67,12 +68,12 @@ const YogaMainDetail = ({ navigation, route }) => {
         return () => { }
     }, [data])
 
-    const [isPlayButtonClicked, setisPlayButtonClicked] = useState(false);
-    const handlePlayPress = async () => {
-        // Call the playAsync method to start playing the video
-        await video.current.playAsync();
-        setisPlayButtonClicked(true);
-    };
+    // const [isPlayButtonClicked, setisPlayButtonClicked] = useState(false);
+    // const handlePlayPress = async () => {
+    //     // Call the playAsync method to start playing the video
+    //     await video.current.playAsync();
+    //     setisPlayButtonClicked(true);
+    // };
 
     const yogaDescArr = new String(dataMain?.tYogaDesc).split("=>");
 
@@ -102,7 +103,7 @@ const YogaMainDetail = ({ navigation, route }) => {
                                 : ""
                         }
 
-                        {
+                        {/* {
                             dataMain?.tYogaFile != "" && dataMain?.tVideoLink != "" ?
                                 <>
                                     <View style={{ marginTop: scale(15) }}>
@@ -130,6 +131,12 @@ const YogaMainDetail = ({ navigation, route }) => {
                                     </View>
                                 </>
                                 : ""
+                        } */}
+
+                        {
+                            dataMain?.tYogaFile != "" && dataMain?.tYoutubeLink != ""?
+                            <YoutubePlayerCust height={verticalScale(200)} width={widthPercentageToDP('100%')} url={dataMain?.tYoutubeLink}/>
+                            :""
                         }
                         
                         <ScrollView
@@ -151,7 +158,7 @@ const YogaMainDetail = ({ navigation, route }) => {
                                                         <View>
                                                             {/* <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" /> */}
                                                         </View>
-                                                        <Text style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2.5),fontFamily:'Lato_700Bold'}:{}}} key={index}>
+                                                        <Text style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2),fontFamily:'Lato_700Bold'}:{}}} key={index}>
                                                             {newString}
                                                         </Text>
                                                     </View> : ""
@@ -206,7 +213,7 @@ const styles = StyleSheet.create({
     textView: {
         alignSelf:'center',
         width: widthPercentageToDP('90%'),
-        backgroundColor:'#eaf4fe',
+        backgroundColor:'white',
         marginTop: scale(25),
         paddingHorizontal: scale(10),
         borderRadius: scale(15),

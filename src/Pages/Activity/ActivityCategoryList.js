@@ -108,7 +108,7 @@ const ActivityCategoryList = ({navigation}) => {
                         <View style={styles.boxRow}>
                             {
                                 ActivityList.map((curEle,index)=>{
-                                    return curEle.isExist>0?<TouchableOpacity style={styles.box} activeOpacity={.9} onPress={()=>{navigation.navigate(curEle
+                                    return curEle.isExist>0?<TouchableOpacity style={styles.box} activeOpacity={.7} onPress={()=>{navigation.navigate(curEle
                                     .eIsSubCat=='y'?RoutName.SUB_ACTIVITY_LIST:RoutName.MAIN_ACTIVITY_LIST,{data:curEle
                                         .eIsSubCat=='y'?{id:curEle.iActivityCatId,name:curEle.vActivitCatName}:{iActivityCatId:curEle.iActivityCatId,vSubActivityName:curEle.vActivitCatName,}})}} key={index}>
                                                 <View style={styles.imageBox}>

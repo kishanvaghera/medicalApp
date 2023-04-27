@@ -8,33 +8,36 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import images from '../../../assets/index'
 import { widthPercentageToDP } from 'react-native-responsive-screen';
+import YoutubePlayerCust from '../../Components/YoutubePlayerCust';
 
 const ActivityDetail = ({navigation, route}) => {
     const [loading, setLoading] = useState(false);
     const {data}=route.params;
 
-    const video = React.useRef(null);
-    const [status, setStatus] = useState({});
-    function setOrientation() {
-        if (Dimensions.get('window').height > Dimensions.get('window').width) {
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-        }else{
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-        }
-    }
+    // const video = React.useRef(null);
+    // const [status, setStatus] = useState({});
+    // function setOrientation() {
+    //     if (Dimensions.get('window').height > Dimensions.get('window').width) {
+    //         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    //     }else{
+    //         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    //     }
+    // }
 
-    const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
-    const handlePlayPress = async () => {
-        // Call the playAsync method to start playing the video
-        await video.current.playAsync();
-        setisPlayButtonClicked(true);
-    };
+    // const [isPlayButtonClicked,setisPlayButtonClicked]=useState(false);
+    // const handlePlayPress = async () => {
+    //     // Call the playAsync method to start playing the video
+    //     await video.current.playAsync();
+    //     setisPlayButtonClicked(true);
+    // };
+
+    const yogaDescArr = new String(data?.tActivityDesc).split("=>");
 
   return (
     <View style={styles.body}>
         <Loader loading={loading} />
         <SafeAreaView>
-            <Header iconName={'menu'} title={data?.vSubActivityName} />
+            <Header iconName={'menu'} title={(data?.vActivityName==null || data?.vActivityName=="")?(data.vSubActivityName==null || data.vSubActivityName=="")?data.vActivitCatName:data.vSubActivityName:data?.vActivityName} />
         </SafeAreaView>
         <Main>
             <View style={styles.container}>
@@ -45,7 +48,7 @@ const ActivityDetail = ({navigation, route}) => {
                         :""
                     }
 
-                    {
+                    {/* {
                         data?.tActivityFile=="" && data?.tVideoLink!=""?
                             <>
                             <Video
@@ -70,18 +73,38 @@ const ActivityDetail = ({navigation, route}) => {
                             }
                             </>
                             :""
+                    } */}
+
+                    {
+                        data?.tActivityFile=="" && data?.tYoutubeLink!=""?
+                        <YoutubePlayerCust height={220} width={widthPercentageToDP('100%')} url={data?.tYoutubeLink}/>:""
                     }
-                    <ScrollView
-                    keyboardShouldPersistTaps="handled"
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
-                            <View style={styles.textView}>
-                                <Text style={styles.textDesc}>
-                                    {data?.tActivityDesc}
-                                </Text>
-                            </View>
-                    </ScrollView>
+
+                    {
+                        data?.tActivityDesc!=""?
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{justifyContent: 'flex-start',alignContent: 'flex-start',paddingBottom:scale(100)}} >
+                                    <View style={styles.textView}>
+                                        {/* <Text style={styles.textDesc}> */}
+                                            {
+                                                yogaDescArr.map((curEle,index)=>{
+                                                    const isStringHeader=new String(curEle).includes("*");
+                                                    let newString=curEle;
+                                                    if(isStringHeader){
+                                                        newString=curEle.replace('*','');
+                                                    }
+
+                                                    return <Text key={index} style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2),fontFamily:'Lato_700Bold'}:{}}}>{newString}</Text>
+                                                })
+                                            }
+                                        {/* </Text> */}
+                                    </View>
+                            </ScrollView>
+                        :""
+                    }
                 </View>
             </View>
         </Main>
@@ -100,11 +123,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     container: {
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        width:widthPercentageToDP('100%'),
     },
     mainData:{
-
     },
     imageView:{
         width:moderateScale(355),
@@ -112,28 +133,17 @@ const styles = StyleSheet.create({
         // backgroundColor:'red'
     },
     textDesc:{
-        marginTop:scale(20),
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
-        lineHeight:moderateScale(30),
-        backgroundColor:'#eaf4fe',
-        alignSelf:'center',
-        width: widthPercentageToDP('90%'),
-        borderRadius: scale(15),
-        paddingVertical: scale(20),
-        paddingHorizontal:scale(10),
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
+        lineHeight:moderateScale(20),
     },
     textView:{
-        width:moderateScale(320),
-        marginLeft:scale(20)
+        marginTop:scale(20),
+        width:widthPercentageToDP('90%'),
+        alignSelf:'center',
+        backgroundColor:'white',
+        padding:scale(10),
+        borderRadius:scale(10)
     },
     thumbnail: {
       width:moderateScale(355),

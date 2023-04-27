@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: scale(20),
     alignSelf: 'center',
     marginTop: scale(10),
-    paddingLeft: scale(15),
     paddingVertical: scale(15),
     shadowColor: "#000",
     shadowOffset: {
@@ -42,16 +41,17 @@ const styles = StyleSheet.create({
   },
   subTxt: {
     color: "#0B4E98",
-    fontSize: RFPercentage(2.5),
+    fontSize: RFPercentage(2),
     fontFamily: 'Lato_700Bold',
     alignSelf: 'center'
   },
   paragraphText: {
     color: "black",
-    fontSize: RFPercentage(2.5),
+    fontSize: RFPercentage(2),
     fontFamily: 'Lato_400Regular',
     marginTop: scale(15),
     alignSelf: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    width:wp('80%')
   }
 })

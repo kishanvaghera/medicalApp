@@ -8,6 +8,9 @@ const music = 'music.php';
 const yoga = 'yoga.php';
 const home = 'home.php';
 const diet = 'diet.php';
+const freeDataApi = 'freedata.php';
+const workshop = 'workshop.php';
+
 export default {
     BASE_URL,
     auth,
@@ -17,5 +20,7 @@ export default {
     music,
     yoga,
     home,
-    diet
+    diet,
+    freeDataApi,
+    workshop
 }
