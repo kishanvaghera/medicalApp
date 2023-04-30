@@ -27,9 +27,11 @@ const Register = ({ navigation }) => {
 
   const [options, setOptions] = useState([
     { value: 0, lable: 'Select Plan' },
+    { value: 4, lable: 'Free Trial' },
     { value: 1, lable: 'Pre - Planning' },
     { value: 2, lable: 'Pregnancy' },
-    { value: 3, lable: 'Post Pregnancy' }]
+    { value: 3, lable: 'Post Pregnancy' },
+  ]
   );
 
   const [loading, setLoading] = useState(false);
@@ -53,39 +55,47 @@ const Register = ({ navigation }) => {
     })
   }
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    generateUserCode();
-    return () => { }
-  }, [])
+  //   generateUserCode();
+  //   return () => { }
+  // }, [])
 
-  const generateUserCode = () => {
-    setLoading(true);
-    const postData = {
-      action: 'UserGenerateCode',
-    };
-    APIService.apiAction(postData, apiUrls.auth).then(res => {
-      setLoading(false);
-      if (res) {
-        if (res.status == 200) {
-          setMainForm(prevState => {
-            return {
-              ...prevState,
-              userName: res.data
-            }
-          })
-        }
-      }
-    })
-  }
+  // const generateUserCode = () => {
+  //   setLoading(true);
+  //   const postData = {
+  //     action: 'UserGenerateCode',
+  //   };
+  //   APIService.apiAction(postData, apiUrls.auth).then(res => {
+  //     setLoading(false);
+  //     if (res) {
+  //       if (res.status == 200) {
+  //         setMainForm(prevState => {
+  //           return {
+  //             ...prevState,
+  //             userName: res.data
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  // }
 
   const [isSubmitErrShow,setIsSubmitErrShow]=useState(false);
+  const [MobileIsValid,setMobileIsValid]=useState(false);
+  const [isValidNumber,setisValidNumber]=useState(false);
   const handalNextBtn = () => {
     setIsSubmitErrShow(true);
     const {planType,firstName,lastName,email,mobileNo,userName,password}=mainForm;
 
-    if(planType.value>0 && firstName!="" && lastName!="" && email!="" && validator.isEmail(mainForm['email']) && mobileNo!="" && userName!="" && password!=""){
-        navigation.navigate(RoutName.OTHER_DETILS, { userId: '3' });
+    const regex = /^\+\d{2,4}\d{7,10}$/;
+    const isValidPhoneNumber = regex.test(mobileNo);
+    if(isValidPhoneNumber){
+      setisValidNumber(false);
+    }else{
+      setisValidNumber(true);
+    }
+    if(planType.value>0 && firstName!="" && lastName!="" && email!="" && validator.isEmail(mainForm['email']) && isValidPhoneNumber){
         setLoading(true);
         const postData = {
           action: 'addUser',
@@ -103,14 +113,16 @@ const Register = ({ navigation }) => {
           setLoading(false);
           if (res) {
             if (res.status == 200) {
+              // navigation.navigate(RoutName.OTHER_DETILS, { userId: '3' });
+              setMobileIsValid(false);
               navigation.navigate(RoutName.OTHER_DETILS, { userId: res.data });
+            }else{
+              setMobileIsValid(true);
             }
           }
         })
     }
   }
-
-  const regex = /^\d{10}$/;
 
   return (
     <View style={styles.body}>
@@ -130,11 +142,14 @@ const Register = ({ navigation }) => {
           <View style={styles.formContaner}>
             <Text style={styles.boldText}>Register</Text>
             <Text style={styles.lableText}>Create your new account</Text>
+            {
+              MobileIsValid ? <Text style={{ marginTop: wp(2), color: "red" }}>This mobile number is already registered. Please try another number.</Text> : ""
+            }
 
-            <Text style={styles.userText}>{'User Name Code'}</Text>
+            {/* <Text style={styles.userText}>{'User Name Code'}</Text>
             <View style={[styles.dropDownView, { marginTop: 5, paddingLeft: scale(20), backgroundColor: '#DDDDDD' }]}>
               <Text style={styles.dropDownText}>{mainForm.userName ? mainForm.userName : '-'}</Text>
-            </View>
+            </View> */}
 
             <View style={styles.dropDownView}>
               <Picker
@@ -196,9 +211,9 @@ const Register = ({ navigation }) => {
               multiline={false}
               returnKeyType={'next'}
             />
-            {(mainForm['mobileNo']=="" || !regex.test(mainForm['mobileNo'])) && isSubmitErrShow?<Text style={styles.err}>{mainForm['mobileNo']==""?"Mobile Number is required!":"Mobile Number is not valid!"}</Text>:""}
+            {(mainForm['mobileNo']=="" || isValidNumber) && isSubmitErrShow?<Text style={styles.err}>{mainForm['mobileNo']==""?"Mobile Number is required!":"Mobile Number is not valid!"}</Text>:""}
 
-            <Input
+            {/* <Input
               placeholder={'Password'}
               onChangeText={(text) => handleChange(text, 'password')}
               value={mainForm.password}
@@ -208,7 +223,7 @@ const Register = ({ navigation }) => {
               autoComplete={'password'}
               secureTextEntry={true}
             />
-            {(mainForm['password']=="" || !validator.isLength(mainForm['password'], { min: 8 })) && isSubmitErrShow?<Text style={styles.err}>{mainForm['password']==""?"Password is required!":"Password minimum length is 8."}</Text>:""}
+            {(mainForm['password']=="" || !validator.isLength(mainForm['password'], { min: 8 })) && isSubmitErrShow?<Text style={styles.err}>{mainForm['password']==""?"Password is required!":"Password minimum length is 8."}</Text>:""} */}
 
             <Button
               width={wp(80)}

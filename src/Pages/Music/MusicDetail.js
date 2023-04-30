@@ -14,6 +14,7 @@ import images from '../../../assets/'
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import YoutubePlayerCust from '../../Components/YoutubePlayerCust';
+import MusicPlayer from '../../Components/MusicPlayer';
 
 const MusicDetail = ({navigation,route}) => {
 
@@ -188,140 +189,141 @@ const MusicDetail = ({navigation,route}) => {
     const musicDescArr = new String(MusicDetailData?.tMusicDesc).split("=>");
 
   return (
-    <View style={styles.body}>
-        <Loader loading={loading} />
-        <SafeAreaView>
-            <Header iconName={'menu'} title={PageName} />
-        </SafeAreaView>
-        {
-            MusicDetailData?.tMusicFile && MusicDetailData.tMusicFile!=""?
-            <View style={styles.bottom}>
-                <View style={styles.MusicScreen}>
-                    <View>
-                        <Text style={styles.durationText}>{formatTime(position)}</Text>
-                    </View>
-                    <View>
-                        <Text  style={styles.durationText}>{formatTime(duration)}</Text>
-                    </View>
-                </View>
-                <View style={{width:moderateScale(310)}}>
-                    <View style={styles.progressContainer}>
-                        <View style={[styles.progressBar, { width: (position / duration) * 100 + '%' }]}></View>
-                        <View style={[styles.progressBar, { width: (buffer / duration) * 100 + '%', backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}></View>
-                    </View>
-                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <View style={{alignSelf:'center'}}>
-                            <TouchableOpacity>
-                                <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#0B4E98'  />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{alignSelf:'center'}}>
-                            <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
-                                <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#0B4E98' />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{alignSelf:'center'}}>
-                            <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={() => isPlaying ? pauseSound() : playSound()}>
-                                <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#0B4E98' />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{alignSelf:'center'}}>
-                            <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
-                                <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#0B4E98' />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{alignSelf:'center'}}>
-                            <TouchableOpacity onPress={handleIsLoop} style={{marginTop:scale(0)}}>
-                                <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#0B4E98'} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </View>:""
-        }
-        <Main>
-            <View style={styles.container}>
-                <View style={styles.mainData}>
-                {
-                    MusicDetailData?.tYoutubeLink!=""?
-                    <>
-                    <View>
-                        {/* <Video
-                            ref={video}
-                            style={styles.VideoView}
-                            source={{
-                                uri: MusicDetailData.tVideoLink,
-                                preload: true,
-                            }}
-                            useNativeControls={isPlayButtonClicked}
-                            rate={1.0}
-                            isMuted={false}
-                            resizeMode='stretch'
-                            isLooping   
-                            onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
-                            onFullscreenUpdate={setOrientation}
-                        /> */}
+    <MusicPlayer />
+    // <View style={styles.body}>
+    //     <Loader loading={loading} />
+    //     <SafeAreaView>
+    //         <Header iconName={'menu'} title={PageName} />
+    //     </SafeAreaView>
+    //     {
+    //         MusicDetailData?.tMusicFile && MusicDetailData.tMusicFile!=""?
+    //         <View style={styles.bottom}>
+    //             <View style={styles.MusicScreen}>
+    //                 <View>
+    //                     <Text style={styles.durationText}>{formatTime(position)}</Text>
+    //                 </View>
+    //                 <View>
+    //                     <Text  style={styles.durationText}>{formatTime(duration)}</Text>
+    //                 </View>
+    //             </View>
+    //             <View style={{width:moderateScale(310)}}>
+    //                 <View style={styles.progressContainer}>
+    //                     <View style={[styles.progressBar, { width: (position / duration) * 100 + '%' }]}></View>
+    //                     <View style={[styles.progressBar, { width: (buffer / duration) * 100 + '%', backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}></View>
+    //                 </View>
+    //                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+    //                     <View style={{alignSelf:'center'}}>
+    //                         <TouchableOpacity>
+    //                             <Icon LibraryName="FontAwesome" IconName={'download'} IconSize={20} IconColor='#0B4E98'  />
+    //                         </TouchableOpacity>
+    //                     </View>
+    //                     <View style={{alignSelf:'center'}}>
+    //                         <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={backForwordsMusic}>
+    //                             <Icon LibraryName="FontAwesome" IconName={'backward'} IconSize={20} IconColor='#0B4E98' />
+    //                         </TouchableOpacity>
+    //                     </View>
+    //                     <View style={{alignSelf:'center'}}>
+    //                         <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={() => isPlaying ? pauseSound() : playSound()}>
+    //                             <Icon LibraryName="FontAwesome" IconName={isPlaying ? 'pause' : 'play'} IconSize={20} IconColor='#0B4E98' />
+    //                         </TouchableOpacity>
+    //                     </View>
+    //                     <View style={{alignSelf:'center'}}>
+    //                         <TouchableOpacity style={{...styles.button,...{backgroundColor:'transparent'}}} onPress={FastForwordsMusic}>
+    //                             <Icon LibraryName="FontAwesome" IconName={'forward'} IconSize={20} IconColor='#0B4E98' />
+    //                         </TouchableOpacity>
+    //                     </View>
+    //                     <View style={{alignSelf:'center'}}>
+    //                         <TouchableOpacity onPress={handleIsLoop} style={{marginTop:scale(0)}}>
+    //                             <Icon LibraryName="Feather" IconName={'repeat'} IconSize={20} IconColor={isLoop?'#7732e6':'#0B4E98'} />
+    //                         </TouchableOpacity>
+    //                     </View>
+    //                 </View>
+    //             </View>
+    //         </View>:""
+    //     }
+    //     <Main>
+    //         <View style={styles.container}>
+    //             <View style={styles.mainData}>
+    //             {
+    //                 MusicDetailData?.tYoutubeLink!=""?
+    //                 <>
+    //                 <View>
+    //                     {/* <Video
+    //                         ref={video}
+    //                         style={styles.VideoView}
+    //                         source={{
+    //                             uri: MusicDetailData.tVideoLink,
+    //                             preload: true,
+    //                         }}
+    //                         useNativeControls={isPlayButtonClicked}
+    //                         rate={1.0}
+    //                         isMuted={false}
+    //                         resizeMode='stretch'
+    //                         isLooping   
+    //                         onPlaybackStatusUpdate={status => setStatus(() => 'Play')}
+    //                         onFullscreenUpdate={setOrientation}
+    //                     /> */}
 
-                        <YoutubePlayerCust height={verticalScale(200)} width={widthPercentageToDP('100%')} url={MusicDetailData?.tYoutubeLink}/>
+    //                     <YoutubePlayerCust height={verticalScale(200)} width={widthPercentageToDP('100%')} url={MusicDetailData?.tYoutubeLink}/>
 
-                        {
-                            isPlayButtonClicked?"":
-                            <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
-                                <Image source={images.videoThumb} style={styles.thumbnail}/>
-                            </TouchableOpacity>
-                        }
-                    </View> 
-                    </>
-                    :""
-                }
+    //                     {
+    //                         isPlayButtonClicked?"":
+    //                         <TouchableOpacity onPress={handlePlayPress} style={{position:'absolute',top:0}} >
+    //                             <Image source={images.videoThumb} style={styles.thumbnail}/>
+    //                         </TouchableOpacity>
+    //                     }
+    //                 </View> 
+    //                 </>
+    //                 :""
+    //             }
                     
                 
-                {
-                    MusicDetailData?.tMusicImage && MusicDetailData?.tVideoLink==""?
-                    <View style={styles.musicProfileShadow}>
-                        <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(280), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad}/>
-                    </View>:""
-                }
+    //             {
+    //                 MusicDetailData?.tMusicImage && MusicDetailData?.tVideoLink==""?
+    //                 <View style={styles.musicProfileShadow}>
+    //                     <Image source={{ uri: MusicDetailData.tMusicImage }} style={{ width: moderateScale(280), height: imageHeight }} resizeMode='stretch'  onLoad={onImageLoad}/>
+    //                 </View>:""
+    //             }
 
-                <ScrollView
-                keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
-                        {
-                            MusicDetailData?.tMusicDesc!=""?
-                            <View style={styles.textView}>
-                                {
-                                    musicDescArr.map((curEle,index)=>{
-                                        const isStringHeader=new String(curEle).includes("*");
-                                        let newString=curEle;
-                                        if(isStringHeader){
-                                            newString=curEle.replace('*','');
-                                        }
-                                        return  curEle!=""?<View style={{...styles.paragraphBox,...isStringHeader?{alignSelf:'center'}:{}}}>
-                                                    {
-                                                        isStringHeader?"":
-                                                        <View>
-                                                            <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" />
-                                                        </View>
-                                                    }
-                                                    <Text style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2.5),fontFamily:'Lato_700Bold'}:{}}} key={index}>
-                                                        {newString}
-                                                    </Text>
-                                                </View>:""
-                                    })
-                                }
-                                <View style={{marginTop:scale(20),alignSelf:'center'}}>
-                                    <Icon LibraryName="Feather" IconName="smile" IconSize={45} IconColor="#f10078" />
-                                </View>
-                            </View>
-                            :""
-                        }
-                </ScrollView>
-                </View>
-            </View>
-        </Main>
-    </View>
+    //             <ScrollView
+    //             keyboardShouldPersistTaps="handled"
+    //             showsVerticalScrollIndicator={false}
+    //             showsHorizontalScrollIndicator={false}
+    //             contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
+    //                     {
+    //                         MusicDetailData?.tMusicDesc!=""?
+    //                         <View style={styles.textView}>
+    //                             {
+    //                                 musicDescArr.map((curEle,index)=>{
+    //                                     const isStringHeader=new String(curEle).includes("*");
+    //                                     let newString=curEle;
+    //                                     if(isStringHeader){
+    //                                         newString=curEle.replace('*','');
+    //                                     }
+    //                                     return  curEle!=""?<View style={{...styles.paragraphBox,...isStringHeader?{alignSelf:'center'}:{}}}>
+    //                                                 {
+    //                                                     isStringHeader?"":
+    //                                                     <View>
+    //                                                         <Icon LibraryName="MaterialCommunityIcons" IconName="flower" IconSize={25} IconColor="#0B4E98" />
+    //                                                     </View>
+    //                                                 }
+    //                                                 <Text style={{...styles.textDesc,...isStringHeader?{textAlign:'center',fontSize:RFPercentage(2.5),fontFamily:'Lato_700Bold'}:{}}} key={index}>
+    //                                                     {newString}
+    //                                                 </Text>
+    //                                             </View>:""
+    //                                 })
+    //                             }
+    //                             <View style={{marginTop:scale(20),alignSelf:'center'}}>
+    //                                 <Icon LibraryName="Feather" IconName="smile" IconSize={45} IconColor="#f10078" />
+    //                             </View>
+    //                         </View>
+    //                         :""
+    //                     }
+    //             </ScrollView>
+    //             </View>
+    //         </View>
+    //     </Main>
+    // </View>
   )
 }
 

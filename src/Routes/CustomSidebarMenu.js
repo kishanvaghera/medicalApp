@@ -8,6 +8,8 @@ import { useSelector,useDispatch } from 'react-redux';
 import { CustSidebarActive, LogOut } from '../Redux/reducer';
 import { useNavigation } from '@react-navigation/native';
 import RoutName from './RoutName';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 function CustomSidebarMenu(props) {
   const loggedData = useSelector((state) => state.userLoggedData);
   const dispatch=useDispatch();
@@ -16,6 +18,9 @@ function CustomSidebarMenu(props) {
   const handleActivePage=(page)=>{
     if(page=='Logout'){
       dispatch(LogOut({}));
+      AsyncStorage.clear()
+      .then(() => console.log('AsyncStorage cleared successfully'))
+      .catch((err) => console.error(err));
     }else{
       dispatch(CustSidebarActive({page}));
       if(page=='MyPlanner'){

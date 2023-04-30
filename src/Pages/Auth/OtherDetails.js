@@ -91,6 +91,7 @@ const OtherDetails = ({ route, navigation }) => {
                 vPregWeek: mainForm['pWeek']
             };
             APIService.apiAction(postData, apiUrls.auth).then(res => {
+                console.log("res",res)
               setLoading(false);
               if (res) {
                 if (res.status == 200) {
