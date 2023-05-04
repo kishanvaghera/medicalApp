@@ -10,6 +10,7 @@ import * as APIService from '../../Middleware/APIService';
 import {ToastMessage} from '../../utils/ToastMessage'
 import moment from 'moment';
 import RoutName from '../../Routes/RoutName';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const SetCalanderData = ({navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -174,7 +175,7 @@ const SetCalanderData = ({navigation}) => {
                     onBlur={handleBlurPeriods}
                   />
                   <View style={styles.styleTextButton}>
-                    <Text style={{fontSize:scale(18),color:'white'}}>Days</Text>
+                    <Text style={{fontSize: RFPercentage(2),color:'white'}}>Days</Text>
                   </View>
 
                   <TouchableOpacity onPress={()=>changePerLen("plus")} style={{...styles.styleTextButton,marginLeft:scale(72)}}>
@@ -195,7 +196,7 @@ const SetCalanderData = ({navigation}) => {
                     onBlur={handleBlurCycle}
                   />
                   <View style={styles.styleTextButton}>
-                    <Text style={{fontSize:scale(18),color:'white'}}>Days</Text>
+                    <Text style={{fontSize: RFPercentage(2),color:'white'}}>Days</Text>
                   </View>
 
                   <TouchableOpacity onPress={()=>changeCycLen("plus")} style={{...styles.styleTextButton,marginLeft:scale(72)}}>
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
       aspectRatio: 1,
   },
   value: {
-      fontSize: 12,
+    fontSize: RFPercentage(2),
       fontWeight: '400',
   },
   body: {
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   InpHeadTitle:{
-    fontSize:scale(18),
+    fontSize: RFPercentage(2),
     fontWeight:'800',
     marginLeft:scale(5),
     marginBottom:scale(10)

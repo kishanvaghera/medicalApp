@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         borderRadius:moderateScale(100)
     },
     textBox:{
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         width:moderateScale(210),
         marginLeft:scale(15),

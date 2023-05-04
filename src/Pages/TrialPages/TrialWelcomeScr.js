@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: scale(20)
   },
   comTextFree: {
-    fontSize: RFPercentage(1.8),
+    fontSize: RFPercentage(2),
     fontFamily: 'Lato_400Regular',
     textAlign: 'center',
     color: 'white'

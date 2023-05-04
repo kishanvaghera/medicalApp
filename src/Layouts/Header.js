@@ -28,7 +28,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
   return (
     <View style={styles.headerContainer}>
       <StatusBar
-       barStyle='default'
+        barStyle='light-content'
         animated={true}
         backgroundColor="#0B4E98"
       />
@@ -43,7 +43,7 @@ const Header = ({ title, iconName, customClick, setIconBG,isCalanderAdd,backScre
         <View style={{position:'absolute',flexDirection:'row',left:scale(20)}}>
         <Image source={images.logo} style={{width:widthPercentageToDP('6%'),height:heightPercentageToDP('6%')}} resizeMode='contain' />
           <Text style={styles.LogoTitile}>
-            <Text style={{color:'#0B4E98'}}>Geeta</Text><Text style={{color:'#f10078'}}> Garbhasanskar</Text>
+            <Text style={{color:'#0B4E98'}}>Geeta</Text><Text style={{color:'#f10078'}}> Garbhsanskar</Text>
           </Text>
           </View>
         :""
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     position:'absolute',
   },
   LogoTitile:{
-    fontFamily:'Lato_900Black',
+    fontFamily:'Lato_700Bold',
     fontSize:RFPercentage(2.3),
     color:'black',
     left: scale(10),

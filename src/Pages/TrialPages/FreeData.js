@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         elevation: 1,
     },
     TextData:{
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2),
         fontFamily: 'Lato_400Regular',
         width:wp('70%'),
         marginLeft:scale(10)

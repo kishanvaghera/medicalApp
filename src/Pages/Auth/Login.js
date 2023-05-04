@@ -14,6 +14,7 @@ import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import firebase from 'firebase/compat/app';
 import { useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -42,10 +43,22 @@ const Login = ({ navigation }) => {
     return () => { }
   }, [loggedData])
 
+  useEffect(() => {
+    const checkIfUserLoggedIn = async () => {
+      const data = await AsyncStorage.getItem('@loginData');
+      if (data !== null) {
+        const dd=JSON.parse(data);
+        console.log("dd",dd)
+        dispatch(LoginSuccess({ userLoggedId: dd.iUserId }));
+        dispatch(UserDataStor({ isUserData: dd }));
+      }
+    };
+    checkIfUserLoggedIn();
+  }, []);
+  
   const saveDataToAsyncStorage = async (data) => {
     try {
       await AsyncStorage.setItem('@loginData', JSON.stringify(data));
-      // 'loginData' is the key under which the data is stored
     } catch (e) {
       console.log('Error saving login data to AsyncStorage:', e);
     }
@@ -59,19 +72,23 @@ const Login = ({ navigation }) => {
   const [isMobileInvalid, setisMobileInvalid] = useState(false);
   const sendVerificationCode = () => {
     if (phoneNumber == "") {
+      setLoading(false);
       setIsInvalidErr(true);
     } else {
       setLoading(true);
       const postData = { action: "mobileNumberCheck", vMobileNumber: phoneNumber }
       APIService.apiAction(postData, apiUrls.auth).then(res => {
+        console.log("first",res)
         if (res) {
           if (res.status == 200) {
+            setIsInvalidErr(false);
             setisMobileInvalid(false);
             const phoneProvider = new firebase.auth.PhoneAuthProvider();
             phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier.current).then(setVerificationId);
-            setPhoneNumber('');
             setLoading(false);
           } else {
+            setIsInvalidErr(false);
+            setLoading(false);
             setisMobileInvalid(true);
           }
         }
@@ -88,6 +105,7 @@ const Login = ({ navigation }) => {
       setIsInvalidErr(false);
       const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, state.vOtp);
       firebase.auth().signInWithCredential(credential).then(() => {
+        console.log("error")
         setisOTPInvalid(false);
         const postData = {
           action: 'AppLogin',
@@ -108,14 +126,17 @@ const Login = ({ navigation }) => {
               saveDataToAsyncStorage(res.data);
 
             } else {
+              setLoading(false);
               setIsInvalidErr(true);
             }
           } else {
+            setLoading(false);
             setIsInvalidErr(true);
           }
         })
 
       }).catch((error) => {
+        console.log("error",error)
         setLoading(false);
         setisOTPInvalid(true);
       })
@@ -220,11 +241,11 @@ const styles = StyleSheet.create({
     // marginTop: '10%'
   },
   boldText: {
-    fontSize: 28,
+    fontSize: RFPercentage(2),
     fontWeight: 'bold'
   },
   lableText: {
-    fontSize: 20,
+    fontSize: RFPercentage(2),
     fontWeight: '400'
   }
 });

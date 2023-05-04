@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         height: hp(35)
     },
     titleText: {
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2),
         fontFamily:'Lato_400Regular',
         textAlign: 'left',
         marginTop: 15,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'red'
     },
     textStyle: {
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2),
         fontFamily:'Lato_400Regular',
         textAlign: 'left',
         lineHeight: 18

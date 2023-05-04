@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         // backgroundColor:'red'
     },
     textDesc: {
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         width:widthPercentageToDP('80%')
     },

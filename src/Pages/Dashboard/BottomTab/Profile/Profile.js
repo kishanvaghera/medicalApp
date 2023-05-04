@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   HeadTextData:{
     fontFamily:'Lato_700Bold',
-    fontSize:RFPercentage(2.3),
+    fontSize:RFPercentage(2),
     color:'#004c99',
     marginTop:scale(2),
     height:'auto'

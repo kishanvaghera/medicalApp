@@ -94,11 +94,11 @@ const ActivityCategoryList = ({navigation}) => {
 
                     <View style={styles.mainRows}>
                         <View style={styles.rows}>
-                            <TouchableOpacity onPress={()=>handleChange('Daily')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Daily'?'#0B4E98':'#82a6cf'}}>
-                                <Text style={{fontSize:RFPercentage(2.3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Daily</Text>
+                            <TouchableOpacity onPress={()=>handleChange('Daily')} style={{...styles.rowsTab,...IsActiveTab=='Daily'?{backgroundColor:'#0B4E98',borderRadius:100}:{}}}>
+                                <Text style={{fontSize:RFPercentage(2),fontFamily:'Lato_700Bold',color:IsActiveTab=='Daily'?'white':'#2B3467'}}>Daily</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#0B4E98':'#82a6cf'}}>
-                                <Text style={{fontSize:RFPercentage(2.3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
+                            <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,...IsActiveTab=='Fixed'?{backgroundColor:'#0B4E98',borderRadius:100}:{}}}>
+                                <Text style={{fontSize:RFPercentage(2),fontFamily:'Lato_700Bold',color:IsActiveTab=='Fixed'?'white':'#2B3467'}}>Fixed</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -121,7 +121,7 @@ const ActivityCategoryList = ({navigation}) => {
                             }
                         </View>
                         :
-                        <View style={{width:widthPercentageToDP('90%'),alignSelf:'center'}}>
+                        <View style={{width:widthPercentageToDP('100%'),alignSelf:'center'}}>
                             <SwiperFlatList
                                 ref={swiperRef}
                                 data={DataImagesArr?DataImagesArr:[]} 
@@ -153,6 +153,16 @@ const styles = StyleSheet.create({
         width:widthPercentageToDP('90%'),
         flexDirection:'row',
         justifyContent:'space-between',
+        borderRadius:100,
+        backgroundColor:'white',
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
     },
     imageBox:{
         marginLeft:scale(10),
@@ -160,9 +170,8 @@ const styles = StyleSheet.create({
     },
     rowsTab:{
         width:widthPercentageToDP('42%'),
-        borderBottomWidth:scale(5),
         alignItems:'center',
-        paddingBottom:scale(5)
+        paddingVertical:scale(10),
     },
     imageRows2:{
     },
@@ -206,7 +215,7 @@ const styles = StyleSheet.create({
     },  
     boxText:{
         fontFamily:'Lato_400Regular',
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         width:widthPercentageToDP('80%'),
         marginLeft:scale(8)
     }

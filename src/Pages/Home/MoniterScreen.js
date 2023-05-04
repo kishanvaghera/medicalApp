@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         marginTop:scale(10)
     },
     headText:{
-        fontSize:RFPercentage(2.5),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_700Bold',
         marginLeft:scale(10),
         color:"#474E68",
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         marginTop:scale(10)
     },
     dateFirstText:{
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         color:"#474E68",
         alignSelf:'center',
@@ -199,13 +199,13 @@ const styles = StyleSheet.create({
         marginTop:scale(50)
     },
     dateFirstText2:{
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_700Bold',
         color:"#474E68",
         marginTop:scale(5)
     },
     lightText3:{
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         color:"#6B728E",
         marginTop:scale(20),
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         width:widthPercentageToDP('80%')
     },
     dateFirstText3:{
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         fontFamily:'Lato_400Regular',
         color:"#474E68",
         marginTop:scale(5),

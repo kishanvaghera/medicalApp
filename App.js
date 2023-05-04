@@ -5,8 +5,8 @@ import Toast from 'react-native-toast-message';
 import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Login } from './src/Pages/Auth';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import AppLoading from 'expo-app-loading';
 import {
   useFonts,
   Lato_100Thin,
@@ -20,7 +20,6 @@ import {
   Lato_900Black,
   Lato_900Black_Italic,
 } from '@expo-google-fonts/lato';
-import AppLoading from 'expo-app-loading';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -36,31 +35,24 @@ export default function App() {
     Lato_900Black_Italic,
   });
 
-  const [loggedIn, setLoggedIn] = useState(false);
-
   useEffect(() => {
     const checkIfUserLoggedIn = async () => {
       const data = await AsyncStorage.getItem('@loginData');
       if (data !== null) {
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);
+        const dd=JSON.parse(data);
+        console.log("dd",dd)
+      }else{
+        console.log("no data found")
       }
     };
-
     checkIfUserLoggedIn();
   }, []);
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
 
   return (
     <Provider store={store}>
       <ApplicationProvider {...eva} theme={eva.light}>
-        {
-          loggedIn ? <MainNavigator /> : <Login />
-        }
+        <MainNavigator />
         <Toast />
       </ApplicationProvider>
     </Provider>

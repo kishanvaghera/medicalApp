@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },  
     boxText:{
         fontFamily:'Lato_400Regular',
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         width:moderateScale(250),
         marginLeft:scale(8)
     }

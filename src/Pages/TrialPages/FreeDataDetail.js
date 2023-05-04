@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     },
     IndecText:{
         color:'white',
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2),
         fontFamily: 'Lato_700Bold',
     },
     imageView: {

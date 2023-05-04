@@ -95,11 +95,11 @@ const DietList = ({navigation}) => {
                 contentContainerStyle={{paddingBottom:scale(80),paddingTop:scale(10)}} >
 
                     <View style={styles.rows}>
-                        <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Fixed'?'#0B4E98':'#82a6cf'}}>
-                            <Text style={{fontSize:RFPercentage(2.3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Fixed</Text>
+                        <TouchableOpacity onPress={()=>handleChange('Fixed')} style={{...styles.rowsTab,...IsActiveTab=='Fixed'?{backgroundColor:'#0B4E98',borderRadius:100}:{}}}>
+                            <Text style={{fontSize:RFPercentage(2),fontFamily:'Lato_700Bold',color:IsActiveTab=='Fixed'?'white':'#2B3467'}}>Fixed</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>handleChange('Monthly')} style={{...styles.rowsTab,borderBottomColor:IsActiveTab=='Monthly'?'#0B4E98':'#82a6cf'}}>
-                            <Text style={{fontSize:RFPercentage(2.3),fontFamily:'Lato_700Bold',color:'#2B3467'}}>Monthly</Text>
+                        <TouchableOpacity onPress={()=>handleChange('Monthly')} style={{...styles.rowsTab,...IsActiveTab=='Monthly'?{backgroundColor:'#0B4E98',borderRadius:100}:{}}}>
+                            <Text style={{fontSize:RFPercentage(2),fontFamily:'Lato_700Bold',color:IsActiveTab=='Monthly'?'white':'#2B3467'}}>Monthly</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -143,12 +143,21 @@ const styles = StyleSheet.create({
         width:widthPercentageToDP('90%'),
         flexDirection:'row',
         justifyContent:'space-between',
-        alignSelf:'center'
+        alignSelf:'center',
+        borderRadius:100,
+        backgroundColor:'white',
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+        elevation: 1,
     },
     rowsTab:{
         width:widthPercentageToDP('42%'),
-        borderBottomWidth:scale(5),
         alignItems:'center',
-        paddingBottom:scale(5)
+        paddingVertical:scale(10)
     },
 })

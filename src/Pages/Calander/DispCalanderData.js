@@ -11,6 +11,7 @@ import { Loader } from '../../Components';
 import { Header, Main } from '../../Layouts';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const DispCalanderData = ({navigation}) => {
     const [loading, setLoading] = useState(false);
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
     },
     value: {
-        fontSize: 12,
-        fontWeight: '400',
+      fontSize: RFPercentage(2),
+      fontWeight: '400',
     },
     body: {
       flex: 1,

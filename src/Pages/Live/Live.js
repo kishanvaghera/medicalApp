@@ -7,7 +7,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  Linking
+  Linking,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -70,14 +70,14 @@ const Live = ({navigation}) => {
         </SafeAreaView>
         <Main>
           <View style={styles.mainTab}>
-            <TouchableOpacity style={{...styles.TabContent,...selectedIndex==1?{}:{borderBottomWidth:0}}} onPress={()=>setSelectedIndex(1)}>
-              <Text style={styles.TabContTxt}>For You</Text>
+            <TouchableOpacity style={{...styles.TabContent,...selectedIndex==1?{backgroundColor:'#0B4E98',borderRadius:100}:{borderBottomWidth:0}}} onPress={()=>setSelectedIndex(1)}>
+              <Text style={{...styles.TabContTxt,...selectedIndex==1?{color:'white'}:{}}}>For You</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{...styles.TabContent,...selectedIndex==2?{}:{borderBottomWidth:0}}} onPress={()=>setSelectedIndex(2)}>
-              <Text style={styles.TabContTxt}>Planning / Pregnant</Text>
+            <TouchableOpacity style={{...styles.TabContent,...selectedIndex==2?{backgroundColor:'#0B4E98',borderRadius:100}:{borderBottomWidth:0}}} onPress={()=>setSelectedIndex(2)}>
+              <Text style={{...styles.TabContTxt,...selectedIndex==2?{color:'white'}:{}}}>Planning / Pregnant</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{...styles.TabContent,...selectedIndex==3?{}:{borderBottomWidth:0}}} onPress={()=>setSelectedIndex(3)}>
-              <Text style={styles.TabContTxt}>Live</Text>
+            <TouchableOpacity style={{...styles.TabContent,...selectedIndex==3?{backgroundColor:'#0B4E98',borderRadius:100}:{borderBottomWidth:0}}} onPress={()=>setSelectedIndex(3)}>
+              <Text style={{...styles.TabContTxt,...selectedIndex==3?{color:'white'}:{}}}>Live</Text>
             </TouchableOpacity>
           </View>
           <ScrollView
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   mainBoxTxt:{
     width:wp('40%'),
-    fontSize: RFPercentage(1.8),
+    fontSize: RFPercentage(2),
     fontFamily: 'Lato_400Regular',
     paddingHorizontal:scale(5),
     paddingVertical:scale(5),
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   mainBoxTxt2:{
     width:wp('90%'),
-    fontSize: RFPercentage(1.8),
+    fontSize: RFPercentage(2),
     fontFamily: 'Lato_400Regular',
     paddingHorizontal:scale(5),
     paddingVertical:scale(5),
@@ -218,18 +218,31 @@ const styles = StyleSheet.create({
     marginTop:scale(10),
     alignSelf:'center',
     flexDirection:'row',
-    justifyContent:'space-between'
+    justifyContent:'space-around',
+    backgroundColor:'white',
+    shadowColor: "#000",
+    shadowOffset:{
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    borderRadius:100,
+    // paddingTop:scale(10)
   },
   TabContent:{
-    width:wp('30%'),
-    paddingVertical:scale(5),
-    borderBottomWidth:scale(5),
-    borderBottomColor:'#0B4E98'
+    // width:wp('30%'),
+    paddingVertical:scale(8),
+    paddingHorizontal:scale(25)
+    // borderBottomWidth:scale(5),
+    // borderBottomColor:'#0B4E98'
   },
   TabContTxt:{
     textAlign:'center',
-    fontSize: RFPercentage(1.8),
+    fontSize: RFPercentage(2),
     fontFamily: 'Lato_700Bold',
-    color:'#0B4E98'
+    color:'#0B4E98',
+    paddingTop:scale(10)
   }
 });

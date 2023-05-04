@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Modal, ActivityIndicator,StatusBar } from 'react-native';
 import { scale } from '../utils/scalling';
 
 const Loader = (props) => {
     const { loading, ...attributes } = props;
 
     return (
+        <>
         <Modal
             transparent={true}
             animationType={'none'}
@@ -17,12 +18,13 @@ const Loader = (props) => {
                     <ActivityIndicator
                         animating={true}
                         color="#f68b1f"
-                        size="small"
+                        size={60}
                         style={styles.activityIndicator}
                     />
                 </View>
             </View>
         </Modal>
+        </>
     );
 };
 
@@ -34,11 +36,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        backgroundColor: '#00000040',
+        // backgroundColor: '#00000040',
         // marginTop:scale(45)
     },
     activityIndicatorWrapper: {
-        backgroundColor: '#f6f7fb',
+        // backgroundColor: '#f6f7fb',
         height: 75,
         width: 75,
         borderRadius: 10,

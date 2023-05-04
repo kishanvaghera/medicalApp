@@ -14,12 +14,17 @@ export async function apiAction(formData, urlKey,isLogin=false) {
         }
        
         let resStatus = "";
-        const data = axios.post(apiUrl +  urlKey,postData);
-        await data.then(val => { resStatus = val  });
-        if (resStatus.data.status == 402) {
-            return false;
-        }else {
-            return resStatus.data
+        try {
+            const data = axios.post(apiUrl +  urlKey,postData);
+            await data.then(val => { resStatus = val  });
+            if (resStatus.data.status == 402) {
+                return false;
+            }else {
+                return resStatus.data
+            }
+        }catch (error) {
+            console.error(error);
+            // handle the error here
         }
        
 

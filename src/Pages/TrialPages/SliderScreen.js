@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     categoryImageText: {
         color: "black",
-        fontSize: RFPercentage(3),
+        fontSize: RFPercentage(2),
         fontFamily: 'Lato_400Regular',
         alignSelf: 'center',
         width: moderateScale(200),

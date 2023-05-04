@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { LoginSuccess, UserDataStor } from '../Redux/reducer';
-
 export default MainNavigator=()=>{
+    
+    
     const loggedData = useSelector((state) => state.userLoggedData );
 
     const dispatch = useDispatch()

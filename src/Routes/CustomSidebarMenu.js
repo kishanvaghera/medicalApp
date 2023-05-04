@@ -31,8 +31,6 @@ function CustomSidebarMenu(props) {
     }
   }
 
-  console.log("loggedData",loggedData)
-
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ alignItems: 'center', marginVertical: 20 }}>

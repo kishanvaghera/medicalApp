@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 const Home = ({navigation}) => {
   const loggedData = useSelector((state) => state.userLoggedData.isUserData );
 
+  console.log("loggedData?.iPlanId",loggedData?.iPlanId)
   return (
     <View>
       {

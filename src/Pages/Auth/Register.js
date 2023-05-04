@@ -22,6 +22,7 @@ import apiUrls from '../../Middleware/apiUrls';
 import { Loader } from '../../Components';
 import { moderateScale, scale } from '../../utils/scalling';
 import validator from 'validator';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const Register = ({ navigation }) => {
 
@@ -166,7 +167,7 @@ const Register = ({ navigation }) => {
                 style={{ color: '#000' }}>
                 {
                   options.map((curElm, index) => {
-                    return <Picker.Item style={{ fontSize: scale(16), fontWeight: '800', color: '#000000' }} label={curElm.lable} value={curElm.value} />
+                    return <Picker.Item style={{ fontSize: RFPercentage(2), fontWeight: '800', color: '#000000' }} label={curElm.lable} value={curElm.value} />
                   })
                 }
               </Picker>
@@ -254,11 +255,11 @@ const styles = StyleSheet.create({
     marginTop: '10%'
   },
   boldText: {
-    fontSize: 28,
+    fontSize: RFPercentage(2),
     fontWeight: 'bold'
   },
   lableText: {
-    fontSize: 20,
+    fontSize: RFPercentage(2),
     fontWeight: '400'
   },
   backBtbView: {
@@ -283,12 +284,12 @@ const styles = StyleSheet.create({
   },
   dropDownText: {
     color: '#000000',
-    fontSize: 16,
+    fontSize: RFPercentage(2),
     fontWeight: '500',
   },
   userText: {
     color: '#000000',
-    fontSize: 16,
+    fontSize: RFPercentage(2),
     fontWeight: '600',
     width: wp(80),
     marginTop: wp(5)
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   err:{
-    fontSize:scale(16),
+    fontSize: RFPercentage(2),
     color:'red',
     marginTop:scale(5)
   }

@@ -97,22 +97,6 @@ const SubscribeSelect = ({ navigation }) => {
 
                 {
                     isSelectPlan===0?
-                    <View style={{marginTop:scale(20)}}>
-                        <Text style={styles.textVBoxFoot}>આપના છેલ્લા માસિકના પ્રથમ દિવસની તારીખ અહીં ભરો.</Text>
-                        <TouchableOpacity style={styles.TextInpBox} onPress={()=>isOpenModal('LMPDate')}>
-                            <Text style={styles.TextInpSty}>{LMPDate==""?"LMP ( Last Menstrual Perio...)":moment(LMPDate).format('DD/MM/YYYY')}</Text>
-                        </TouchableOpacity>
-
-                        <Text style={styles.textVBoxFoot}>આપના સંતાનના જન્મની સંભવિત તારીખ.</Text>
-                        <View style={styles.TextInpBox}>
-                            <Text style={styles.TextInpSty}>{EDDDate==""?"EDD (Estimated Due Date)":moment(EDDDate).format('DD/MM/YYYY')}</Text>
-                        </View>
-                    </View>
-                    :""
-                }
-
-                {
-                    isSelectPlan===0?
                     <View style={styles.planBox}>
                         <Text style={styles.planContt}>Plan Content:</Text>
                         {
@@ -156,6 +140,33 @@ const SubscribeSelect = ({ navigation }) => {
                             })
                         }
                     </View>:""
+                }
+
+
+                {
+                    isSelectPlan===""?"":
+                    <>
+                    {
+                        isSelectPlan===0?
+                        <View style={{marginTop:scale(20)}}>
+                            <Text style={styles.textVBoxFoot}>આપના છેલ્લા માસિકના પ્રથમ દિવસની તારીખ અહીં ભરો.</Text>
+                            <TouchableOpacity style={styles.TextInpBox} onPress={()=>isOpenModal('LMPDate')}>
+                                <Text style={styles.TextInpSty}>{LMPDate==""?"LMP ( Last Menstrual Perio...)":moment(LMPDate).format('DD/MM/YYYY')}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={{marginTop:scale(20)}}>
+                            <Text style={styles.textVBoxFoot}>આપના છેલ્લા માસિકના પ્રથમ દિવસની તારીખ અહીં ભરો.</Text>
+                            <TouchableOpacity style={styles.TextInpBox} onPress={()=>isOpenModal('LMPDate')}>
+                                <Text style={styles.TextInpSty}>{LMPDate==""?"LMP ( Last Menstrual Perio...)":moment(LMPDate).format('DD/MM/YYYY')}</Text>
+                            </TouchableOpacity>
+                            <Text style={styles.textVBoxFoot}>આપના સંતાનના જન્મની સંભવિત તારીખ.</Text>
+                            <View style={styles.TextInpBox}>
+                                <Text style={styles.TextInpSty}>{EDDDate==""?"EDD (Estimated Due Date)":moment(EDDDate).format('DD/MM/YYYY')}</Text>
+                            </View>
+                        </View>
+                    }
+                    </>
                 }
 
                 {
@@ -259,7 +270,7 @@ const styles = StyleSheet.create({
         borderColor:'#0B4E98'
     },
     TextInpSty:{
-        fontSize: RFPercentage(1.8),
+        fontSize: RFPercentage(2),
         fontFamily: 'Lato_400Regular',
         color: '#0B4E98',
     },

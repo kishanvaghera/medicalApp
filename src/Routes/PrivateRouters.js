@@ -35,6 +35,7 @@ import FreeData from '../Pages/TrialPages/FreeData';
 import FreeDataDetail from '../Pages/TrialPages/FreeDataDetail';
 import LiveSubData from '../Pages/Live/LiveSubData';
 import LiveMainData from '../Pages/Live/LiveMainData';
+import { useEffect } from 'react';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -204,6 +205,7 @@ const BottomTabStack = () => {
 };
 
 function PrivateRoutes() {
+
   return (
 
     <Drawer.Navigator

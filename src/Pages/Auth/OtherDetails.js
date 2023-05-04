@@ -21,6 +21,7 @@ import * as APIService from './../../Middleware/APIService';
 import apiUrls from '../../Middleware/apiUrls';
 import moment from 'moment';
 import { scale } from '../../utils/scalling';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const OtherDetails = ({ route, navigation }) => {
 
@@ -184,7 +185,7 @@ const OtherDetails = ({ route, navigation }) => {
 
                     <TouchableOpacity style={{ marginTop: 15 }}
                         onPress={() => handleSubmit('1')}>
-                        <Text style={[styles.boldText, { fontSize: 15,alignSelf:'center' }]}>SKIP</Text>
+                        <Text style={[styles.boldText, { fontSize: RFPercentage(2),alignSelf:'center' }]}>SKIP</Text>
                     </TouchableOpacity>
                 </View>
                 </KeyboardAvoidingView>
@@ -208,11 +209,11 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     },
     boldText: {
-        fontSize: 28,
+        fontSize: RFPercentage(2),
         fontWeight: 'bold'
     },
     lableText: {
-        fontSize: 16,
+        fontSize: RFPercentage(2),
         // textAlign:'center',
         fontWeight: '400'
     },
@@ -228,12 +229,12 @@ const styles = StyleSheet.create({
     },
     dropDownText: {
         color: '#000000',
-        fontSize: 16,
+        fontSize: RFPercentage(2),
         fontWeight: '500',
     },
     err:{
-    fontSize:scale(16),
-    color:'red',
-    marginTop:scale(5)
+        fontSize: RFPercentage(2),
+        color:'red',
+        marginTop:scale(5)
   }
 });

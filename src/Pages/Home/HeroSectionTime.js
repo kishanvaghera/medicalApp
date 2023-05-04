@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     },
     msg:{
         fontFamily:'Lato_400Regular',
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         textAlign:'center'
     },
     DatePicker:{
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     },
     pregStartDate:{
         fontFamily:'Lato_700Bold',
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         color:"#0B4E98",
     },
     backdrop: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     },
     term:{
         fontFamily:'Lato_700Bold',
-        fontSize:RFPercentage(2.3),
+        fontSize:RFPercentage(2),
         textAlign:'center',
         height:scale(20)
     },

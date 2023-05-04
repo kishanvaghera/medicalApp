@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8
     },
     titleText: {
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2),
         fontFamily:'Lato_400Regular',
         textAlign: 'left',
         paddingLeft: 8
